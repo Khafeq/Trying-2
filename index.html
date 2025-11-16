@@ -1,0 +1,755 @@
+<!doctypehtml><html lang=ar><meta charset=utf-8><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"name=viewport><meta content="no-cache, no-store, must-revalidate"http-equiv=Cache-Control><meta content=no-cache http-equiv=Pragma><meta content=0 http-equiv=Expires><title>AppelBoom v2.0 - Designed by Khaled Albadawi (khaledalbadawi.a@gmail.com)</title><style>:root{--slot-font:30px;--slot-gap:12px}*{box-sizing:border-box;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial}body,html{height:100%;margin:0;padding:0;background:#222}.wrap{width:100%;height:100vh;display:flex;align-items:center;justify-content:center;padding:12px}.stage{width:100%;max-width:1320px;height:calc(100vh - 24px);position:relative;border-radius:8px;overflow:hidden;background-color:#000}.bg{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center center;filter:none}header{position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999;pointer-events:none}header .title{position:absolute;bottom:10px;left:50%;transform:translateX(calc(-50% + 30px));font-weight:800;color:#fff;z-index:10000;padding:12px 24px;background:rgba(0,0,0,.7);border-radius:8px;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.2);pointer-events:auto}header .controls{position:absolute;bottom:30px;right:120px;z-index:10000;display:flex;gap:8px;align-items:center;padding:0;background:0 0!important;border-radius:0;backdrop-filter:none;border:none!important}.sound-toggle{padding:10px;border-radius:50%;background:rgba(255,255,255,.9);border:none;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:0;position:relative;z-index:10001;pointer-events:auto!important}.sound-toggle::before{content:"🔊";font-size:22px;pointer-events:none}.sound-toggle.muted::before{content:"🔇"}.page{display:none;height:calc(100% - 64px);position:relative;z-index:5;padding:12px}.page.active{display:block}.lang-col{display:flex;flex-direction:column;gap:10px;margin-top:500px}.setup{height:100%;display:grid;grid-template-columns:88px 1fr;gap:12px;align-items:start}.lang-btn{width:72px;height:38px;border-radius:8px;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;cursor:pointer;font-weight:800}.lang-btn.active{background:#0b5138;color:#fff}.tree-wrap{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center}.tree-frame{width:90%!important;max-width:740px!important;aspect-ratio:4/3;position:relative;display:flex;align-items:center;justify-content:center;margin-left:-750px;margin-top:65px}.tree-img{position:absolute;left:45%!important;top:50%;transform:translate(-50%,-50%);width:100%;height:135%;object-fit:cover;border-radius:8px}.hero-apples,.tree-apples{position:absolute;left:7%;top:8%;width:86%;height:84%;pointer-events:none}.apple-item{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center}.apple-item img{display:block;max-width:100%;height:auto;pointer-events:none}.input-container{position:absolute;right:20px;top:120px;width:680px!important;z-index:10}.input-field{width:100%;border:none;padding:16px 20px!important;border-radius:12px!important;background:#fff;color:#000;font-weight:800;text-align:center;font-size:22px!important;outline:0;letter-spacing:4px;min-height:60px}.input-field.password-dots{font-size:24px;letter-spacing:8px;-webkit-text-security:disc;text-security:disc}.input-field::placeholder{color:#666;letter-spacing:normal;font-size:16px}.start-col{position:absolute;right:20px;bottom:120px;display:flex;align-items:center;justify-content:center}.start-btn{padding:24px 36px!important;border-radius:16px!important;background:#0b5138;color:#fff;border:none;font-weight:900;font-size:26px!important;cursor:pointer;box-shadow:0 12px 40px rgba(0,0,0,.4);min-height:100px;min-width:180px}.game{height:100%;display:grid;grid-template-columns:1fr 460px;grid-template-rows:120px 1fr;gap:12px;align-items:start}.word-top-section{grid-column:1/-1;display:flex;justify-content:center;align-items:center;padding:5px 10px;margin-top:-20px}.slots-row{display:flex;justify-content:center;gap:var(--slot-gap,12px);align-items:center;min-height:90px;margin-top:-10px!important}.left-game{position:relative;display:flex;align-items:flex-start;justify-content:center;padding-top:40px;width:100%;padding-top:0}.game-tree-frame{width:100%!important;max-width:750px!important;aspect-ratio:4/3;position:relative;margin-left:-200px;margin-top:-110px}.game-tree-img{position:absolute;left:40%;top:62%;transform:translate(-50%,-50%);width:120%!important;height:120%!important;object-fit:contain!important;border-radius:8px}.right-col{display:flex;flex-direction:column;gap:10px;padding:6px;height:100%}.tree-apples{position:absolute;left:12%!important;top:8%;width:76%!important;height:84%;pointer-events:none}.slot{min-width:36px;border-bottom:3px solid rgba(255,255,255,.12);padding:6px 8px;text-align:center;font-weight:900;font-size:var(--slot-font,30px);color:#fff}.slot.space{border-bottom:none}.alphabet{display:flex;flex-wrap:wrap;gap:8px;padding:8px;border-radius:8px;min-height:160px;align-items:flex-start;overflow:auto;justify-content:center}.letter-btn{padding:8px 10px;border-radius:8px;border:1px solid rgba(0,0,0,.06);background:rgba(255,255,255,.94);cursor:pointer;min-width:40px;text-align:center;font-weight:800}.letter-btn.disabled{opacity:.28;cursor:default}.fallen-columns{display:flex;gap:12px;overflow:auto;padding-top:100px;align-items:flex-start}.fallen-column{display:flex;flex-direction:column;gap:10px;align-items:center;width:84px}.fallen-item{display:flex;flex-direction:row;align-items:center;gap:8px}.fallen-letter{font-weight:900;font-size:18px;color:#111;margin-left:4px}.new-bottom{position:absolute;right:20px;top:350px;z-index:8}.new-btn{padding:35px 20px;border-radius:42px;background:#86198f!important;color:#fff!important;border:none;cursor:pointer;font-weight:800;font-size:16px;box-shadow:0 4px 12px rgba(139,92,246,.3);transition:all .3s ease;min-height:50px}.new-btn:hover{background:#5d2a2c!important;transform:translateY(-2px);box-shadow:0 6px 16px rgba(139,92,246,.4)}.modal{position:fixed;left:0;top:0;right:0;bottom:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.6);z-index:9999}.modal.show{display:flex}.modal-card{background:#fff;padding:18px;border-radius:12px;min-width:320px;text-align:center}.modal-card img{max-width:320px;height:auto;border-radius:8px;margin:8px 0}.modal-btn{margin-top:12px;padding:8px 12px;border-radius:8px;border:none;background:#0b5138;color:#fff;cursor:pointer}.signature{display:none!important}.slots-row{justify-content:center!important;padding:0 10px!important;flex-wrap:wrap!important;gap:2px!important;margin:0 auto!important;max-width:100%!important;text-align:center!important;overflow-x:visible!important;white-space:normal!important}.slot{transition:all .3s ease!important;flex-shrink:0!important;display:inline-block!important}.short-word .slot{font-size:60px!important;min-width:36px!important;font-weight:900!important}.medium-word .slot{font-size:45px!important;min-width:30px!important}.long-word .slot{font-size:35px!important;min-width:24px!important}.very-long-word .slot{font-size:25px!important;min-width:20px!important}.extremely-long-word .slot{font-size:20px!important;min-width:18px!important}.slot.revealed{color:#0b8a3a!important;font-weight:900!important}*{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.input-field{-webkit-user-select:text;-moz-user-select:text;-ms-user-select:text;user-select:text}@media (max-width:1024px) and (orientation:landscape){.wrap{padding:5px;height:100vh;display:block}.stage{height:100vh;max-width:100%;border-radius:0}.page{height:calc(100vh - 20px);padding:10px}header .title{bottom:15px;font-size:14px;padding:8px 16px;transform:translateX(-50%);left:50%;width:auto;white-space:nowrap}header .controls{bottom:15px;right:15px}.sound-toggle{width:40px;height:40px}.setup{grid-template-columns:80px 1fr;gap:15px;height:100%}.lang-col{flex-direction:column;justify-content:center;margin-top:180px!important;gap:8px;z-index:1000;pointer-events:auto}.lang-btn{width:60px;height:35px;font-size:12px;pointer-events:auto!important}.tree-wrap{height:85vh}.tree-frame{width:85%!important;max-width:600px!important;margin-left:-400px!important;margin-top:0!important}.tree-img{left:50%!important;height:120%!important}.input-container{position:absolute;width:450px!important;right:30px;top:200px!important}.input-field{padding:14px 16px!important;font-size:18px!important;min-height:55px}.input-field.password-dots{font-size:22px!important;letter-spacing:6px!important}.start-col{position:absolute;right:30px;bottom:150px!important}.start-btn{width:180px;padding:18px 24px!important;font-size:20px!important;min-height:70px}.game{grid-template-columns:1fr 380px;grid-template-rows:100px 1fr;gap:10px;height:100%}.word-top-section{grid-column:1;margin-top:0;padding:5px}.slots-row{min-height:60px;margin-top:0!important;gap:1px!important}.short-word .slot{font-size:40px!important;min-width:30px!important}.medium-word .slot{font-size:32px!important;min-width:26px!important}.long-word .slot{font-size:24px!important;min-width:22px!important}.very-long-word .slot{font-size:18px!important;min-width:20px!important}.extremely-long-word .slot{font-size:16px!important;min-width:18px!important}.left-game{grid-row:2;padding-top:10px;height:65vh;justify-content:center}.game-tree-frame{width:90%!important;max-width:500px!important;margin:0 auto!important;margin-left:-100px!important;margin-top:-50px!important}.game-tree-img{width:100%!important;height:100%!important;left:50%!important;top:50%!important}.tree-apples{left:7%!important;width:86%!important}.right-col{grid-row:2;height:65vh;gap:8px;padding:5px}.alphabet{min-height:120px;gap:6px;padding:6px}.letter-btn{padding:10px 12px;min-width:38px;font-size:14px}.fallen-columns{padding-top:20px;max-height:200px}.fallen-item img{width:35px!important}.fallen-letter{font-size:14px}.new-bottom{position:absolute;bottom:210px!important;right:30px;top:auto}.new-btn{padding:12px 24px;border-radius:25px;font-size:14px;min-height:45px}}@media (max-width:768px) and (orientation:portrait){.wrap{padding:5px;height:100vh;display:block;overflow:hidden}.stage{height:100vh;max-width:100%;border-radius:0}.page{height:calc(100vh - 10px);padding:5px}header .title{bottom:10px;font-size:12px;padding:6px 12px;transform:translateX(-50%);left:50%;width:90%;text-align:center;white-space:normal}header .controls{bottom:10px;right:10px}.sound-toggle{width:36px;height:36px}.sound-toggle::before{font-size:18px}#pageSetup.active{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;height:100vh;position:relative}.setup{display:flex;flex-direction:column;height:100%;width:100%;grid-template-columns:1fr;gap:10px}.tree-wrap{order:1;height:50vh;width:100%;margin-top:10px}.tree-frame{width:95%!important;max-width:100%!important;margin:0!important;height:100%}.tree-img{position:relative!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important;width:100%!important;height:100%!important;object-fit:contain!important}.input-container{position:absolute!important;order:2;width:90%!important;bottom:50vh!important;left:50%!important;transform:translateX(-50%);top:auto!important;right:auto!important;z-index:20}.input-field{padding:14px 16px!important;font-size:18px!important;min-height:55px;background:#fff!important;opacity:1!important;border:2px solid #0b5138}.input-field.password-dots{font-size:20px!important;letter-spacing:4px!important}.start-col{position:absolute!important;order:3;bottom:15vh;right:5%;left:auto!important;transform:none}.start-btn{width:120px;padding:12px 20px!important;font-size:16px!important;min-height:50px;border-radius:12px!important}.lang-col{position:absolute;order:4;left:5%;bottom:15vh;margin-top:0;flex-direction:column;gap:6px}.lang-btn{width:50px;height:30px;font-size:10px}#pageGame.active{display:flex;flex-direction:column;height:100vh;position:relative}.game{display:flex;flex-direction:column;height:100%;width:100%;grid-template-columns:1fr;grid-template-rows:auto auto 1fr;gap:8px}.word-top-section{order:1;height:15vh;margin-top:0;padding:5px 0}.slots-row{min-height:50px;margin-top:0!important;gap:1px!important;padding:0 5px!important}.short-word .slot{font-size:28px!important;min-width:24px!important}.medium-word .slot{font-size:22px!important;min-width:20px!important}.long-word .slot{font-size:18px!important;min-width:18px!important}.very-long-word .slot{font-size:16px!important;min-width:16px!important}.extremely-long-word .slot{font-size:14px!important;min-width:14px!important}.left-game{order:2;height:25vh;position:relative;padding:0;margin:0}.game-tree-frame{width:60%!important;max-width:300px!important;margin:0 auto!important;height:100%}.game-tree-img{width:100%!important;height:100%!important;left:50%!important;top:50%!important;object-fit:contain!important}.new-bottom{position:absolute!important;order:3;top:250px!important;right:5%;transform:none}.new-btn{padding:8px 16px;border-radius:20px;font-size:12px;min-height:40px}.right-col{order:4;height:50vh;display:flex;flex-direction:row;gap:8px;padding:5px;margin-top:10px}.fallen-columns{flex:1;padding-top:10px;max-height:100%;justify-content:flex-start;overflow-y:auto}.fallen-column{width:70px}.fallen-item img{width:30px!important}.fallen-letter{font-size:12px}.alphabet{flex:2;min-height:auto;max-height:100%;overflow-y:auto;padding:5px;gap:4px}.letter-btn{padding:8px 10px;min-width:32px;min-height:32px;font-size:12px}.modal-card{min-width:280px;margin:20px;padding:15px}.modal-card img{max-width:250px}}@media (max-width:1100px) and (min-width:769px){.setup{grid-template-columns:80px 1fr}.tree-frame{width:85%!important;margin-left:-600px!important}.input-container{width:500px!important}.game-tree-frame{width:85%!important;max-width:600px!important}}@media (max-width:480px) and (orientation:portrait){.lang-btn{width:45px;height:28px;font-size:9px}.input-field{font-size:16px!important;padding:12px 14px!important}.start-btn{width:100px;padding:10px 16px!important;font-size:14px!important}.letter-btn{min-width:28px;min-height:28px;padding:6px 8px;font-size:11px}.new-btn{padding:6px 12px;font-size:11px;min-height:35px}}@media (max-width:380px) and (orientation:portrait){.tree-wrap{height:45vh}.input-container{bottom:20vh;width:95%!important}.start-col{bottom:12vh}.lang-col{bottom:12vh}.right-col{height:45vh}}</style><body><script>const settings = {
+    images: {
+        background: "background.jpg",
+        tree: "tree.png", 
+        apple: "apple.png",
+        appleTransparent: "apple_transparent.png",
+        crowdFail: "crowd_fail.jpg",
+        crowdWin: "crowd_win.jpg",
+        winImage: "win.jpg"
+    },
+    sounds: {
+        birds: "birds.mp3",
+        click: "click1.mp3", 
+        fallWhistle: "fall_whistle.mp3",
+        impact: "impact.mp3",
+        slide: "slide.mp3",
+        successList: [
+            "success1.mp3",
+            "success2.mp3"
+        ],
+        failList: [
+            "fail1.mp3", 
+            "fail2.mp3"
+        ],
+        successMessage: "success_message.mp3",
+        failMessage: "fail_message.mp3"
+    },
+    options: {
+        sound_enabled: true,
+        check_dictionary_online: false,
+        maxApplesPerColumn: 3,
+        fallDurationMs: 700,
+        bounceDurationMs: 420,
+        bounceTiltDeg: 28,
+        appleSizeBasePx: 38,
+        slotFontSizePx: 26,
+        slotUnderscoreSpacing: 10,
+        arabicWordsFile: "assets/words_ar.json",
+        slotSizes: {
+            short: 70,
+            medium: 35,
+            long: 20,
+            veryLong: 16,
+            extremelyLong: 14
+        }
+    },
+    advanced: {
+        tree: {
+            setupPage: {
+                width: "86%",
+                maxWidth: "760px"
+            },
+            gamePage: {
+                width: "95%",
+                maxWidth: "700px"
+            }
+        },
+        apples: {
+            heroApples: {
+                size: 38,
+                fontSize: "18px"
+            },
+            fallenSize: 44,
+            fallenLetterSize: 18
+        },
+        ui: {
+            slots: {
+                revealedColor: "#0b8a3a",
+                revealedSizeIncrease: 4
+            }
+        }
+    },
+    languages: {
+        nl: ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","Á","À","É","È","Ë","Í","Ï","Ó","Ö","Ú","Ü"],
+        en: ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"],
+        ar: ["ا","أ","إ","آ","ب","ت","ث","ج","ح","خ","د","ذ","ر","ز","س","ش","ص","ض","ط","ظ","ع","غ","ف","ق","ك","ل","م","ن","ه","و","ؤ","ي","ئ","ى"]
+    }
+};</script><div class=wrap><div class=stage id=stage><div class=bg id=bg></div><header><div class=title>Appelboom V2.0 - Designed by Khaled Albadawi (khaledalbadawi.a@gmail.com)</div><div class=controls><button class=sound-toggle id=soundToggle aria-label="تبديل الصوت"></button></div></header><section class="active page"id=pageSetup><div class=setup><div class=lang-col id=langCol><div class="lang-btn active"data-lang=nl>NL</div><div class=lang-btn data-lang=en>EN</div><div class=lang-btn data-lang=ar>AR</div></div><div class=tree-wrap><div class=tree-frame><img alt=tree class=tree-img id=heroTree src=""><div class=hero-apples id=heroApples></div></div></div></div><div class=input-container><input autocomplete=off class="input-field password-dots"id=wordInput placeholder="Typ het woord..."></div><div class=start-col><button class=start-btn id=startBtn>Start</button></div></section><section class=page id=pageGame aria-hidden=true><div class=game><div class=word-top-section><div class=slots-row id=slotsRow></div></div><div class=left-game><div class=game-tree-frame><img alt=tree class=game-tree-img id=gameTree src=""><div class=tree-apples id=treeApples></div></div></div><div class=right-col><div class=alphabet id=alphabet></div><div class=fallen-columns id=fallenColumns></div></div><div class=new-bottom><button class=new-btn id=newBtn>Nieuw / New</button></div></div></section><div class=modal id=modal><div class=modal-card><h2 id=modalTitle></h2><div id=modalMedia></div><p id=modalDesc></p><button class=modal-btn id=modalOk>OK</button></div></div></div></div><script>(async function(){
+    if(typeof settings === 'undefined'){
+        alert('الملف config.js غير موجود. الرجاء وضعه في نفس المجلد.');
+        return;
+    }
+
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    function updateOrientationClasses() {
+        const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+        document.body.classList.remove('mobile-portrait', 'mobile-landscape');
+        
+        if (isMobile) {
+            if (isPortrait) {
+                document.body.classList.add('mobile-portrait');
+            } else {
+                document.body.classList.add('mobile-landscape');
+            }
+        }
+    }
+
+    function updateDynamicElements() {
+        const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+        
+        if (pageGame.classList.contains('active')) {
+            adjustAlphabetButtons();
+            repositionFallenApples();
+        }
+    }
+
+    function repositionFallenApples() {
+        const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+        const fallenColumns = document.getElementById('fallenColumns');
+        if (!fallenColumns) return;
+        
+        const columns = fallenColumns.querySelectorAll('.fallen-column');
+        columns.forEach((col, index) => {
+            if (isPortrait) {
+                col.style.width = "70px";
+            } else {
+                col.style.width = "84px";
+            }
+        });
+    }
+
+    function adjustAlphabetButtons() {
+        const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+        
+        if (state.alphabetButtons && state.alphabetButtons.length > 0) {
+            state.alphabetButtons.forEach(btn => {
+                if (isPortrait) {
+                    btn.style.minWidth = "32px";
+                    btn.style.minHeight = "32px";
+                    btn.style.padding = "8px 10px";
+                    btn.style.fontSize = "12px";
+                } else {
+                    btn.style.minWidth = "40px";
+                    btn.style.minHeight = "auto";
+                    btn.style.padding = "8px 10px";
+                    btn.style.fontSize = "inherit";
+                }
+            });
+        }
+    }
+
+    const bg = document.getElementById('bg');
+    const heroTree = document.getElementById('heroTree');
+    const gameTree = document.getElementById('gameTree');
+    const heroApples = document.getElementById('heroApples');
+    const treeApples = document.getElementById('treeApples');
+    const wordInput = document.getElementById('wordInput');
+    const startBtn = document.getElementById('startBtn');
+    const langCol = document.getElementById('langCol');
+    const langEls = langCol.querySelectorAll('.lang-btn');
+    const soundToggle = document.getElementById('soundToggle');
+    const pageSetup = document.getElementById('pageSetup');
+    const pageGame = document.getElementById('pageGame');
+    const slotsRow = document.getElementById('slotsRow');
+    const alphabetDiv = document.getElementById('alphabet');
+    const fallenColumns = document.getElementById('fallenColumns');
+    const newBtn = document.getElementById('newBtn');
+    const modal = document.getElementById('modal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalMedia = document.getElementById('modalMedia');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalOk = document.getElementById('modalOk');
+
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        return false;
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (!pageGame.classList.contains('active')) return;
+        const key = e.key.toUpperCase();
+        const currentAlphabet = ALPHABETS[state.lang] || ALPHABETS.nl;
+        const isValidKey = currentAlphabet.includes(key) || (state.lang === 'ar' && currentAlphabet.includes(e.key));
+        
+        if (isValidKey) {
+            const letterBtn = Array.from(state.alphabetButtons).find(btn => 
+                btn.dataset.letter === key || (state.lang === 'ar' && btn.dataset.letter === e.key)
+            );
+            if (letterBtn && !letterBtn.classList.contains('disabled')) {
+                letterBtn.click();
+            }
+        }
+
+        if (e.key === 'Enter' && pageGame.classList.contains('active')) {
+            newBtn.click();
+        }
+    });
+
+    bg.style.backgroundImage = `url("${settings.images.background}")`;
+    heroTree.src = settings.images.tree;
+    gameTree.src = settings.images.tree;
+
+    if (settings.advanced) {
+        if (settings.advanced.tree && settings.advanced.tree.setupPage) {
+            heroTree.style.width = settings.advanced.tree.setupPage.width;
+            heroTree.style.maxWidth = settings.advanced.tree.setupPage.maxWidth;
+        }
+        if (settings.advanced.tree && settings.advanced.tree.gamePage) {
+            gameTree.style.width = settings.advanced.tree.gamePage.width;
+            gameTree.style.maxWidth = settings.advanced.tree.gamePage.maxWidth;
+        }
+    }
+
+    const ALPHABETS = {
+        nl: ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","Á","À","É","È","Ë","Í","Ï","Ó","Ö","Ú","Ü"],
+        en: ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"],
+        ar: ["ا","أ","إ","آ","ب","ت","ث","ج","ح","خ","د","ذ","ر","ز","س","ش","ص","ض","ط","ظ","ع","غ","ف","ق","ك","ل","م","ن","ه","و","ؤ","ي","ئ","ى"]
+    };
+
+    const state = {
+        lang: 'nl',
+        wordRaw: '',
+        wordChars: [],
+        maxApples: 0,
+        apples: [],
+        fallenCount: 0,
+        slots: [],
+        alphabetButtons: [],
+        audioEnabled: !!settings.options.sound_enabled,
+        successIndex: 0,
+        failIndex: 0,
+        arabicWords: null,
+    };
+
+    async function loadArabicWords(){
+        try{
+            const resp = await fetch(settings.options.arabicWordsFile);
+            if(!resp.ok) throw new Error('no ar words');
+            state.arabicWords = await resp.json();
+        }catch(e){
+            state.arabicWords = null;
+            console.warn('لم يتم تحميل ملف كلمات عربية محلي:', e);
+        }
+    }
+    await loadArabicWords();
+
+    function playAudio(src, vol=1){
+        if(!state.audioEnabled) return;
+        try{
+            const a = new Audio(src);
+            a.volume = Math.min(1, vol);
+            a.play().catch(()=>{});
+        }catch(e){
+            console.warn('audio play error', e);
+        }
+    }
+
+    function uiClick(){
+        playAudio(settings.sounds.click, 0.12);
+    }
+
+    let birdsStarted = false;
+    function playBirds(){
+        if(state.audioEnabled && !birdsStarted) {
+            try{
+                birdsAudio.play().catch(()=>{});
+                birdsStarted = true;
+            }catch(e){}
+        }
+    }
+
+    function stopBirds(){
+        try{
+            birdsAudio.pause();
+            birdsAudio.currentTime = 0;
+            birdsStarted = false;
+        }catch(e){}
+    }
+
+    const birdsAudio = new Audio(settings.sounds.birds);
+    birdsAudio.loop = true;
+    birdsAudio.volume = 0.25;
+
+    soundToggle.addEventListener('click', ()=>{
+        state.audioEnabled = !state.audioEnabled;
+        if(state.audioEnabled) {
+            soundToggle.classList.remove('muted');
+            soundToggle.setAttribute('aria-label', 'إيقاف الصوت');
+        } else {
+            soundToggle.classList.add('muted');
+            soundToggle.setAttribute('aria-label', 'تشغيل الصوت');
+        }
+        uiClick();
+        if(state.audioEnabled) playBirds();
+        else stopBirds();
+    });
+
+    if(state.audioEnabled) {
+        soundToggle.classList.remove('muted');
+    } else {
+        soundToggle.classList.add('muted');
+    }
+
+    document.addEventListener('click', function first(){
+        if(state.audioEnabled) playBirds();
+        document.removeEventListener('click', first);
+    });
+
+    function updateInputPlaceholder() {
+        if(state.lang === 'ar') {
+            wordInput.placeholder = 'اكتب الكلمة...';
+        } else if(state.lang === 'en') {
+            wordInput.placeholder = 'Type the word...';
+        } else {
+            wordInput.placeholder = 'Typ het woord...';
+        }
+    }
+
+    langEls.forEach(el=>{
+        el.addEventListener('click', ()=>{
+            langEls.forEach(x=>x.classList.remove('active'));
+            el.classList.add('active');
+            state.lang = el.dataset.lang;
+            updateInputPlaceholder();
+            uiClick();
+        })
+    });
+
+    function renderHeroApples(){
+        heroApples.innerHTML = '';
+        const positions = [
+            {x:13,y:-2},{x:23,y:5},{x:33,y:-2},{x:43,y:5},{x:53,y:-2},{x:63,y:5},{x:73,y:-2},
+            {x:4,y:30},{x:14,y:37},{x:24,y:30},{x:34,y:37},{x:44,y:30},{x:54,y:37},{x:64,y:30},{x:74,y:37},{x:84,y:30}
+        ];
+        const label = 'KHALEDSAPPELBOOM'.split('');
+        positions.forEach((p,i)=>{
+            const w = document.createElement('div');
+            w.className='apple-item';
+            w.style.left = p.x + '%';
+            w.style.top = p.y + '%';
+            const img = document.createElement('img');
+            img.src = settings.images.appleTransparent;
+            img.style.width = '38px';
+            img.style.height = 'auto';
+            img.style.opacity = '0.85';
+            w.appendChild(img);
+            const span = document.createElement('div');
+            span.textContent = label[i % label.length];
+            span.style.position='absolute';
+            span.style.left='50%';
+            span.style.top='50%';
+            span.style.transform='translate(-50%,-52%)';
+            span.style.fontWeight='900';
+            span.style.fontSize='18px';
+            span.style.color='#000';
+            w.appendChild(span);
+            heroApples.appendChild(w);
+        });
+    }
+    renderHeroApples();
+
+    wordInput.addEventListener('input', ()=> {
+    });
+
+    async function checkDictionary(word){
+        if(!settings.options.check_dictionary_online) return true;
+        if(state.lang === 'en' || state.lang === 'nl'){
+            const langCode = state.lang === 'en' ? 'en' : 'nl';
+            const url = `https://api.dictionaryapi.dev/api/v2/entries/${langCode}/${encodeURIComponent(word)}`;
+            try{
+                const res = await fetch(url);
+                if(res.ok) return true;
+                else return false;
+            }catch(e){
+                console.warn('Dictionary API error', e);
+                return false;
+            }
+        } else if(state.lang === 'ar'){
+            if(!state.arabicWords) return false;
+            return state.arabicWords.includes(word);
+        }
+        return false;
+    }
+
+    startBtn.addEventListener('click', async ()=>{
+        uiClick();
+        const raw = (wordInput.value || '').trim();
+        if(!raw){
+            alert(state.lang==='ar' ? 'الرجاء إدخال كلمة.' : (state.lang==='nl' ? 'Voer een woord in.' : 'Please enter a word.'));
+            return;
+        }
+        const word = state.lang === 'ar' ? raw : raw.toUpperCase();
+        
+        if(settings.options.check_dictionary_online){
+            const ok = await checkDictionary(word);
+            if(!ok){
+                modalTitle.textContent = state.lang==='ar' ? 'الكلمة غير موجودة' : 'Word not found';
+                modalDesc.textContent = state.lang==='ar' ? 'الكلمة غير موجودة في القاموس. راجع التهجئة.' : 'Word not found in dictionary. Check spelling.';
+                modalMedia.innerHTML = '';
+                modal.classList.add('show');
+                playAudio(settings.sounds.failList[0], 0.18);
+                return;
+            }
+        }
+
+        state.wordRaw = word;
+        state.wordChars = word.split('');
+        state.maxApples = word.replace(/\s/g,'').length;
+        
+        pageSetup.classList.remove('active');
+        pageGame.classList.add('active');
+        buildGameBoard();
+    });
+
+    modalOk.addEventListener('click', ()=>{
+        uiClick();
+        modal.classList.remove('show');
+    });
+
+    function buildGameBoard(){
+        treeApples.innerHTML = '';
+        fallenColumns.innerHTML = '';
+        slotsRow.innerHTML = '';
+        alphabetDiv.innerHTML = '';
+        state.apples = [];
+        state.slots = [];
+        state.alphabetButtons = [];
+        state.fallenCount = 0;
+
+        const n = state.maxApples;
+        let appleSize = settings.options.appleSizeBasePx;
+        if(n>12) appleSize = Math.max(30, appleSize - 6);
+        if(n>20) appleSize = Math.max(24, appleSize - 10);
+
+        const cols = Math.min(6, Math.ceil(Math.sqrt(n)));
+        const rows = Math.ceil(n/cols);
+        let idx = 0;
+
+        const treeContainer = document.querySelector('.game-tree-frame');
+        const treeWidthPercent = 85;
+        const offsetPercent = (100 - treeWidthPercent) / 2;
+
+        for(let r=0;r<rows;r++){
+            for(let c=0;c<cols;c++){
+                if(idx>=n) break;
+                const left = 4 + (c + (r%2?0.16:0)) * (62/cols) + (Math.random()*4 -2);
+                const top = 10 + r * (70/rows) + (Math.random()*6 -3);
+                
+                const wrap = document.createElement('div');
+                wrap.className='apple-item';
+                wrap.style.left = `calc(${left}% + ${offsetPercent / 2}%)`;
+                wrap.style.top = top + '%';
+                wrap.dataset.index = idx;
+                wrap.dataset.fallen = 'false';
+
+                const img = document.createElement('img');
+                img.src = settings.images.apple;
+                img.style.width = appleSize + 'px';
+                wrap.appendChild(img);
+                
+                treeApples.appendChild(wrap);
+                state.apples.push(wrap);
+                idx++;
+            }
+        }
+
+        renderSlots();
+        renderAlphabet();
+        
+        document.documentElement.style.setProperty('--slot-font', settings.options.slotFontSizePx + 'px');
+        document.documentElement.style.setProperty('--slot-gap', settings.options.slotUnderscoreSpacing + 'px');
+        
+        updateDynamicElements();
+    }
+
+    function renderSlots(){
+        slotsRow.innerHTML = '';
+        state.slots = [];
+        state.wordChars.forEach((ch, i)=>{
+            const s = document.createElement('div');
+            s.className = 'slot';
+            s.dataset.pos = i;
+            if(ch === ' ') {
+                s.classList.add('space');
+                s.textContent = ' ';
+            } else {
+                s.textContent = '_';
+            }
+            slotsRow.appendChild(s);
+            state.slots.push(s);
+        });
+
+        const wordLength = state.wordChars.filter(ch => ch !== ' ').length;
+        slotsRow.classList.remove('short-word', 'medium-word', 'long-word', 'very-long-word', 'extremely-long-word');
+        
+        if (wordLength <= 8) {
+            slotsRow.classList.add('short-word');
+        } else if (wordLength <= 16) {
+            slotsRow.classList.add('medium-word');
+        } else if (wordLength <= 24) {
+            slotsRow.classList.add('long-word');
+        } else if (wordLength <= 30) {
+            slotsRow.classList.add('very-long-word');
+        } else {
+            slotsRow.classList.add('extremely-long-word');
+        }
+    }
+
+    function renderAlphabet(){
+        alphabetDiv.innerHTML = '';
+        const arr = ALPHABETS[state.lang] || ALPHABETS.nl;
+        const letters = (state.lang === 'ar') ? arr.slice().reverse() : arr.slice();
+        
+        letters.forEach(l=>{
+            const btn = document.createElement('button');
+            btn.className='letter-btn';
+            btn.textContent = l;
+            btn.dataset.letter = l;
+            
+            btn.addEventListener('click', onLetterClick);
+            alphabetDiv.appendChild(btn);
+            state.alphabetButtons.push(btn);
+        });
+
+        alphabetDiv.style.direction = (state.lang==='ar') ? 'rtl' : 'ltr';
+        
+        adjustAlphabetButtons();
+    }
+
+    function onLetterClick(e){
+        const btn = e.currentTarget;
+        if(btn.classList.contains('disabled')) return;
+        btn.classList.add('disabled');
+        btn.disabled = true;
+        uiClick();
+        const letter = btn.dataset.letter;
+        handleGuess(letter);
+    }
+
+    function handleGuess(letter){
+        let match = false;
+        state.wordChars.forEach(ch => {
+            if(ch === ' ') return;
+            if(state.lang === 'ar'){
+                if(ch === letter) match = true;
+            } else {
+                if(ch.toUpperCase() === letter.toUpperCase()) match = true;
+            }
+        });
+
+        if(match){
+            revealLetter(letter);
+            const isLastLetter = checkIfLastLetter();
+            if (!isLastLetter) {
+                const list = settings.sounds.successList || [];
+                if(list.length) playAudio(list[state.successIndex % list.length], 0.18);
+                state.successIndex++;
+            }
+            checkWin();
+        } else {
+            triggerAppleFall(letter);
+        }
+    }
+
+    function checkIfLastLetter() {
+        let revealedCount = 0;
+        state.wordChars.forEach((ch, idx) => {
+            if(ch !== ' ' && state.slots[idx].textContent !== '_') {
+                revealedCount++;
+            }
+        });
+        return revealedCount + 0 >= state.maxApples;
+    }
+
+    function revealLetter(letter){
+        state.wordChars.forEach((ch, idx)=>{
+            if(ch === ' ') return;
+            const equal = (state.lang === 'ar') ? (ch === letter) : (ch.toUpperCase() === letter.toUpperCase());
+            if(equal){
+                state.slots[idx].textContent = ch;
+                state.slots[idx].style.color = '#0b8a3a';
+                state.slots[idx].classList.add('revealed');
+            }
+        });
+    }
+
+    function triggerAppleFall(letter){
+        const appleEl = state.apples.find(a => a.dataset.fallen === 'false');
+        if(!appleEl) return;
+        
+        appleEl.dataset.fallen = 'true';
+        appleEl.style.opacity = '0.14';
+        state.fallenCount++;
+        
+        const isLastApple = state.fallenCount >= state.maxApples;
+        const rect = appleEl.getBoundingClientRect();
+        
+        const clone = appleEl.cloneNode(true);
+        clone.style.position = 'fixed';
+        clone.style.left = (rect.left + rect.width/2) + 'px';
+        clone.style.top = (rect.top + rect.height/2) + 'px';
+        clone.style.transform = 'translate(-50%,-50%) scale(1)';
+        clone.style.zIndex = 9999;
+        document.body.appendChild(clone);
+
+        const perCol = settings.options.maxApplesPerColumn || 3;
+        const colIndex = Math.floor((state.fallenCount - 1) / perCol);
+        let colEl = fallenColumns.querySelector(`.fallen-column[data-col='${colIndex}']`);
+        if(!colEl){
+            colEl = document.createElement('div');
+            colEl.className = 'fallen-column';
+            colEl.dataset.col = colIndex;
+            fallenColumns.appendChild(colEl);
+        }
+
+        const temp = document.createElement('div');
+        temp.style.width='1px';
+        temp.style.height='1px';
+        temp.style.opacity='0';
+        colEl.appendChild(temp);
+        const targetRect = temp.getBoundingClientRect();
+
+        if(!isLastApple && state.audioEnabled) playAudio(settings.sounds.fallWhistle, 0.16);
+
+        const fallDur = settings.options.fallDurationMs || 700;
+        const bounceDur = settings.options.bounceDurationMs || 420;
+        const tilt = settings.options.bounceTiltDeg || 28;
+
+        requestAnimationFrame(()=> {
+            clone.style.transition = `top ${fallDur}ms cubic-bezier(.2,.9,.2,1)`;
+            clone.style.top = (targetRect.top - 28) + 'px';
+        });
+
+        setTimeout(()=>{
+            if(!isLastApple && state.audioEnabled) playAudio(settings.sounds.impact, 0.16);
+            const tx = targetRect.left + (targetRect.width/2);
+            const ty = targetRect.top + (targetRect.height/2);
+            
+            clone.style.transition = `left ${bounceDur}ms cubic-bezier(.2,.9,.2,1), top ${bounceDur}ms cubic-bezier(.2,.9,.2,1), transform ${bounceDur}ms ease`;
+            clone.style.left = tx + 'px';
+            clone.style.top = ty + 'px';
+            clone.style.transform = `translate(-50%,-50%) scale(0.92) rotate(${tilt}deg)`;
+            
+            if(!isLastApple && state.audioEnabled && settings.sounds.slide) playAudio(settings.sounds.slide, 0.12);
+        }, fallDur + 20);
+
+        setTimeout(()=>{
+            if(clone && clone.parentNode) clone.parentNode.removeChild(clone);
+            
+            const item = document.createElement('div');
+            item.className='fallen-item';
+            const imgWrap = document.createElement('div');
+            imgWrap.innerHTML = appleEl.innerHTML;
+            imgWrap.querySelector('img').style.width = '44px';
+            const letterEl = document.createElement('div');
+            letterEl.className='fallen-letter';
+            letterEl.textContent = letter;
+            item.appendChild(imgWrap);
+            item.appendChild(letterEl);
+            colEl.appendChild(item);
+            
+            if(temp && temp.parentNode) temp.parentNode.removeChild(temp);
+            
+            if(!isLastApple) {
+                const fl = settings.sounds.failList || [];
+                if(fl.length) playAudio(fl[state.failIndex % fl.length], 0.18);
+                state.failIndex++;
+            }
+            
+            checkLose();
+        }, fallDur + bounceDur + 60);
+    }
+
+    function checkWin(){
+        const unfinished = state.slots.some(s => s.textContent === '_');
+        if(!unfinished){
+            stopBirds();
+            state.slots.forEach(s=>{
+                if(s.textContent !== ' ') s.style.color = '#0b8a3a';
+            });
+            modalTitle.textContent = state.lang==='ar' ? 'مبروك!' : (state.lang==='nl' ? 'Gefeliciteerd!' : 'Congratulations!');
+            modalDesc.textContent = (state.lang==='ar') ? 'لقد خمنت الكلمة!' : `The word was: ${state.wordRaw}`;
+            modalMedia.innerHTML = `<img src="${settings.images.crowdWin}" alt="win" onerror="this.style.display='none'">`;
+            modal.classList.add('show');
+            setTimeout(() => {
+                if(settings.sounds.successMessage) playAudio(settings.sounds.successMessage, 0.22);
+            }, 300);
+        }
+    }
+
+    function checkLose(){
+        if(state.fallenCount >= state.maxApples){
+            stopBirds();
+            state.slots.forEach((slot, idx)=>{
+                const ch = state.wordChars[idx];
+                if(ch === ' ') return;
+                slot.textContent = ch;
+                slot.style.color = '#c73737';});
+            modalTitle.textContent = state.lang==='ar' ? 'انتهت التفاحات' : (state.lang==='nl' ? 'Alle appels zijn gevallen' : 'Apples finished');
+            modalDesc.textContent = (state.lang==='ar') ? `الكلمة كانت: ${state.wordRaw}` : `The word was: ${state.wordRaw}`;
+            modalMedia.innerHTML = `<img src="${settings.images.crowdFail}" alt="fail" onerror="this.style.display='none'">`;
+            modal.classList.add('show');
+            setTimeout(() => {
+                if(settings.sounds.failMessage) playAudio(settings.sounds.failMessage, 0.22);
+            }, 300);
+        }
+    }
+
+    newBtn.addEventListener('click', ()=>{
+        uiClick();
+        pageGame.classList.remove('active');
+        pageSetup.classList.add('active');
+        treeApples.innerHTML = '';
+        fallenColumns.innerHTML = '';
+        slotsRow.innerHTML = '';
+        alphabetDiv.innerHTML = '';
+        wordInput.value = '';
+        state.wordRaw = '';
+        state.wordChars = [];
+        state.maxApples = 0;
+        state.apples = [];
+        state.fallenCount = 0;
+        state.slots = [];
+        
+        setTimeout(() => {
+            document.addEventListener('click', function restartBirds(){
+                if(state.audioEnabled && pageSetup.classList.contains('active')) {
+                    playBirds();
+                    document.removeEventListener('click', restartBirds);
+                }
+            });
+        }, 100);
+    });
+
+    wordInput.addEventListener('keydown', function(e){
+        if(e.key === 'Enter'){
+            uiClick();
+            startBtn.click();
+        }
+    });
+
+    updateOrientationClasses();
+    
+    window.addEventListener('orientationchange', function() {
+        setTimeout(() => {
+            updateOrientationClasses();
+            updateDynamicElements();
+        }, 100);
+    });
+    
+    window.addEventListener('resize', function() {
+        setTimeout(() => {
+            updateOrientationClasses();
+            updateDynamicElements();
+        }, 150);
+    });
+
+    window.Appelboom = {
+        settings,
+        state,
+        updateOrientationClasses,
+        updateDynamicElements
+    };
+})();</script>
