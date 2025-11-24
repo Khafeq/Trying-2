@@ -82,26 +82,6 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
 /* responsive helpers (already implemented earlier) */
 /* --- we'll add specific mobile rules below --- */
 
-/* ====== ROTATE OVERLAY & FORCE-LANDSCAPE ====== */
-.rotate-overlay {
-  position:fixed; inset:0; background:rgba(0,0,0,0.9); color:white; display:none; z-index:100000; align-items:center; justify-content:center; text-align:center; padding:20px;
-}
-.rotate-overlay.show{ display:flex; }
-.rotate-overlay .inner{ max-width:420px; }
-.rotate-overlay .btns{ margin-top:16px; display:flex; gap:12px; justify-content:center; }
-.small-btn{ padding:10px 14px; border-radius:8px; border:none; background:#0b5138; color:white; cursor:pointer; }
-
-/* small helper for force-rotated stage */
-.stage.force-rotated {
-  transform-origin: top left;
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 50000;
-  background: #000;
-  /* width/height set dynamically in JS */
-}
-
 /* ========== MOBILE: LANDSCAPE & PORTRAIT RULES ========== */
 /* Landscape mobile: try to mirror desktop layout (no changes to desktop) */
 @media (max-width: 1024px) and (orientation: landscape) {
@@ -221,9 +201,8 @@ const settings = {
       <div class="title">Appelboom V7.0 - Designed by MEE</div>
       <div class="controls">
         <button id="soundToggle" class="sound-toggle" aria-label="تبديل الصوت"></button>
-        <!-- extra: challenge & share -->
+        <!-- زر التحدي فقط -->
         <button id="challengeBtn" class="small-btn" style="margin-left:10px; padding:8px 12px; border-radius:8px;">تحدي</button>
-        <button id="forceLandscapeBtn" class="small-btn" style="margin-left:8px; padding:8px 12px; border-radius:8px;">فرض أفقي</button>
       </div>
     </header>
 
@@ -291,19 +270,6 @@ const settings = {
       </div>
     </div>
 
-    <!-- rotate overlay (shown when portrait and user requested landscape) -->
-    <div id="rotateOverlay" class="rotate-overlay">
-      <div class="inner">
-        <h2>الرجاء تدوير جهازك إلى الوضع الأفقي</h2>
-        <p>التصميم يعمل بشكل أفضل في الاتجاه الأفقي. يمكنك تدوير جهازك الآن أو اختيار "فرض العرض الأفقي" (قد يؤثر على تجربة اللمس).</p>
-        <div class="btns">
-          <button id="overlayJustRotate" class="small-btn">سأدوّر الجهاز</button>
-          <button id="overlayForceRotate" class="small-btn">فرض العرض الأفقي</button>
-          <button id="overlayClose" class="small-btn" style="background:#999;">متابعة عموديًا</button>
-        </div>
-      </div>
-    </div>
-
   </div>
 </div>
 
@@ -336,12 +302,6 @@ const settings = {
   const shareReportBtn = document.getElementById('shareReportBtn');
   const downloadReportBtn = document.getElementById('downloadReportBtn');
   const challengeBtn = document.getElementById('challengeBtn');
-  const forceLandscapeBtn = document.getElementById('forceLandscapeBtn');
-
-  const rotateOverlay = document.getElementById('rotateOverlay');
-  const overlayJustRotate = document.getElementById('overlayJustRotate');
-  const overlayForceRotate = document.getElementById('overlayForceRotate');
-  const overlayClose = document.getElementById('overlayClose');
 
   // state
   const ALPHABETS = {
@@ -366,8 +326,6 @@ const settings = {
     arabicWords: null,
     // multiplayer/challenge
     activeChallenge: null, // object when playing a challenge {id, word, duration, tsStart}
-    // force-rotate flag
-    forcedLandscape: false
   };
 
   // load images
@@ -820,68 +778,6 @@ const settings = {
   shareReportBtn.addEventListener('click', shareReport);
   downloadReportBtn.addEventListener('click', downloadReport);
 
-  /* ================= ROTATE / FORCE LANDSCAPE ================= */
-  function updateOrientationClasses(){
-    const isPortrait = window.matchMedia("(orientation: portrait)").matches;
-    document.body.classList.remove('mobile-portrait','mobile-landscape');
-    if(isMobile){
-      if(isPortrait) document.body.classList.add('mobile-portrait');
-      else document.body.classList.add('mobile-landscape');
-    }
-    // show rotate overlay if in portrait and we want horizontal-only experience
-    if(isMobile && isPortrait && !state.forcedLandscape){
-      // show a gentle overlay to ask user to rotate
-      rotateOverlay.classList.add('show');
-    } else {
-      rotateOverlay.classList.remove('show');
-      // if forcedLandscape active, apply transform
-      if(state.forcedLandscape){
-        applyForceLandscape();
-      } else {
-        removeForceLandscape();
-      }
-    }
-  }
-
-  overlayJustRotate.addEventListener('click', ()=>{ rotateOverlay.classList.remove('show'); });
-  overlayClose.addEventListener('click', ()=>{ rotateOverlay.classList.remove('show'); });
-  overlayForceRotate.addEventListener('click', ()=>{ state.forcedLandscape = true; rotateOverlay.classList.remove('show'); applyForceLandscape(); });
-
-  // Force landscape by rotating .stage (works even if physical device remains portrait).
-  function applyForceLandscape(){
-    // only for mobile, apply CSS transform and resize stage
-    if(!isMobile) return;
-    const vw = window.innerWidth, vh = window.innerHeight;
-    // rotate -90deg and set width/height swapped
-    stage.classList.add('force-rotated');
-    stage.style.transform = `rotate(-90deg) translate(${ -vh }px, 0px)`;
-    stage.style.width = vh + 'px';
-    stage.style.height = vw + 'px';
-    // adjust top/left
-    stage.style.left = '0px';
-    stage.style.top = '0px';
-    // set a flag
-    state.forcedLandscape = true;
-  }
-  function removeForceLandscape(){
-    stage.classList.remove('force-rotated');
-    stage.style.transform = '';
-    stage.style.width = '';
-    stage.style.height = '';
-    stage.style.left = '';
-    stage.style.top = '';
-    state.forcedLandscape = false;
-  }
-
-  forceLandscapeBtn.addEventListener('click', ()=>{
-    state.forcedLandscape = !state.forcedLandscape;
-    if(state.forcedLandscape) applyForceLandscape(); else removeForceLandscape();
-  });
-
-  // On orientation changes
-  window.addEventListener('orientationchange', ()=>{ setTimeout(()=>{ updateOrientationClasses(); updateDynamicElements(); }, 150); });
-  window.addEventListener('resize', ()=>{ setTimeout(()=>{ updateOrientationClasses(); updateDynamicElements(); }, 150); });
-
   // dynamic updates without rebuild
   function updateDynamicElements(){
     adjustAlphabetButtons();
@@ -900,14 +796,13 @@ const settings = {
   }
 
   /* ================= init ================= */
-  updateOrientationClasses();
   // ensure birds play on first click if enabled
   document.addEventListener('click', function first(){ if(state.audioEnabled) playBirds(); document.removeEventListener('click', first); });
   // sound toggle
   soundToggle.addEventListener('click', ()=>{ state.audioEnabled = !state.audioEnabled; if(state.audioEnabled){ soundToggle.classList.remove('muted'); soundToggle.setAttribute('aria-label','إيقاف الصوت'); playBirds(); } else { soundToggle.classList.add('muted'); soundToggle.setAttribute('aria-label','تشغيل الصوت'); stopBirds(); } uiClick(); });
 
   // Expose for debug
-  window.Appelboom = { settings, state, generateChallengeLink, parseChallengeFromUrl, applyForceLandscape, removeForceLandscape, createReport, computeReportSignature };
+  window.Appelboom = { settings, state, generateChallengeLink, parseChallengeFromUrl, createReport, computeReportSignature };
 })();
 </script>
 </body>
