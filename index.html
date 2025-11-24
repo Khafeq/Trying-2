@@ -451,6 +451,14 @@ const settings = {
     }
   });
 
+  // دالة تعطيل جميع أزرار الأحرف
+  function disableAllLetters() {
+    state.alphabetButtons.forEach(btn => {
+        btn.disabled = true;
+        btn.classList.add('disabled');
+    });
+  }
+
   // language setup
   function updateInputPlaceholder(){
     if(state.lang === 'ar') wordInput.placeholder='اكتب الكلمة...';
@@ -544,6 +552,8 @@ const settings = {
   }
 
   function handleTimeUp() {
+      endChallengeTimer();
+      disableAllLetters(); // تعطيل جميع الأحرف
       stopBirds();
       state.slots.forEach((slot, idx) => {
           const ch = state.wordChars[idx];
@@ -558,6 +568,7 @@ const settings = {
       modal.classList.add('show');
       
       lastReport = createReport('time_up');
+      // تشغيل صوت رسالة الفشل عند انتهاء الوقت
       setTimeout(() => {
           if (settings.sounds.failMessage) playAudio(settings.sounds.failMessage, 0.22);
       }, 300);
@@ -716,6 +727,7 @@ const settings = {
     const unfinished = state.slots.some(s => s.textContent === '_');
     if(!unfinished){
       endChallengeTimer(); // إيقاف المؤقت عند الفوز
+      disableAllLetters(); // تعطيل جميع الأحرف
       stopBirds();
       state.slots.forEach(s=>{ if(s.textContent !== ' ') s.style.color = '#0b8a3a'; });
       modalTitle.textContent = state.lang==='ar' ? 'مبروك!' : (state.lang==='nl' ? 'Gefeliciteerd!' : 'Congratulations!');
@@ -731,6 +743,7 @@ const settings = {
   function checkLose(){
     if(state.fallenCount >= state.maxApples){
       endChallengeTimer(); // إيقاف المؤقت عند الخسارة
+      disableAllLetters(); // تعطيل جميع الأحرف
       stopBirds();
       state.slots.forEach((slot,idx)=>{ const ch=state.wordChars[idx]; if(ch===' ') return; slot.textContent = ch; slot.style.color = '#c73737'; });
       modalTitle.textContent = state.lang==='ar' ? 'انتهت التفاحات' : (state.lang==='nl' ? 'Alle appels zijn gevallen' : 'Apples finished');
