@@ -6,302 +6,213 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>AppelBoom v7.0 - Final</title>
+<title>AppelBoom v7.0 - Designed by MEE</title>
 <style>
-:root{
-    --slot-font: 30px;
-    --slot-gap: 12px;
-    --challenge-blue: #0D47A1;
-}
+/* --------- BASE (unchanged for desktop) ---------- */
+:root{ --slot-font:30px; --slot-gap:12px; }
 *{box-sizing:border-box;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;}
-html,body{height:100%;margin:0;padding:0;background:#222;color:#fff}
+html,body{height:100%;margin:0;padding:0;background:#222}
 .wrap{width:100%;height:100vh;display:flex;align-items:center;justify-content:center;padding:12px}
-.stage{
-    width:100%;max-width:1320px;height:calc(100vh - 24px);position:relative;border-radius:8px;overflow:hidden;
-    background-color:#000;
-}
-.bg{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center center;filter:none}
+.stage{ width:100%;max-width:1320px;height:calc(100vh - 24px);position:relative;border-radius:8px;overflow:hidden;background-color:#000; }
+.bg{ position:absolute;inset:0;z-index:0;background-size:cover;background-position:center center;filter:none; }
 
 /* header */
-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 64px;
-    z-index: 9999;
-    pointer-events: none; /* keep general pointer-events none so header doesn't block UI */
-}
-header .title {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(calc(-50% + 30px));
-    font-weight: 800;
-    color: #fff;
-    z-index: 10000;
-    padding: 12px 24px;
-    background: rgba(0, 0, 0, 0.7);
-    border-radius: 8px;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.2);
-    pointer-events: auto;
-}
-header .controls {
-    position: absolute;
-    bottom: 8px;
-    right: 120px;
-    z-index: 10000;
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    padding: 0;
-    pointer-events: auto;
-}
-.sound-toggle {
-    padding: 10px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.95);
-    border: none;
-    cursor: pointer;
-    width: 44px;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0;
-    position: relative;
-    z-index: 10001;
-}
-.sound-toggle::before { content: "🔊"; font-size: 22px; }
-.sound-toggle.muted::before { content: "🔇"; }
+header{ position: fixed; top:0; left:0; width:100%; height:100%; z-index:9999; pointer-events:none;}
+header .title{ position:absolute; bottom:10px; left:50%; transform:translateX(calc(-50% + 30px)); font-weight:800; color:#fff; z-index:10000; padding:12px 24px; background:rgba(0,0,0,0.7); border-radius:8px; backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.2); pointer-events:auto;}
+header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; display:flex; gap:8px; align-items:center; padding:0; background:transparent !important; border:none !important; pointer-events:auto;}
+.sound-toggle{ padding:10px; border-radius:50%; background:rgba(255,255,255,0.9); border:none; cursor:pointer; width:44px; height:44px; display:flex; align-items:center; justify-content:center; font-size:0; position:relative; z-index:10001; }
+.sound-toggle::before{ content:"🔊"; font-size:22px; pointer-events:none; }
+.sound-toggle.muted::before{ content:"🔇"; }
 
 /* pages */
 .page{display:none;height:calc(100% - 64px);position:relative;z-index:5;padding:12px}
 .page.active{display:block}
 
-/* setup layout (restore original sizes & alignment like the old code) */
-.setup {
-    height: 100%;
-    display: grid;
-    grid-template-columns: 88px 1fr;
-    gap: 12px;
-    align-items: start;
-}
-.lang-col {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 500px;
-    z-index: 40;
-    pointer-events: auto;
-}
-.lang-btn{
-    width:72px;height:38px;border-radius:8px;background:rgba(255,255,255,0.92);display:flex;align-items:center;justify-content:center;cursor:pointer;font-weight:800;color:#000;
-    pointer-events: auto;
-}
-.lang-btn.active{background:#0b5138;color:white}
+/* setup */
+.lang-col{ display:flex; flex-direction:column; gap:10px; margin-top:500px; pointer-events:auto; }
+.setup{ height:100%; display:grid; grid-template-columns:88px 1fr; gap:12px; align-items:start; }
+.lang-btn{ width:72px; height:38px; border-radius:8px; background:rgba(255,255,255,0.92); display:flex; align-items:center; justify-content:center; cursor:pointer; font-weight:800; }
+.lang-btn.active{ background:#0b5138; color:white; }
+.tree-wrap{ position:relative; width:100%; height:100%; display:flex; align-items:center; justify-content:center; }
+.tree-frame{ width:90% !important; max-width:740px !important; aspect-ratio:4/3; position:relative; display:flex; align-items:center; justify-content:center; margin-left:-750px; margin-top:65px; }
+.tree-img{ position:absolute; left:45% !important; top:50%; transform:translate(-50%,-50%); width:100%; height:135%; object-fit:cover; border-radius:8px; }
+.hero-apples, .tree-apples{ position:absolute; left:7%; top:8%; width:86%; height:84%; pointer-events:none; }
+.apple-item{ position:absolute; transform:translate(-50%,-50%); display:flex; align-items:center; justify-content:center; }
+.apple-item img{ display:block; max-width:100%; height:auto; pointer-events:none; }
 
-/* tree and hero apples (original formatting) */
-.tree-wrap{
-    position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;
-}
-.tree-frame {
-    width: 90% !important;
-    max-width: 740px !important;
-    aspect-ratio: 4/3;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: -750px;
-    margin-top: 65px;
-}
-.tree-img {
-    position: absolute;
-    left: 45% !important;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: 135%;
-    object-fit: cover;
-    border-radius: 8px;
-}
-.hero-apples, .tree-apples{position:absolute;left:7%;top:8%;width:86%;height:84%;pointer-events:none}
-.apple-item{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center}
-.apple-item img{display:block;max-width:100%;height:auto;pointer-events:none}
+/* input & start */
+.input-container{ position:absolute; right:20px; top:120px; width:680px !important; z-index:10; }
+.input-field{ width:100%; border:none; padding:16px 20px !important; border-radius:12px !important; background:white; color:#000; font-weight:800; text-align:center; font-size:22px !important; outline:none; letter-spacing:4px; min-height:60px; }
+.input-field.password-dots{ font-size:24px; letter-spacing:8px; -webkit-text-security:disc; text-security:disc; }
+.input-field::placeholder{ color:#666; letter-spacing:normal; font-size:16px; }
+.start-col{ position:absolute; right:20px; bottom:120px; display:flex; align-items:center; justify-content:center; }
+.start-btn{ padding:24px 36px !important; border-radius:16px !important; background:#0b5138; color:white; border:none; font-weight:900; font-size:26px !important; cursor:pointer; box-shadow:0 12px 40px rgba(0,0,0,0.4); min-height:100px; min-width:180px; }
 
-/* input / start (original) */
-.input-container {
-    position: absolute;
-    right: 20px;
-    top: 120px;
-    width: 680px !important;
-    z-index: 30;
-}
-.input-field {
-    width: 100%;
-    border: none;
-    padding: 16px 20px !important;
-    border-radius: 12px !important;
-    background: white;
-    color: #000;
-    font-weight: 800;
-    text-align: center;
-    font-size: 22px !important;
-    outline: none;
-    letter-spacing: 4px;
-    min-height: 60px;
-}
-.start-col{position:absolute;right:20px;bottom:120px;display:flex;align-items:center;justify-content:center;z-index:30}
-.start-btn {
-    padding: 24px 36px !important;
-    border-radius: 16px !important;
-    background: #0b5138;
-    color: white;
-    border: none;
-    font-weight: 900;
-    font-size: 26px !important;
-    cursor: pointer;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
-    min-height: 100px;
-    min-width: 180px;
-}
+/* game */
+.game{ height:100%; display:grid; grid-template-columns:1fr 460px; grid-template-rows:120px 1fr; gap:12px; align-items:start; }
+.word-top-section{ grid-column:1 / -1; display:flex; justify-content:center; align-items:center; padding:5px 10px; margin-top:-20px; }
+.slots-row{ display:flex; justify-content:center; gap:var(--slot-gap,12px); align-items:center; min-height:90px; margin-top:-10px !important; overflow-visible; }
+.left-game{ position:relative; display:flex; align-items:flex-start; justify-content:center; padding-top:40px; width:100%; padding-top:0px; }
+.game-tree-frame{ width:100% !important; max-width:750px !important; aspect-ratio:4/3; position:relative; margin-left:-200px; margin-top:-110px; }
+.game-tree-img{ position:absolute; left:40%; top:62%; transform:translate(-50%,-50%); width:120% !important; height:120% !important; object-fit:contain !important; border-radius:8px; }
+.right-col{ display:flex; flex-direction:column; gap:10px; padding:6px; height:100%; }
+.tree-apples{ position:absolute; left:12% !important; top:8%; width:76% !important; height:84%; pointer-events:none; }
+.slot{ min-width:36px; border-bottom:3px solid rgba(255,255,255,0.12); padding:6px 8px; text-align:center; font-weight:900; font-size:var(--slot-font,30px); color:#fff; }
+.slot.space{ border-bottom:none; }
+.alphabet{ display:flex; flex-wrap:wrap; gap:8px; padding:8px; border-radius:8px; min-height:160px; align-items:flex-start; overflow:auto; justify-content:center; }
+.letter-btn{ padding:8px 10px; border-radius:8px; border:1px solid rgba(0,0,0,0.06); background:rgba(255,255,255,0.94); cursor:pointer; min-width:40px; text-align:center; font-weight:800; }
+.letter-btn.disabled{ opacity:0.28; cursor:default; }
+.fallen-columns{ display:flex; gap:12px; overflow:auto; padding-top:100px; align-items:flex-start; }
+.fallen-column{ display:flex; flex-direction:column; gap:10px; align-items:center; width:84px; }
+.fallen-item{ display:flex; flex-direction:row; align-items:center; gap:8px; }
+.fallen-letter{ font-weight:900; font-size:18px; color:#111; margin-left:4px; }
 
-/* game (restore old layout, fonts, sizes exactly) */
-.game{
-    height:100%;
-    display:grid;
-    grid-template-columns:1fr 460px;
-    grid-template-rows: 120px 1fr;
-    gap:12px;
-    align-items:start;
-}
-.word-top-section {
-    grid-column: 1 / -1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 5px 10px;
-    margin-top: -20px;
-}
-.slots-row {
-    display: flex;
-    justify-content: center;
-    gap: var(--slot-gap,12px);
-    align-items: center;
-    min-height: 90px;
-    margin-top: -10px !important;
-}
-.slot{min-width:36px;border-bottom:3px solid rgba(255,255,255,0.12);padding:6px 8px;text-align:center;font-weight:900;font-size:var(--slot-font,30px);color:#fff}
-.slot.space{border-bottom:none}
-.slot.revealed{color:#0b8a3a !important;font-weight:900 !important}
-.left-game{
-    position:relative;
-    display:flex;
-    align-items:flex-start;
-    justify-content:center;
-    padding-top: 0;
-}
-.game-tree-frame{
-    width:100% !important;
-    max-width:750px !important;
-    aspect-ratio: 4/3;
-    position:relative;
-    margin-left: -200px;
-    margin-top: -110px;
-}
-.game-tree-img{
-    position:absolute;
-    left:40%;
-    top:62%;
-    transform:translate(-50%,-50%);
-    width: 120% !important;
-    height: 120% !important;
-    object-fit: contain !important;
-    border-radius:8px;
-}
-.right-col{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-    padding:6px;
-    height:100%;
-}
-.tree-apples {
-    position: absolute;
-    left: 12% !important;
-    top: 8%;
-    width: 76% !important;
-    height: 84%;
-    pointer-events: none;
-}
-
-/* alphabet & fallen (restore old exact styling) */
-.alphabet{display:flex;flex-wrap:wrap;gap:8px;padding:8px;border-radius:8px;min-height:160px;align-items:flex-start;overflow:auto;justify-content:center}
-.letter-btn{padding:8px 10px;border-radius:8px;border:1px solid rgba(0,0,0,0.06);background:rgba(255,255,255,0.94);cursor:pointer;min-width:40px;text-align:center;font-weight:800;color:#000}
-.letter-btn.disabled{opacity:0.28;cursor:default}
-.letter-btn.correct{background:#0b8a3a;color:#fff}
-.letter-btn.wrong{background:#c73737;color:#fff}
-.fallen-columns{display:flex;gap:12px;overflow:auto;padding-top:100px;align-items:flex-start}
-.fallen-column{display:flex;flex-direction:column;gap:10px;align-items:center;width:84px}
-.fallen-item{display:flex;flex-direction:row;align-items:center;gap:8px}
-.fallen-letter{font-weight:900;font-size:18px;color:#111;margin-left:4px}
-
-/* New button kept as before */
-.new-bottom { position: absolute; right: 20px; top: 350px; z-index: 8; }
-.new-btn { padding: 35px 20px; border-radius: 42px; background: #86198F !important; color: white !important; border: none; cursor: pointer; font-weight: 800; font-size: 16px; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3); min-height: 50px;}
-
-/* challenge button: fixed bottom center on both pages */
-.challenge-fixed {
-  position: fixed;
-  bottom: 18px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10003;
-  padding: 14px 20px;
-  border-radius: 28px;
-  border: none;
-  background: var(--challenge-blue);
-  color: #fff;
-  font-weight: 900;
-  cursor: pointer;
-  box-shadow: 0 8px 24px rgba(13,71,161,0.25);
-  min-width: 180px;
-  font-size: 16px;
-}
+/* new button */
+.new-bottom{ position:absolute; right:20px; top:350px; z-index:8; }
+.new-btn{ padding:35px 20px; border-radius:42px; background:#86198F !important; color:white !important; border:none; cursor:pointer; font-weight:800; font-size:16px; box-shadow:0 4px 12px rgba(139,92,246,0.3); transition:all 0.3s ease; min-height:50px; }
+.new-btn:hover{ background:#5D2A2C !important; transform:translateY(-2px); box-shadow:0 6px 16px rgba(139,92,246,0.4); }
 
 /* modal */
-.modal{position:fixed;left:0;top:0;right:0;bottom:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:9999}
-.modal.show{display:flex}
-.modal-card{background:white;padding:18px;border-radius:12px;min-width:320px;text-align:center;color:#000}
-.modal-card img{max-width:320px;height:auto;border-radius:8px;margin:8px 0}
-.modal-btn{margin-top:12px;padding:8px 12px;border-radius:8px;border:none;background:#0b5138;color:white;cursor:pointer}
-.signature{display:none !important;}
+.modal{ position:fixed; left:0; top:0; right:0; bottom:0; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,0.6); z-index:9999; }
+.modal.show{ display:flex; }
+.modal-card{ background:white; padding:18px; border-radius:12px; min-width:320px; text-align:center; }
+.modal-card img{ max-width:320px; height:auto; border-radius:8px; margin:8px 0; }
+.modal-btn{ margin-top:12px; padding:8px 12px; border-radius:8px; border:none; background:#0b5138; color:white; cursor:pointer; }
 
-/* timer badge */
-.timer-badge{position:fixed;top:12px;right:12px;background:rgba(0,0,0,0.6);padding:8px 12px;border-radius:8px;font-weight:800;z-index:10002;pointer-events:none;}
+/* responsive helpers (already implemented earlier) */
+/* --- we'll add specific mobile rules below --- */
 
-/* small responsive adjustments (keep original feel) */
-@media (max-width: 768px) {
-  .setup{grid-template-columns:1fr}
-  .tree-wrap{height:50vh}
-  .tree-frame{width:95% !important;height:100%}
-  .input-container{position:absolute;left:50%;transform:translateX(-50%);bottom:50vh;width:90%}
-  .start-col{position:absolute;right:5%;bottom:15vh}
-  .lang-col{position:absolute;left:5%;bottom:15vh}
-  .game{display:flex;flex-direction:column}
-  .word-top-section{height:15vh}
-  .left-game{height:25vh}
-  .game-tree-frame{width:60% !important;max-width:300px}
-  .right-col{display:flex;flex-direction:row;height:50vh}
-  .alphabet{flex:2}
-  .fallen-columns{flex:1}
-  .timer-badge{top:8px;right:8px}
+/* ====== ROTATE OVERLAY & FORCE-LANDSCAPE ====== */
+.rotate-overlay {
+  position:fixed; inset:0; background:rgba(0,0,0,0.9); color:white; display:none; z-index:100000; align-items:center; justify-content:center; text-align:center; padding:20px;
+}
+.rotate-overlay.show{ display:flex; }
+.rotate-overlay .inner{ max-width:420px; }
+.rotate-overlay .btns{ margin-top:16px; display:flex; gap:12px; justify-content:center; }
+.small-btn{ padding:10px 14px; border-radius:8px; border:none; background:#0b5138; color:white; cursor:pointer; }
+
+/* small helper for force-rotated stage */
+.stage.force-rotated {
+  transform-origin: top left;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 50000;
+  background: #000;
+  /* width/height set dynamically in JS */
+}
+
+/* ========== MOBILE: LANDSCAPE & PORTRAIT RULES ========== */
+/* Landscape mobile: try to mirror desktop layout (no changes to desktop) */
+@media (max-width: 1024px) and (orientation: landscape) {
+  /* adjustments tuned earlier; keep desktop feel */
+  .wrap{ padding:5px; height:100vh; display:block; }
+  .stage{ height:100vh; max-width:100%; border-radius:0; }
+  .page{ height:calc(100vh - 20px); padding:10px; }
+  .lang-col{ margin-top:180px !important; z-index:1000; pointer-events:auto; }
+  .tree-wrap{ height:85vh; }
+  .tree-frame{ width:85% !important; max-width:600px !important; margin-left:-400px !important; margin-top:0 !important; }
+  .input-container{ position:absolute; width:450px !important; right:30px; top:200px !important; }
+  .start-col{ position:absolute; right:30px; bottom:150px !important; }
+  .game{ grid-template-columns:1fr 380px; grid-template-rows:100px 1fr; gap:10px; height:100%; }
+  .game-tree-frame{ width:90% !important; max-width:500px !important; margin:0 auto !important; margin-left:-100px !important; margin-top:-50px !important; }
+  .right-col{ grid-row:2; height:65vh; gap:8px; padding:5px; }
+}
+
+/* Portrait mobile: custom layout as you specified */
+@media (max-width: 768px) and (orientation: portrait) {
+  .wrap{ padding:5px; height:100vh; display:block; overflow:hidden; }
+  .stage{ height:100vh; max-width:100%; border-radius:0; }
+  .page{ height:calc(100vh - 10px); padding:5px; }
+  header .title{ bottom:10px; font-size:12px; padding:6px 12px; transform:translateX(-50%); left:50%; width:90%; text-align:center; white-space:normal; }
+  header .controls{ bottom:10px; right:10px; }
+  .sound-toggle{ width:36px; height:36px; }
+  /* Setup page (portrait) */
+  #pageSetup.active{ display:flex; flex-direction:column; align-items:center; justify-content:flex-start; height:100vh; position:relative; }
+  .setup{ display:flex; flex-direction:column; height:100%; width:100%; grid-template-columns:1fr; gap:10px; }
+  .tree-wrap{ order:1; height:50vh; width:100%; margin-top:10px; }
+  .tree-frame{ width:95% !important; max-width:100% !important; margin:0 !important; height:100%; }
+  .tree-img{ position:relative !important; left:50% !important; top:50% !important; transform:translate(-50%,-50%) !important; width:100% !important; height:100% !important; object-fit:contain !important; }
+  /* Input box centered on trunk (bottom of the tree) */
+  .input-container{ position:absolute !important; order:2; width:90% !important; bottom:50vh !important; left:50% !important; transform:translateX(-50%); top:auto !important; right:auto !important; z-index:20; }
+  .input-field{ padding:14px 16px !important; font-size:18px !important; min-height:55px; background:white !important; opacity:1 !important; border:2px solid #0b5138; }
+  .start-col{ position:absolute !important; order:3; bottom:15vh; right:5%; left:auto !important; transform:none; }
+  .start-btn{ width:120px; padding:12px 20px !important; font-size:16px !important; min-height:50px; border-radius:12px !important; }
+  .lang-col{ position:absolute; order:4; left:5%; bottom:15vh; margin-top:0; flex-direction:column; gap:6px; }
+  .lang-btn{ width:50px; height:30px; font-size:10px; }
+  /* Game page (portrait) */
+  #pageGame.active{ display:flex; flex-direction:column; height:100vh; position:relative; }
+  .game{ display:flex; flex-direction:column; height:100%; width:100%; grid-template-columns:1fr; grid-template-rows:auto auto 1fr; gap:8px; }
+  .word-top-section{ order:1; height:15vh; margin-top:0; padding:5px 0; }
+  .slots-row{ min-height:50px; margin-top:0 !important; gap:1px !important; padding:0 5px !important; }
+  .left-game{ order:2; height:25vh; position:relative; padding:0; margin:0; }
+  .game-tree-frame{ width:60% !important; max-width:300px !important; margin:0 auto !important; height:100%; }
+  .game-tree-img{ width:100% !important; height:100% !important; left:50% !important; top:50% !important; object-fit:contain !important; }
+  .new-bottom{ position:absolute !important; order:3; top:250px !important; right:5%; transform:none; }
+  .new-btn{ padding:8px 16px; border-radius:20px; font-size:12px; min-height:40px; }
+  /* bottom area: fallen apples (left) + alphabet (right) */
+  .right-col{ order:4; height:50vh; display:flex; flex-direction:row; gap:8px; padding:5px; margin-top:10px; }
+  .fallen-columns{ flex:1; padding-top:10px; max-height:100%; justify-content:flex-start; overflow-y:auto; }
+  .fallen-column{ width:70px; }
+  .fallen-item img{ width:30px !important; }
+  .fallen-letter{ font-size:12px; }
+  .alphabet{ flex:2; min-height:auto; max-height:100%; overflow-y:auto; padding:5px; gap:4px; }
+  .letter-btn{ padding:8px 10px; min-width:32px; min-height:32px; font-size:12px; }
+}
+
+/* very small screens */
+@media (max-width:380px) and (orientation:portrait){
+  .tree-wrap{ height:45vh; }
+  .input-container{ bottom:20vh; width:95% !important; }
+  .start-col{ bottom:12vh; }
+  .lang-col{ bottom:12vh; }
+  .right-col{ height:45vh; }
 }
 </style>
 </head>
 <body>
+<script>
+/* ================= SETTINGS ================= */
+const settings = {
+  images: {
+    background: "background.jpg",
+    tree: "tree.png",
+    apple: "apple.png",
+    appleTransparent: "apple_transparent.png",
+    crowdFail: "crowd_fail.jpg",
+    crowdWin: "crowd_win.jpg",
+    winImage: "win.jpg"
+  },
+  sounds: {
+    birds: "birds.mp3",
+    click: "click1.mp3",
+    fallWhistle: "fall_whistle.mp3",
+    impact: "impact.mp3",
+    slide: "slide.mp3",
+    successList: ["success1.mp3","success2.mp3"],
+    failList: ["fail1.mp3","fail2.mp3"],
+    successMessage: "success_message.mp3",
+    failMessage: "fail_message.mp3"
+  },
+  options: {
+    sound_enabled: true,
+    check_dictionary_online: false,
+    maxApplesPerColumn: 3,
+    fallDurationMs: 700,
+    bounceDurationMs: 420,
+    bounceTiltDeg: 28,
+    appleSizeBasePx: 38,
+    slotFontSizePx: 26,
+    slotUnderscoreSpacing: 10,
+    arabicWordsFile: "assets/words_ar.json",
+  },
+  // salt used to compute client-side report signature.
+  // IMPORTANT: move this signing to server for real anti-tamper protection.
+  reportSalt: "change-this-to-server-salt-or-remove",
+};
+
+</script>
+
 <div class="wrap">
   <div class="stage" id="stage">
     <div id="bg" class="bg"></div>
@@ -310,17 +221,21 @@ header .controls {
       <div class="title">Appelboom V7.0 - Designed by MEE</div>
       <div class="controls">
         <button id="soundToggle" class="sound-toggle" aria-label="تبديل الصوت"></button>
+        <!-- extra: challenge & share -->
+        <button id="challengeBtn" class="small-btn" style="margin-left:10px; padding:8px 12px; border-radius:8px;">تحدي</button>
+        <button id="forceLandscapeBtn" class="small-btn" style="margin-left:8px; padding:8px 12px; border-radius:8px;">فرض أفقي</button>
       </div>
     </header>
 
-    <!-- Setup Page -->
-    <section id="pageSetup" class="page active" aria-hidden="false">
+    <!-- PAGE SETUP -->
+    <section id="pageSetup" class="page active">
       <div class="setup">
         <div class="lang-col" id="langCol">
           <div class="lang-btn active" data-lang="nl">NL</div>
           <div class="lang-btn" data-lang="en">EN</div>
           <div class="lang-btn" data-lang="ar">AR</div>
         </div>
+
         <div class="tree-wrap">
           <div class="tree-frame">
             <img id="heroTree" class="tree-img" src="" alt="tree" />
@@ -330,7 +245,7 @@ header .controls {
       </div>
 
       <div class="input-container">
-        <input id="wordInput" class="input-field" autocomplete="off" inputmode="text" placeholder="Typ het woord..." />
+        <input id="wordInput" class="input-field password-dots" autocomplete="off" placeholder="Typ het woord..." />
       </div>
 
       <div class="start-col">
@@ -338,7 +253,7 @@ header .controls {
       </div>
     </section>
 
-    <!-- Game Page -->
+    <!-- PAGE GAME -->
     <section id="pageGame" class="page" aria-hidden="true">
       <div class="game">
         <div class="word-top-section">
@@ -363,765 +278,637 @@ header .controls {
       </div>
     </section>
 
-    <!-- Modals -->
-    <div class="modal" id="modal"><div class="modal-card">
-      <h2 id="modalTitle"></h2>
-      <div id="modalMedia"></div>
-      <p id="modalDesc"></p>
-      <div style="display:flex;gap:8px;justify-content:center">
-        <button id="modalOk" class="modal-btn">OK</button>
+    <div class="modal" id="modal">
+      <div class="modal-card">
+        <h2 id="modalTitle"></h2>
+        <div id="modalMedia"></div>
+        <p id="modalDesc"></p>
+        <div style="display:flex;gap:8px;justify-content:center;margin-top:8px;">
+          <button id="modalOk" class="modal-btn">OK</button>
+          <button id="shareReportBtn" class="modal-btn" style="background:#0a84ff;">مشاركة التقرير</button>
+          <button id="downloadReportBtn" class="modal-btn" style="background:#444;">تحميل التقرير</button>
+        </div>
       </div>
-    </div></div>
+    </div>
 
-    <!-- Challenge Modal -->
-    <div class="modal" id="challengeModal"><div class="modal-card" style="width:380px">
-      <h3 id="challengeTitle">Create challenge</h3>
-      <div style="margin-top:8px">
-        <label id="lblDuration">Duration (sec):</label>
-        <input id="challengeDuration" type="number" min="5" value="60" style="width:100%;padding:8px;margin-top:6px;border:1px solid #ccc;border-radius:8px"/>
+    <!-- rotate overlay (shown when portrait and user requested landscape) -->
+    <div id="rotateOverlay" class="rotate-overlay">
+      <div class="inner">
+        <h2>الرجاء تدوير جهازك إلى الوضع الأفقي</h2>
+        <p>التصميم يعمل بشكل أفضل في الاتجاه الأفقي. يمكنك تدوير جهازك الآن أو اختيار "فرض العرض الأفقي" (قد يؤثر على تجربة اللمس).</p>
+        <div class="btns">
+          <button id="overlayJustRotate" class="small-btn">سأدوّر الجهاز</button>
+          <button id="overlayForceRotate" class="small-btn">فرض العرض الأفقي</button>
+          <button id="overlayClose" class="small-btn" style="background:#999;">متابعة عموديًا</button>
+        </div>
       </div>
-      <div style="display:flex;gap:8px;align-items:center;justify-content:center;margin-top:8px">
-        <button id="createChallenge" class="modal-btn">Create</button>
-        <button id="cancelChallenge" class="modal-btn" style="background:#555">Cancel</button>
-      </div>
-      <div style="margin-top:12px;text-align:left;font-size:13px;color:#444">عند الإنشاء سيظهر رابط؛ يمكن مشاركة الرابط أو تنزيل تقرير الصورة بعد انتهاء اللعبة.</div>
-    </div></div>
-
-    <!-- Share Modal -->
-    <div class="modal" id="shareModal"><div class="modal-card">
-      <h3 id="shareTitle">Share</h3>
-      <div id="shareBody" style="margin-top:8px"></div>
-      <div style="margin-top:12px;display:flex;gap:8px;justify-content:center">
-        <button id="copyLinkBtn" class="modal-btn">Copy Link</button>
-        <button id="downloadReportBtn" class="modal-btn">Download Report</button>
-        <button id="shareNativeBtn" class="modal-btn" style="background:#555">Share</button>
-      </div>
-      <div style="margin-top:8px"><button id="closeShare" class="modal-btn" style="background:#999">Close</button></div>
-    </div></div>
-
-    <!-- Timer badge -->
-    <div id="timerBadge" class="timer-badge" style="display:none">00:00</div>
-
-    <!-- Challenge button (fixed bottom middle, present on both pages) -->
-    <button id="challengeBtnFixed" class="challenge-fixed">Uitdaging</button>
+    </div>
 
   </div>
 </div>
 
 <script>
-/* ================= SETTINGS ================= */
-const settings = {
-  images: {
-    background: "background.jpg",
-    tree: "tree.png",
-    apple: "apple.png",
-    appleTransparent: "apple_transparent.png",
-    crowdFail: "crowd_fail.jpg",
-    crowdWin: "crowd_win.jpg"
-  },
-  sounds: {
-    birds: "birds.mp3",
-    click: "click1.mp3",
-    fallWhistle: "fall_whistle.mp3",
-    impact: "impact.mp3",
-    slide: "slide.mp3",
-    successList: ["success1.mp3","success2.mp3"],
-    failList: ["fail1.mp3","fail2.mp3"],
-    successMessage: "success_message.mp3",
-    failMessage: "fail_message.mp3"
-  },
-  options: {
-    sound_enabled: true,
-    check_dictionary_online: false,
-    maxApplesPerColumn: 3,
-    fallDurationMs: 700,
-    bounceDurationMs: 420,
-    bounceTiltDeg: 28,
-    appleSizeBasePx: 38,
-    slotFontSizePx: 26,
-    slotUnderscoreSpacing: 10,
-    arabicWordsFile: "assets/words_ar.json"
+/* ================= Appelboom v7 - Mobile Optimized + Challenge/Share ================= */
+(async function(){
+  // DOM refs
+  const stage = document.getElementById('stage');
+  const bg = document.getElementById('bg');
+  const heroTree = document.getElementById('heroTree');
+  const gameTree = document.getElementById('gameTree');
+  const heroApples = document.getElementById('heroApples');
+  const treeApples = document.getElementById('treeApples');
+  const wordInput = document.getElementById('wordInput');
+  const startBtn = document.getElementById('startBtn');
+  const langCol = document.getElementById('langCol');
+  const langEls = langCol.querySelectorAll('.lang-btn');
+  const soundToggle = document.getElementById('soundToggle');
+  const pageSetup = document.getElementById('pageSetup');
+  const pageGame = document.getElementById('pageGame');
+  const slotsRow = document.getElementById('slotsRow');
+  const alphabetDiv = document.getElementById('alphabet');
+  const fallenColumns = document.getElementById('fallenColumns');
+  const newBtn = document.getElementById('newBtn');
+  const modal = document.getElementById('modal');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalMedia = document.getElementById('modalMedia');
+  const modalDesc = document.getElementById('modalDesc');
+  const modalOk = document.getElementById('modalOk');
+  const shareReportBtn = document.getElementById('shareReportBtn');
+  const downloadReportBtn = document.getElementById('downloadReportBtn');
+  const challengeBtn = document.getElementById('challengeBtn');
+  const forceLandscapeBtn = document.getElementById('forceLandscapeBtn');
+
+  const rotateOverlay = document.getElementById('rotateOverlay');
+  const overlayJustRotate = document.getElementById('overlayJustRotate');
+  const overlayForceRotate = document.getElementById('overlayForceRotate');
+  const overlayClose = document.getElementById('overlayClose');
+
+  // state
+  const ALPHABETS = {
+    nl: ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","Á","À","É","È","Ë","Í","Ï","Ó","Ö","Ú","Ü"],
+    en: ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"],
+    ar: ["ا","أ","إ","آ","ب","ت","ث","ج","ح","خ","د","ذ","ر","ز","س","ش","ص","ض","ط","ظ","ع","غ","ف","ق","ك","ل","م","ن","ه","و","ؤ","ي","ئ","ى"]
+  };
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+  const state = {
+    lang: 'nl',
+    wordRaw: '',
+    wordChars: [],
+    maxApples: 0,
+    apples: [],
+    fallenCount: 0,
+    slots: [],
+    alphabetButtons: [],
+    audioEnabled: !!settings.options.sound_enabled,
+    successIndex: 0,
+    failIndex: 0,
+    arabicWords: null,
+    // multiplayer/challenge
+    activeChallenge: null, // object when playing a challenge {id, word, duration, tsStart}
+    // force-rotate flag
+    forcedLandscape: false
+  };
+
+  // load images
+  bg.style.backgroundImage = `url("${settings.images.background}")`;
+  heroTree.src = settings.images.tree;
+  gameTree.src = settings.images.tree;
+
+  // audio helper
+  function playAudio(src, vol=1){ if(!state.audioEnabled) return; try{ const a=new Audio(src); a.volume=Math.min(1,vol); a.play().catch(()=>{}); }catch(e){} }
+  function uiClick(){ playAudio(settings.sounds.click, 0.12); }
+  const birdsAudio = new Audio(settings.sounds.birds); birdsAudio.loop=true; birdsAudio.volume=0.25;
+  function playBirds(){ if(state.audioEnabled){ birdsAudio.play().catch(()=>{}); } }
+  function stopBirds(){ try{ birdsAudio.pause(); birdsAudio.currentTime=0; }catch(e){} }
+
+  // language setup
+  function updateInputPlaceholder(){
+    if(state.lang === 'ar') wordInput.placeholder='اكتب الكلمة...';
+    else if(state.lang==='en') wordInput.placeholder='Type the word...';
+    else wordInput.placeholder='Typ het woord...';
   }
-};
-
-/* ================= DOM elements ================= */
-const bg = document.getElementById('bg');
-const heroTree = document.getElementById('heroTree');
-const gameTree = document.getElementById('gameTree');
-const heroApples = document.getElementById('heroApples');
-const treeApples = document.getElementById('treeApples');
-const wordInput = document.getElementById('wordInput');
-const startBtn = document.getElementById('startBtn');
-const langCol = document.getElementById('langCol');
-const langEls = langCol.querySelectorAll('.lang-btn');
-const soundToggle = document.getElementById('soundToggle');
-const pageSetup = document.getElementById('pageSetup');
-const pageGame = document.getElementById('pageGame');
-const slotsRow = document.getElementById('slotsRow');
-const alphabetDiv = document.getElementById('alphabet');
-const fallenColumns = document.getElementById('fallenColumns');
-const newBtn = document.getElementById('newBtn');
-const modal = document.getElementById('modal');
-const modalTitle = document.getElementById('modalTitle');
-const modalDesc = document.getElementById('modalDesc');
-const modalOk = document.getElementById('modalOk');
-const challengeBtnFixed = document.getElementById('challengeBtnFixed');
-const challengeModal = document.getElementById('challengeModal');
-const createChallenge = document.getElementById('createChallenge');
-const cancelChallenge = document.getElementById('cancelChallenge');
-const challengeDuration = document.getElementById('challengeDuration');
-const shareModal = document.getElementById('shareModal');
-const shareBody = document.getElementById('shareBody');
-const copyLinkBtn = document.getElementById('copyLinkBtn');
-const downloadReportBtn = document.getElementById('downloadReportBtn');
-const shareNativeBtn = document.getElementById('shareNativeBtn');
-const closeShare = document.getElementById('closeShare');
-const timerBadge = document.getElementById('timerBadge');
-
-/* ======= Alphabets and localization ======= */
-const ALPHABETS = {
-  nl:["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"],
-  en:["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"],
-  ar:["ا","أ","إ","آ","ب","ت","ث","ج","ح","خ","د","ذ","ر","ز","س","ش","ص","ض","ط","ظ","ع","غ","ف","ق","ك","ل","م","ن","ه","و","ؤ","ي","ئ","ى"]
-};
-
-const LOC = {
-  nl: { challenge: "Uitdaging", share: "Delen", download: "Download", copy: "Kopieer link", report: "Rapport", timerLabel: "Tijd" },
-  en: { challenge: "Challenge", share: "Share", download: "Download", copy: "Copy link", report: "Report", timerLabel: "Time" },
-  ar: { challenge: "تحدّي", share: "مشاركة", download: "تنزيل", copy: "نسخ الرابط", report: "تقرير", timerLabel: "الوقت" }
-};
-
-/* ================= STATE ================= */
-const state = {
-  lang: 'nl',
-  wordRaw: '',
-  wordChars: [],
-  maxApples: 0,
-  apples: [],
-  fallenCount: 0,
-  slots: [],
-  alphabetButtons: [],
-  audioEnabled: !!settings.options.sound_enabled,
-  successIndex:0,
-  failIndex:0,
-  challenge: null, // {id,durationSec,url,active,startedAt,timeLeftSec}
-  inputRaw: '',
-  maskedLen: 0
-};
-
-/* ================= set visuals ================= */
-bg.style.backgroundImage = `url("${settings.images.background}")`;
-heroTree.src = settings.images.tree;
-gameTree.src = settings.images.tree;
-
-/* ================= audio setup (reliable, global Audio objects) ================= */
-let birdsAudio = null;
-let clickAudio = null;
-let fallWhistleAudio = null;
-let impactAudio = null;
-let slideAudio = null;
-let successAudios = [];
-let failAudios = [];
-let successMsgAudio = null;
-let failMsgAudio = null;
-
-function initAudio() {
-  try {
-    birdsAudio = new Audio(settings.sounds.birds); birdsAudio.loop = true; birdsAudio.volume = 0.25;
-  } catch(e){ birdsAudio = null; }
-  try { clickAudio = new Audio(settings.sounds.click); clickAudio.volume = 0.28; } catch(e){ clickAudio = null; }
-  try { fallWhistleAudio = new Audio(settings.sounds.fallWhistle); } catch(e){ fallWhistleAudio = null; }
-  try { impactAudio = new Audio(settings.sounds.impact); } catch(e){ impactAudio = null; }
-  try { slideAudio = new Audio(settings.sounds.slide); } catch(e){ slideAudio = null; }
-
-  successAudios = (settings.sounds.successList || []).map(s=>{ try { const a=new Audio(s); a.volume=0.2; return a;}catch(e){return null;} }).filter(Boolean);
-  failAudios = (settings.sounds.failList || []).map(s=>{ try { const a=new Audio(s); a.volume=0.2; return a;}catch(e){return null;} }).filter(Boolean);
-  try { successMsgAudio = new Audio(settings.sounds.successMessage); } catch(e){ successMsgAudio = null; }
-  try { failMsgAudio = new Audio(settings.sounds.failMessage); } catch(e){ failMsgAudio = null; }
-}
-initAudio();
-
-function playAudioObj(a, vol=1) {
-  if(!state.audioEnabled || !a) return;
-  try { a.volume = Math.min(1,vol); a.currentTime = 0; a.play().catch(()=>{}); } catch(e){}
-}
-function playAudio(src, vol=1){
-  if(!state.audioEnabled || !src) return;
-  try { const a = new Audio(src); a.volume = Math.min(1,vol); a.play().catch(()=>{}); } catch(e){}
-}
-function uiClick(){ if(clickAudio) playAudioObj(clickAudio, 0.12); else playAudio(settings.sounds.click, 0.12); }
-
-/* birds auto-start handling */
-let birdsStarted = false;
-function startBirdsIfNeeded(){
-  if(!birdsStarted && state.audioEnabled && birdsAudio){
-    try { birdsAudio.play().catch(()=>{}); birdsStarted = true; } catch(e){ birdsStarted = false; }
-  }
-}
-function stopBirds(){
-  try { if(birdsAudio){ birdsAudio.pause(); birdsAudio.currentTime=0; } birdsStarted = false; } catch(e){}
-}
-
-soundToggle.addEventListener('click', ()=>{
-  state.audioEnabled = !state.audioEnabled;
-  soundToggle.classList.toggle('muted', !state.audioEnabled);
-  uiClick();
-  if(state.audioEnabled) startBirdsIfNeeded();
-  else stopBirds();
-});
-
-/* start birds on first interaction if audio on */
-document.addEventListener('click', function firstStart(){
-  startBirdsIfNeeded();
-  document.removeEventListener('click', firstStart);
-});
-
-/* ========== localization UI ========== */
-function updateChallengeButtonText(){
-  const txt = LOC[state.lang].challenge;
-  challengeBtnFixed.textContent = txt;
-}
-updateChallengeButtonText();
-
-function updatePlaceholders(){
-  if(state.lang==='ar') wordInput.placeholder='اكتب الكلمة...';
-  else if(state.lang==='en') wordInput.placeholder='Type the word...';
-  else wordInput.placeholder='Typ het woord...';
-}
-updatePlaceholders();
-
-/* ========== language switching ========== */
-langEls.forEach(el=>{
-  el.addEventListener('click', ()=>{
-    langEls.forEach(x=>x.classList.remove('active'));
-    el.classList.add('active');
-    state.lang = el.dataset.lang;
-    updateChallengeButtonText();
-    updatePlaceholders();
-    renderAlphabet(); // update alphabet if page active
+  langEls.forEach(el=>{
+    el.addEventListener('click', ()=>{ langEls.forEach(x=>x.classList.remove('active')); el.classList.add('active'); state.lang = el.dataset.lang; updateInputPlaceholder(); uiClick(); });
   });
-});
+  updateInputPlaceholder();
 
-/* ========== Render hero apples (unchanged) ========== */
-function renderHeroApples(){
-  heroApples.innerHTML='';
-  const positions=[{x:13,y:-2},{x:23,y:5},{x:33,y:-2},{x:43,y:5},{x:53,y:-2},{x:63,y:5},{x:73,y:-2},{x:4,y:30},{x:14,y:37},{x:24,y:30},{x:34,y:37},{x:44,y:30},{x:54,y:37},{x:64,y:30},{x:74,y:37},{x:84,y:30}];
-  const label='KHALEDSAPPELBOOM'.split('');
-  positions.forEach((p,i)=>{
-    const w=document.createElement('div');w.className='apple-item';w.style.left=p.x+'%';w.style.top=p.y+'%';
-    const img=document.createElement('img');img.src=settings.images.appleTransparent;img.style.width='38px';img.style.opacity='0.85';
-    w.appendChild(img);
-    const span=document.createElement('div');span.textContent=label[i%label.length];span.style.position='absolute';span.style.left='50%';span.style.top='50%';span.style.transform='translate(-50%,-52%)';span.style.fontWeight='900';span.style.fontSize='18px';span.style.color='#000';
-    w.appendChild(span);
-    heroApples.appendChild(w);
-  });
-}
-renderHeroApples();
-
-/* ========== Input masking fix for old devices ========== */
-wordInput.addEventListener('input', ()=> {
-  const v = wordInput.value || '';
-  const prevMasked = state.maskedLen;
-  const newLen = v.length;
-  if(newLen > prevMasked){
-    const added = v.slice(prevMasked);
-    state.inputRaw += added;
-  } else if(newLen < prevMasked){
-    const diff = prevMasked - newLen;
-    state.inputRaw = state.inputRaw.slice(0, state.inputRaw.length - diff);
+  // hero apples render (small label apples)
+  function renderHeroApples(){
+    heroApples.innerHTML='';
+    const positions = [
+      {x:13,y:-2},{x:23,y:5},{x:33,y:-2},{x:43,y:5},{x:53,y:-2},{x:63,y:5},{x:73,y:-2},
+      {x:4,y:30},{x:14,y:37},{x:24,y:30},{x:34,y:37},{x:44,y:30},{x:54,y:37},{x:64,y:30},{x:74,y:37},{x:84,y:30}
+    ];
+    const label='KHALEDSAPPELBOOM'.split('');
+    positions.forEach((p,i)=>{
+      const w=document.createElement('div'); w.className='apple-item';
+      w.style.left=p.x+'%'; w.style.top=p.y+'%';
+      const img=document.createElement('img'); img.src=settings.images.appleTransparent; img.style.width='38px'; img.style.opacity='0.85';
+      w.appendChild(img);
+      const span=document.createElement('div'); span.textContent = label[i%label.length];
+      span.style.position='absolute'; span.style.left='50%'; span.style.top='50%'; span.style.transform='translate(-50%,-52%)';
+      span.style.fontWeight='900'; span.style.fontSize='18px'; span.style.color='#000';
+      w.appendChild(span); heroApples.appendChild(w);
+    });
   }
-  state.maskedLen = state.inputRaw.length;
-  const bullet = '•';
-  wordInput.value = bullet.repeat(state.maskedLen);
-});
-wordInput.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); startBtn.click(); } });
+  renderHeroApples();
 
-/* ========== Dictionary check (stub as config) ========== */
-async function checkDictionary(word){
-  if(!settings.options.check_dictionary_online) return true;
-  // Could implement online check here
-  return true;
-}
-
-/* ========== START button logic ========== */
-startBtn.addEventListener('click', async ()=>{
-  uiClick();
-  const raw = (state.inputRaw || '').trim();
-  if(!raw){
-    alert(state.lang==='ar' ? 'الرجاء إدخال كلمة.' : (state.lang==='nl' ? 'Voer een woord in.' : 'Please enter a word.'));
-    return;
+  // dictionary loading for Arabic words (if used)
+  async function loadArabicWords(){
+    try{
+      const res = await fetch(settings.options.arabicWordsFile);
+      if(!res.ok) throw new Error('no ar words');
+      state.arabicWords = await res.json();
+    }catch(e){ state.arabicWords = null; console.warn('لم يتم تحميل ملف كلمات عربية محلي:', e); }
   }
-  const word = (state.lang === 'ar') ? raw : raw.toUpperCase();
-  const ok = await checkDictionary(word);
-  if(!ok){
-    showModal(state.lang==='ar'?'الكلمة غير موجودة':'Word not found', state.lang==='ar'?'الكلمة غير موجودة في القاموس. راجع التهجئة.':'Word not found in dictionary. Check spelling.');
-    return;
-  }
-  state.wordRaw = word;
-  state.wordChars = word.split('');
-  state.maxApples = word.replace(/\s/g,'').length;
-  pageSetup.classList.remove('active'); pageSetup.setAttribute('aria-hidden','true');
-  pageGame.classList.add('active'); pageGame.setAttribute('aria-hidden','false');
-  buildGameBoard();
-  // reset input store
-  state.inputRaw = ''; state.maskedLen = 0; wordInput.value = '';
-});
+  await loadArabicWords();
 
-/* modal helpers */
-function showModal(title, desc, mediaHTML=''){
-  modalTitle.textContent = title;
-  modalDesc.textContent = desc;
-  const media = modal.querySelector('#modalMedia');
-  if(media) media.innerHTML = mediaHTML || '';
-  modal.classList.add('show');
-}
-modalOk.addEventListener('click', ()=> modal.classList.remove('show'));
-
-/* ========== Build game board (apples + slots + alphabet) ========== */
-function buildGameBoard(){
-  treeApples.innerHTML=''; fallenColumns.innerHTML=''; slotsRow.innerHTML=''; alphabetDiv.innerHTML='';
-  state.apples=[]; state.slots=[]; state.alphabetButtons=[]; state.fallenCount=0;
-
-  const n = state.maxApples;
-  let appleSize = settings.options.appleSizeBasePx;
-  if(n>12) appleSize = Math.max(30, appleSize-6);
-  if(n>20) appleSize = Math.max(24, appleSize-10);
-
-  const cols = Math.min(6, Math.ceil(Math.sqrt(n)));
-  const rows = Math.ceil(n/cols);
-  let idx = 0;
-  const treeWidthPercent = 85;
-  const offsetPercent = (100 - treeWidthPercent) / 2;
-
-  for(let r=0;r<rows;r++){
-    for(let c=0;c<cols;c++){
-      if(idx>=n) break;
-      const left = 4 + (c + (r%2?0.16:0)) * (62/cols) + (Math.random()*4 -2);
-      const top = 10 + r * (70/rows) + (Math.random()*6 -3);
-
-      const wrap = document.createElement('div'); wrap.className='apple-item';
-      wrap.style.left = `calc(${left}% + ${offsetPercent / 2}%)`;
-      wrap.style.top = top + '%';
-      wrap.dataset.index = idx; wrap.dataset.fallen = 'false';
-
-      const img = document.createElement('img'); img.src = settings.images.apple; img.style.width = appleSize + 'px';
-      wrap.appendChild(img);
-      treeApples.appendChild(wrap);
-      state.apples.push(wrap);
-      idx++;
-    }
-  }
-
-  renderSlots();
-  renderAlphabet();
-
-  document.documentElement.style.setProperty('--slot-font', settings.options.slotFontSizePx + 'px');
-  document.documentElement.style.setProperty('--slot-gap', settings.options.slotUnderscoreSpacing + 'px');
-
-  // start challenge timer if challenge exists and not active
-  if(state.challenge && !state.challenge.active){
-    startChallengeTimer(state.challenge);
-  }
-}
-
-/* slots */
-function renderSlots(){
-  slotsRow.innerHTML=''; state.slots=[];
-  state.wordChars.forEach((ch,i)=>{
-    const s = document.createElement('div'); s.className='slot'; s.dataset.pos = i;
-    if(ch === ' ') { s.classList.add('space'); s.textContent = ' '; } else { s.textContent = '_'; }
-    slotsRow.appendChild(s); state.slots.push(s);
-  });
-  const wordLength = state.wordChars.filter(ch => ch !== ' ').length;
-  slotsRow.classList.remove('short-word','medium-word','long-word','very-long-word','extremely-long-word');
-  if (wordLength <= 8) slotsRow.classList.add('short-word');
-  else if (wordLength <= 16) slotsRow.classList.add('medium-word');
-  else if (wordLength <= 24) slotsRow.classList.add('long-word');
-  else if (wordLength <= 30) slotsRow.classList.add('very-long-word');
-  else slotsRow.classList.add('extremely-long-word');
-}
-
-/* alphabet */
-function renderAlphabet(){
-  alphabetDiv.innerHTML=''; state.alphabetButtons=[];
-  const arr = ALPHABETS[state.lang] || ALPHABETS.nl;
-  const letters = (state.lang === 'ar') ? arr.slice().reverse() : arr.slice();
-  letters.forEach(l=>{
-    const btn = document.createElement('button'); btn.className='letter-btn'; btn.textContent = l; btn.dataset.letter = l;
-    btn.addEventListener('click', onLetterClick);
-    alphabetDiv.appendChild(btn);
-    state.alphabetButtons.push(btn);
-  });
-  alphabetDiv.style.direction = (state.lang==='ar') ? 'rtl' : 'ltr';
-}
-
-/* letter click */
-function onLetterClick(e){
-  const btn = e.currentTarget;
-  if(btn.classList.contains('disabled')) return;
-  btn.classList.add('disabled');
-  uiClick();
-  const letter = btn.dataset.letter;
-  handleGuess(letter);
-}
-
-/* guess handling */
-function handleGuess(letter){
-  let match=false;
-  state.wordChars.forEach(ch=>{
-    if(ch === ' ') return;
-    if(state.lang === 'ar'){ if(ch === letter) match = true; }
-    else { if(ch.toUpperCase() === letter.toUpperCase()) match = true; }
-  });
-
-  if(match){
-    // mark matching alphabet buttons as correct
-    state.alphabetButtons.forEach(btn=>{
-      if(btn.dataset.letter === letter || (state.lang!=='ar' && btn.dataset.letter.toUpperCase() === letter.toUpperCase())){
-        btn.classList.add('correct');
-        btn.classList.add('disabled');
+  // build game board (apples, slots, alphabet)
+  function buildGameBoard(){
+    treeApples.innerHTML=''; fallenColumns.innerHTML=''; slotsRow.innerHTML=''; alphabetDiv.innerHTML='';
+    state.apples=[]; state.slots=[]; state.alphabetButtons=[]; state.fallenCount=0;
+    const n = state.maxApples;
+    let appleSize = settings.options.appleSizeBasePx;
+    if(n>12) appleSize = Math.max(30, appleSize - 6);
+    if(n>20) appleSize = Math.max(24, appleSize - 10);
+    const cols = Math.min(6, Math.ceil(Math.sqrt(n)));
+    const rows = Math.ceil(n/cols);
+    let idx=0;
+    const treeWidthPercent = 85;
+    const offsetPercent = (100-treeWidthPercent)/2;
+    for(let r=0;r<rows;r++){
+      for(let c=0;c<cols;c++){
+        if(idx>=n) break;
+        const left = 4 + (c + (r%2?0.16:0)) * (62/cols) + (Math.random()*4 -2);
+        const top = 10 + r * (70/rows) + (Math.random()*6 -3);
+        const wrap = document.createElement('div'); wrap.className='apple-item';
+        wrap.style.left = `calc(${left}% + ${offsetPercent/2}%)`; wrap.style.top = top + '%';
+        wrap.dataset.index = idx; wrap.dataset.fallen = 'false';
+        const img = document.createElement('img'); img.src = settings.images.apple; img.style.width = appleSize + 'px';
+        wrap.appendChild(img); treeApples.appendChild(wrap); state.apples.push(wrap); idx++;
       }
-    });
-    revealLetter(letter);
-    // play success audio if available
-    if(successAudios.length) playAudioObj(successAudios[state.successIndex % successAudios.length], 0.18);
-    else playAudio(settings.sounds.successList[state.successIndex % (settings.sounds.successList.length || 1)] || settings.sounds.click, 0.18);
-    state.successIndex++;
-    checkWin();
-  } else {
-    // mark the pressed button as wrong (single)
-    state.alphabetButtons.forEach(btn=>{
-      if(btn.dataset.letter === letter) btn.classList.add('wrong');
-    });
-    triggerAppleFall(letter);
-    // play fail audio if available
-    if(failAudios.length) playAudioObj(failAudios[state.failIndex % failAudios.length], 0.18);
-    state.failIndex++;
-  }
-}
-
-/* reveal letter(s) */
-function revealLetter(letter){
-  state.wordChars.forEach((ch, idx)=>{
-    if(ch === ' ') return;
-    const equal = (state.lang === 'ar') ? (ch === letter) : (ch.toUpperCase() === letter.toUpperCase());
-    if(equal){
-      state.slots[idx].textContent = ch;
-      state.slots[idx].style.color = '#0b8a3a';
-      state.slots[idx].classList.add('revealed');
     }
-  });
-}
-
-/* apple fall + fallen columns */
-function triggerAppleFall(letter){
-  const appleEl = state.apples.find(a => a.dataset.fallen === 'false');
-  if(!appleEl) return;
-  appleEl.dataset.fallen = 'true';
-  appleEl.style.opacity = '0.14';
-  state.fallenCount++;
-
-  const isLastApple = state.fallenCount >= state.maxApples;
-  const rect = appleEl.getBoundingClientRect();
-
-  const clone = appleEl.cloneNode(true);
-  clone.style.position = 'fixed';
-  clone.style.left = (rect.left + rect.width/2) + 'px';
-  clone.style.top = (rect.top + rect.height/2) + 'px';
-  clone.style.transform = 'translate(-50%,-50%) scale(1)';
-  clone.style.zIndex = 9999;
-  document.body.appendChild(clone);
-
-  const perCol = settings.options.maxApplesPerColumn || 3;
-  const colIndex = Math.floor((state.fallenCount - 1) / perCol);
-  let colEl = fallenColumns.querySelector(`.fallen-column[data-col='${colIndex}']`);
-  if(!colEl){
-    colEl = document.createElement('div');
-    colEl.className = 'fallen-column';
-    colEl.dataset.col = colIndex;
-    fallenColumns.appendChild(colEl);
+    renderSlots();
+    renderAlphabet();
+    document.documentElement.style.setProperty('--slot-font', settings.options.slotFontSizePx + 'px');
+    document.documentElement.style.setProperty('--slot-gap', settings.options.slotUnderscoreSpacing + 'px');
+    updateDynamicElements();
   }
 
-  const temp = document.createElement('div');
-  temp.style.width='1px'; temp.style.height='1px'; temp.style.opacity='0';
-  colEl.appendChild(temp);
-  const targetRect = temp.getBoundingClientRect();
+  function renderSlots(){
+    slotsRow.innerHTML=''; state.slots=[];
+    state.wordChars.forEach((ch,i)=>{
+      const s=document.createElement('div'); s.className='slot'; s.dataset.pos=i;
+      if(ch===' '){ s.classList.add('space'); s.textContent=' '; } else s.textContent='_';
+      slotsRow.appendChild(s); state.slots.push(s);
+    });
+    const wordLength = state.wordChars.filter(ch=>ch!==' ').length;
+    slotsRow.classList.remove('short-word','medium-word','long-word','very-long-word','extremely-long-word');
+    if(wordLength<=8) slotsRow.classList.add('short-word');
+    else if(wordLength<=16) slotsRow.classList.add('medium-word');
+    else if(wordLength<=24) slotsRow.classList.add('long-word');
+    else if(wordLength<=30) slotsRow.classList.add('very-long-word');
+    else slotsRow.classList.add('extremely-long-word');
+  }
 
-  // audio
-  if(!isLastApple && fallWhistleAudio) playAudioObj(fallWhistleAudio, 0.16);
-  const fallDur = settings.options.fallDurationMs || 700;
-  const bounceDur = settings.options.bounceDurationMs || 420;
-  const tilt = settings.options.bounceTiltDeg || 28;
+  function renderAlphabet(){
+    alphabetDiv.innerHTML=''; state.alphabetButtons=[];
+    const arr = ALPHABETS[state.lang] || ALPHABETS.nl;
+    const letters = (state.lang==='ar') ? arr.slice().reverse() : arr.slice();
+    letters.forEach(l=>{
+      const btn=document.createElement('button'); btn.className='letter-btn'; btn.textContent=l; btn.dataset.letter=l;
+      btn.addEventListener('click', onLetterClick); alphabetDiv.appendChild(btn); state.alphabetButtons.push(btn);
+    });
+    alphabetDiv.style.direction = (state.lang==='ar') ? 'rtl' : 'ltr';
+    adjustAlphabetButtons();
+  }
 
-  requestAnimationFrame(()=> {
-    clone.style.transition = `top ${fallDur}ms cubic-bezier(.2,.9,.2,1)`;
-    clone.style.top = (targetRect.top - 28) + 'px';
-  });
-
-  setTimeout(()=>{
-    if(!isLastApple && impactAudio) playAudioObj(impactAudio, 0.14);
-    const tx = targetRect.left + (targetRect.width/2);
-    const ty = targetRect.top + (targetRect.height/2);
-    clone.style.transition = `left ${bounceDur}ms cubic-bezier(.2,.9,.2,1), top ${bounceDur}ms cubic-bezier(.2,.9,.2,1), transform ${bounceDur}ms ease`;
-    clone.style.left = tx + 'px';
-    clone.style.top = ty + 'px';
-    clone.style.transform = `translate(-50%,-50%) scale(0.92) rotate(${tilt}deg)`;
-    if(!isLastApple && slideAudio) playAudioObj(slideAudio, 0.12);
-  }, fallDur + 20);
-
-  setTimeout(()=>{
-    if(clone && clone.parentNode) clone.parentNode.removeChild(clone);
-    const item = document.createElement('div'); item.className='fallen-item';
-    const imgWrap = document.createElement('div'); imgWrap.innerHTML = appleEl.innerHTML;
-    const img = imgWrap.querySelector('img'); if(img) img.style.width = '44px';
-    const letterEl = document.createElement('div'); letterEl.className='fallen-letter'; letterEl.textContent = letter;
-    item.appendChild(imgWrap); item.appendChild(letterEl); colEl.appendChild(item);
-    if(temp && temp.parentNode) temp.parentNode.removeChild(temp);
-    checkLose();
-  }, fallDur + bounceDur + 60);
-}
-
-/* check win */
-function checkWin(){
-  const unfinished = state.slots.some(s => s.textContent === '_');
-  if(!unfinished){
-    // set slot colors green
-    state.slots.forEach((s, idx)=>{ if(s.textContent !== ' ') s.style.color = '#0b8a3a'; });
-    // mark alphabet: correct -> green
-    state.alphabetButtons.forEach(btn=>{
-      const letter = btn.dataset.letter;
-      let correct=false;
-      state.wordChars.forEach(ch => {
-        if(ch === ' ') return;
-        if((state.lang==='ar' && ch===letter) || (state.lang!=='ar' && ch.toUpperCase()===letter.toUpperCase())) correct=true;
+  function adjustAlphabetButtons(){
+    const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+    if(state.alphabetButtons && state.alphabetButtons.length){
+      state.alphabetButtons.forEach(btn=>{
+        if(isPortrait){
+          btn.style.minWidth="32px"; btn.style.minHeight="32px"; btn.style.padding="8px 10px"; btn.style.fontSize="12px";
+        } else {
+          btn.style.minWidth="40px"; btn.style.minHeight="auto"; btn.style.padding="8px 10px"; btn.style.fontSize="inherit";
+        }
       });
-      if(correct) btn.classList.add('correct');
-    });
-    // stop challenge & show modal
-    endChallenge(true);
-    if(successMsgAudio) playAudioObj(successMsgAudio, 0.22);
-    showModal(state.lang==='ar'?'مبروك!':(state.lang==='nl'?'Gefeliciteerd!':'Congratulations!'),
-      (state.lang==='ar')? 'لقد خمنت الكلمة!' : `The word was: ${state.wordRaw}`,
-      `<img src="${settings.images.crowdWin}" style="max-width:320px">`);
-  }
-}
-
-/* check lose (all apples fallen or timer expired) */
-function checkLose(){
-  if(state.fallenCount >= state.maxApples){
-    // reveal all, color recognized letters green and others red
-    state.slots.forEach((slot, idx)=>{
-      const ch = state.wordChars[idx];
-      if(ch === ' ') return;
-      slot.textContent = ch;
-      // if slot already revealed earlier -> keep green; else red
-      if(slot.classList.contains('revealed')) slot.style.color = '#0b8a3a';
-      else slot.style.color = '#c73737';
-    });
-
-    // update alphabet buttons: in-word -> green; wrong guessed -> red
-    state.alphabetButtons.forEach(btn=>{
-      const letter = btn.dataset.letter;
-      let inWord = false;
-      state.wordChars.forEach(ch=>{ if(ch!=='' && ch!==' ' && ((state.lang==='ar' && ch===letter) || (state.lang!=='ar' && ch.toUpperCase()===letter.toUpperCase()))) inWord = true; });
-      if(inWord) btn.classList.add('correct');
-      else if(btn.classList.contains('disabled')) btn.classList.add('wrong');
-    });
-
-    endChallenge(false);
-    if(failMsgAudio) playAudioObj(failMsgAudio, 0.22);
-    showModal(state.lang==='ar'?'انتهت التفاحات':(state.lang==='nl'?'Alle appels zijn gevallen':'Apples finished'),
-      (state.lang==='ar')? `الكلمة كانت: ${state.wordRaw}` : `The word was: ${state.wordRaw}`,
-      `<img src="${settings.images.crowdFail}" style="max-width:320px">`);
-  }
-}
-
-/* new button */
-newBtn.addEventListener('click', ()=> {
-  uiClick();
-  pageGame.classList.remove('active'); pageGame.setAttribute('aria-hidden','true');
-  pageSetup.classList.add('active'); pageSetup.setAttribute('aria-hidden','false');
-  treeApples.innerHTML=''; fallenColumns.innerHTML=''; slotsRow.innerHTML=''; alphabetDiv.innerHTML='';
-  state.wordRaw = ''; state.wordChars=[]; state.maxApples=0; state.apples=[]; state.fallenCount=0; state.slots=[]; state.alphabetButtons=[];
-  state.challenge = null; timerBadge.style.display='none';
-  // reset audio indexes
-  state.successIndex = 0; state.failIndex = 0;
-});
-
-/* ========== CHALLENGE flow (fixed button) ========== */
-function openChallengeModal(){
-  document.getElementById('challengeTitle').textContent = LOC[state.lang].challenge;
-  document.getElementById('lblDuration').textContent = `${LOC[state.lang].timerLabel} / Duration (sec):`;
-  createChallenge.textContent = LOC[state.lang].challenge;
-  cancelChallenge.textContent = state.lang==='ar'?'إلغاء':'Cancel';
-  challengeModal.classList.add('show');
-}
-challengeBtnFixed.addEventListener('click', ()=>{ uiClick(); openChallengeModal(); });
-cancelChallenge.addEventListener('click', ()=> challengeModal.classList.remove('show'));
-
-createChallenge.addEventListener('click', ()=>{
-  uiClick();
-  const dur = Math.max(5, Math.floor(Number(challengeDuration.value) || 60));
-  const seed = Math.random().toString(36).slice(2,10).toUpperCase();
-  const params = new URLSearchParams({ seed, lang: state.lang, duration: String(dur) });
-  const url = `${location.origin}${location.pathname}?${params.toString()}`;
-  state.challenge = { id: seed, durationSec: dur, url, active:false, startedAt:null, timeLeftSec: dur };
-  challengeModal.classList.remove('show');
-  openShareModal(url);
-});
-
-/* share modal */
-function openShareModal(url){
-  shareBody.innerHTML = `<div style="word-break:break-all">${url}</div>`;
-  shareModal.classList.add('show');
-  copyLinkBtn.textContent = LOC[state.lang].copy;
-  downloadReportBtn.textContent = LOC[state.lang].download + ' ' + LOC[state.lang].report;
-  shareNativeBtn.textContent = LOC[state.lang].share;
-
-  copyLinkBtn.onclick = async ()=>{
-    try {
-      await navigator.clipboard.writeText(url);
-      alert(state.lang==='ar'?'تم نسخ الرابط':'Link copied');
-    } catch(e){
-      prompt('Copy this link:', url);
     }
-  };
+  }
 
-  downloadReportBtn.onclick = ()=> {
-    const blob = new Blob([`Challenge Link: ${url}`], {type:'text/plain'});
-    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'challenge-link.txt'; a.click();
-  };
+  // letter click
+  function onLetterClick(e){
+    const btn = e.currentTarget; if(btn.classList.contains('disabled')) return;
+    btn.classList.add('disabled'); btn.disabled=true; uiClick(); const letter = btn.dataset.letter; handleGuess(letter);
+  }
 
-  shareNativeBtn.onclick = async ()=>{
-    if(navigator.share){
-      try {
-        await navigator.share({ title: LOC[state.lang].challenge, text: LOC[state.lang].challenge + ' - ' + url, url });
-      } catch(e){
-        // user cancelled or failed
-      }
+  function handleGuess(letter){
+    let match=false;
+    state.wordChars.forEach(ch => {
+      if(ch===' ') return;
+      if(state.lang==='ar'){ if(ch===letter) match=true; } else { if(ch.toUpperCase()===letter.toUpperCase()) match=true; }
+    });
+    if(match){
+      revealLetter(letter);
+      const isLastLetter = checkIfLastLetter();
+      if(!isLastLetter){ const list=settings.sounds.successList||[]; if(list.length) playAudio(list[state.successIndex%list.length],0.18); state.successIndex++; }
+      checkWin();
     } else {
-      // fallback to whatsapp web
-      window.open(`https://web.whatsapp.com/send?text=${encodeURIComponent(url)}`, '_blank');
+      triggerAppleFall(letter);
     }
-  };
-
-  closeShare.onclick = ()=> shareModal.classList.remove('show');
-}
-
-/* ========== detect incoming challenge via URL ========= */
-(function detectIncomingChallenge(){
-  const qs = new URLSearchParams(location.search);
-  const seed = qs.get('seed');
-  const dur = Number(qs.get('duration')||0);
-  const lang = qs.get('lang');
-  if(seed){
-    state.challenge = { id: seed, durationSec: dur || 60, url: location.href, active:false, startedAt:null, timeLeftSec: dur || 60 };
-    if(lang && ALPHABETS[lang]) state.lang = lang;
-    langEls.forEach(x=>x.classList.toggle('active', x.dataset.lang===state.lang));
-    updateChallengeButtonText();
-    updatePlaceholders();
-    showModal(state.lang==='ar'?'تحدٍّ وارد':'Incoming challenge', state.lang==='ar'?'تم استلام رابط التحدي. ابدأ اللعبة لبدء المؤقت.':'Challenge link detected. Start the game to start timer.');
   }
-})();
 
-/* ========== Challenge timer ========== */
-let timerInterval = null;
-function startChallengeTimer(chal){
-  if(!chal) return;
-  chal.active = true; chal.startedAt = Date.now();
-  chal.timeLeftSec = chal.durationSec;
-  timerBadge.style.display = 'block';
-  updateTimerBadge(chal.timeLeftSec);
-  if(timerInterval) clearInterval(timerInterval);
-  timerInterval = setInterval(()=>{
-    const elapsed = Math.floor((Date.now() - chal.startedAt)/1000);
-    const remain = Math.max(0, chal.durationSec - elapsed);
-    chal.timeLeftSec = remain;
-    updateTimerBadge(remain);
-    if(remain <= 0){
-      clearInterval(timerInterval); timerInterval = null;
-      // enforce lose
-      state.fallenCount = state.maxApples;
+  function checkIfLastLetter(){
+    let revealed=0;
+    state.wordChars.forEach((ch,idx)=>{ if(ch!==' ' && state.slots[idx].textContent!=='_') revealed++; });
+    return revealed >= state.maxApples;
+  }
+
+  function revealLetter(letter){
+    state.wordChars.forEach((ch,idx)=>{ if(ch===' ') return; const equal = (state.lang==='ar') ? (ch===letter) : (ch.toUpperCase()===letter.toUpperCase()); if(equal){ state.slots[idx].textContent = ch; state.slots[idx].style.color = '#0b8a3a'; state.slots[idx].classList.add('revealed'); }});
+  }
+
+  function triggerAppleFall(letter){
+    const appleEl = state.apples.find(a=>a.dataset.fallen==='false'); if(!appleEl) return;
+    appleEl.dataset.fallen='true'; appleEl.style.opacity='0.14'; state.fallenCount++;
+    const isLastApple = state.fallenCount >= state.maxApples;
+    const rect = appleEl.getBoundingClientRect();
+    const clone = appleEl.cloneNode(true);
+    clone.style.position='fixed'; clone.style.left=(rect.left + rect.width/2) + 'px'; clone.style.top=(rect.top + rect.height/2) + 'px';
+    clone.style.transform='translate(-50%,-50%) scale(1)'; clone.style.zIndex=9999; document.body.appendChild(clone);
+    const perCol = settings.options.maxApplesPerColumn || 3;
+    const colIndex = Math.floor((state.fallenCount - 1) / perCol);
+    let colEl = fallenColumns.querySelector(`.fallen-column[data-col='${colIndex}']`);
+    if(!colEl){ colEl = document.createElement('div'); colEl.className='fallen-column'; colEl.dataset.col = colIndex; fallenColumns.appendChild(colEl); }
+    const temp = document.createElement('div'); temp.style.width='1px'; temp.style.height='1px'; temp.style.opacity='0'; colEl.appendChild(temp);
+    const targetRect = temp.getBoundingClientRect();
+    if(!isLastApple && state.audioEnabled) playAudio(settings.sounds.fallWhistle, 0.16);
+    const fallDur = settings.options.fallDurationMs || 700;
+    const bounceDur = settings.options.bounceDurationMs || 420;
+    const tilt = settings.options.bounceTiltDeg || 28;
+    requestAnimationFrame(()=>{ clone.style.transition = `top ${fallDur}ms cubic-bezier(.2,.9,.2,1)`; clone.style.top = (targetRect.top - 28) + 'px'; });
+    setTimeout(()=>{
+      if(!isLastApple && state.audioEnabled) playAudio(settings.sounds.impact, 0.16);
+      const tx = targetRect.left + (targetRect.width/2);
+      const ty = targetRect.top + (targetRect.height/2);
+      clone.style.transition = `left ${bounceDur}ms cubic-bezier(.2,.9,.2,1), top ${bounceDur}ms cubic-bezier(.2,.9,.2,1), transform ${bounceDur}ms ease`;
+      clone.style.left = tx + 'px';
+      clone.style.top = ty + 'px';
+      clone.style.transform = `translate(-50%,-50%) scale(0.92) rotate(${tilt}deg)`;
+      if(!isLastApple && state.audioEnabled && settings.sounds.slide) playAudio(settings.sounds.slide, 0.12);
+    }, fallDur + 20);
+    setTimeout(()=>{
+      if(clone && clone.parentNode) clone.parentNode.removeChild(clone);
+      const item = document.createElement('div'); item.className='fallen-item';
+      const imgWrap = document.createElement('div'); imgWrap.innerHTML = appleEl.innerHTML; imgWrap.querySelector('img').style.width='44px';
+      const letterEl = document.createElement('div'); letterEl.className='fallen-letter'; letterEl.textContent = letter;
+      item.appendChild(imgWrap); item.appendChild(letterEl); colEl.appendChild(item);
+      if(temp && temp.parentNode) temp.parentNode.removeChild(temp);
+      if(!isLastApple){ const fl = settings.sounds.failList || []; if(fl.length) playAudio(fl[state.failIndex%fl.length],0.18); state.failIndex++; }
       checkLose();
+    }, fallDur + bounceDur + 60);
+  }
+
+  function checkWin(){
+    const unfinished = state.slots.some(s => s.textContent === '_');
+    if(!unfinished){
+      stopBirds();
+      state.slots.forEach(s=>{ if(s.textContent !== ' ') s.style.color = '#0b8a3a'; });
+      modalTitle.textContent = state.lang==='ar' ? 'مبروك!' : (state.lang==='nl' ? 'Gefeliciteerd!' : 'Congratulations!');
+      modalDesc.textContent = (state.lang==='ar') ? 'لقد خمنت الكلمة!' : `The word was: ${state.wordRaw}`;
+      modalMedia.innerHTML = `<img src="${settings.images.crowdWin}" alt="win" onerror="this.style.display='none'">`;
+      modal.classList.add('show');
+      // save report
+      lastReport = createReport('win');
+      setTimeout(()=>{ if(settings.sounds.successMessage) playAudio(settings.sounds.successMessage,0.22); }, 300);
     }
-  }, 250);
-}
-function updateTimerBadge(sec){
-  const mm = String(Math.floor(sec/60)).padStart(2,'0'); const ss = String(sec%60).padStart(2,'0');
-  timerBadge.textContent = `${mm}:${ss}`;
-}
-function endChallenge(won){
-  if(!state.challenge) return;
-  state.challenge.active = false;
-  state.challenge.timeLeftSec = state.challenge.timeLeftSec || 0;
-  timerBadge.style.display = 'none';
-  if(timerInterval){ clearInterval(timerInterval); timerInterval = null; }
-  // generate report image and show share modal with it
-  generateReportImage(won).then(dataUrl=>{
-    shareBody.innerHTML = `<div style="text-align:center"><img src="${dataUrl}" style="max-width:320px;border:1px solid #ddd;border-radius:8px"></div><p style="margin-top:8px">${LOC[state.lang].report}</p>`;
-    shareModal.classList.add('show');
+  }
 
-    downloadReportBtn.onclick = ()=> {
-      const a=document.createElement('a'); a.href=dataUrl; a.download='appelboom_report.png'; a.click();
-    };
-    shareNativeBtn.onclick = async ()=>{
-      if(navigator.canShare && navigator.canShare({files:[]})){
-        alert(LOC[state.lang].share);
-      } else if(navigator.share){
-        try { navigator.share({ title: LOC[state.lang].report, text: 'Result', url: state.challenge.url }); } catch(e){}
-      } else {
-        alert(state.lang==='ar'?'استخدم النسخ أو التنزيل':'Use copy or download');
-      }
-    };
-    copyLinkBtn.onclick = async ()=>{ try { await navigator.clipboard.writeText(state.challenge.url||location.href); alert(state.lang==='ar'?'تم النسخ':'Link copied'); } catch(e){ prompt('Link:', state.challenge.url||location.href); } };
+  function checkLose(){
+    if(state.fallenCount >= state.maxApples){
+      stopBirds();
+      state.slots.forEach((slot,idx)=>{ const ch=state.wordChars[idx]; if(ch===' ') return; slot.textContent = ch; slot.style.color = '#c73737'; });
+      modalTitle.textContent = state.lang==='ar' ? 'انتهت التفاحات' : (state.lang==='nl' ? 'Alle appels zijn gevallen' : 'Apples finished');
+      modalDesc.textContent = (state.lang==='ar') ? `الكلمة كانت: ${state.wordRaw}` : `The word was: ${state.wordRaw}`;
+      modalMedia.innerHTML = `<img src="${settings.images.crowdFail}" alt="fail" onerror="this.style.display='none'">`;
+      modal.classList.add('show');
+      lastReport = createReport('lose');
+      setTimeout(()=>{ if(settings.sounds.failMessage) playAudio(settings.sounds.failMessage,0.22); }, 300);
+    }
+  }
+
+  // start button
+  startBtn.addEventListener('click', async ()=>{
+    uiClick();
+    const raw = (wordInput.value || '').trim();
+    if(!raw){ alert(state.lang==='ar' ? 'الرجاء إدخال كلمة.' : (state.lang==='nl' ? 'Voer een woord in.' : 'Please enter a word.')); return; }
+    const word = state.lang==='ar' ? raw : raw.toUpperCase();
+    state.wordRaw = word;
+    state.wordChars = word.split('');
+    state.maxApples = word.replace(/\s/g,'').length;
+    pageSetup.classList.remove('active'); pageGame.classList.add('active');
+    buildGameBoard();
   });
-}
 
-/* generate report canvas */
-async function generateReportImage(won){
-  const w = 800, h = 600;
-  const c = document.createElement('canvas'); c.width = w; c.height = h;
-  const ctx = c.getContext('2d');
-  ctx.fillStyle = '#ffffff'; ctx.fillRect(0,0,w,h);
-  ctx.fillStyle='#000'; ctx.font = '28px Arial'; ctx.fillText('Appelboom - ' + LOC[state.lang].report, 20,40);
-  ctx.font = '22px Arial'; ctx.fillStyle = won? '#0b8a3a' : '#c73737';
-  ctx.fillText(state.lang==='ar' ? (won? 'الفوز' : 'خسارة') : (won? 'Win':'Lose'), 20,90);
-  ctx.fillStyle='#000'; ctx.font='20px Arial'; ctx.fillText((state.lang==='ar'?'الكلمة: ':'Word: ') + state.wordRaw, 20,140);
-  ctx.fillText((state.lang==='ar'?'التفاحات الساقطة: ':'Apples fallen: ') + state.fallenCount + ' / ' + state.maxApples, 20,180);
-  ctx.fillText((state.lang==='ar'?'الوقت المتبقي: ':'Time left: ') + (state.challenge? state.challenge.timeLeftSec + 's' : 'N/A'), 20,220);
-  for(let i=0;i<state.fallenCount;i++){
-    ctx.fillStyle='#c73737'; ctx.beginPath(); ctx.arc(40 + (i%10)*28, 260 + Math.floor(i/10)*28, 10,0,Math.PI*2); ctx.fill();
+  // newBtn
+  newBtn.addEventListener('click', ()=>{
+    uiClick();
+    pageGame.classList.remove('active'); pageSetup.classList.add('active');
+    treeApples.innerHTML=''; fallenColumns.innerHTML=''; slotsRow.innerHTML=''; alphabetDiv.innerHTML='';
+    wordInput.value=''; state.wordRaw=''; state.wordChars=[]; state.maxApples=0; state.apples=[]; state.fallenCount=0; state.slots=[];
+    setTimeout(()=>{ document.addEventListener('click', function restartBirds(){ if(state.audioEnabled && pageSetup.classList.contains('active')){ playBirds(); document.removeEventListener('click', restartBirds); } }); }, 100);
+  });
+
+  // keyboard support
+  document.addEventListener('keydown', function(e){
+    if(!pageGame.classList.contains('active')) return;
+    const key = e.key.toUpperCase();
+    const arr = ALPHABETS[state.lang] || ALPHABETS.nl;
+    const isValid = arr.includes(key) || (state.lang==='ar' && arr.includes(e.key));
+    if(isValid){
+      const letterBtn = Array.from(state.alphabetButtons).find(btn=> btn.dataset.letter === key || (state.lang==='ar' && btn.dataset.letter === e.key) );
+      if(letterBtn && !letterBtn.classList.contains('disabled')) letterBtn.click();
+    }
+    if(e.key === 'Enter' && pageGame.classList.contains('active')) newBtn.click();
+  });
+
+  // modal ok
+  modalOk.addEventListener('click', ()=>{ uiClick(); modal.classList.remove('show'); });
+
+  /* ================== CHALLENGE / SHARE ================== */
+  // create challenge link encoded in URL (base64 JSON)
+  function generateChallengeLink({ word, durationSec = 60, mode = 'solo' }){
+    const payload = { id: 'c-' + Date.now(), word, durationSec, mode, ts: Date.now() };
+    const b64 = btoa(encodeURIComponent(JSON.stringify(payload)));
+    const url = new URL(location.href);
+    url.searchParams.set('challenge', b64);
+    return url.toString();
   }
-  ctx.fillStyle='#666'; ctx.font='14px Arial'; ctx.fillText('Generated by Appelboom', 20, h-30);
-  return c.toDataURL('image/png');
-}
 
-/* keyboard support */
-document.addEventListener('keydown', (e)=>{
-  if(!pageGame.classList.contains('active')) return;
-  const key = e.key;
-  const currentAlphabet = ALPHABETS[state.lang] || ALPHABETS.nl;
-  // check both upper and lower where relevant
-  const isValid = currentAlphabet.includes(key.toUpperCase()) || currentAlphabet.includes(key);
-  if(isValid){
-    const letterBtn = Array.from(state.alphabetButtons).find(btn => btn.dataset.letter === key || btn.dataset.letter === key.toUpperCase());
-    if(letterBtn && !letterBtn.classList.contains('disabled')) letterBtn.click();
+  // parse challenge from URL
+  function parseChallengeFromUrl(){
+    const p = new URL(location.href).searchParams.get('challenge');
+    if(!p) return null;
+    try{
+      const json = decodeURIComponent(atob(p));
+      return JSON.parse(json);
+    }catch(e){ console.warn('bad challenge url', e); return null; }
   }
-  if(e.key === 'Enter') newBtn.click();
-});
 
-/* Resize/orientation handler (minimal) */
-window.addEventListener('resize', ()=>{/* no heavy reflows here */});
+  // if open with challenge param -> prefill and offer accept
+  function handleIncomingChallenge(){
+    const ch = parseChallengeFromUrl();
+    if(!ch) return;
+    // if spectate param
+    const spectate = new URL(location.href).searchParams.get('spectate');
+    if(spectate === '1'){
+      // spectator view: show read-only board (no input) with word hidden, show basic info
+      pageSetup.classList.remove('active'); pageGame.classList.add('active');
+      state.wordRaw = ch.word; state.wordChars = ch.word.split(''); state.maxApples = ch.word.replace(/\s/g,'').length;
+      buildGameBoard();
+      // disable alphabet
+      state.alphabetButtons.forEach(b=>{ b.disabled=true; b.classList.add('disabled'); });
+      modalTitle.textContent = 'Spectator Mode'; modalDesc.textContent = `Viewing challenge: ${ch.id}`; modalMedia.innerHTML='';
+      modal.classList.add('show');
+      return;
+    }
+    // else offer to accept challenge
+    const accept = confirm((state.lang==='ar' ? 'هل تريد قبول التحدي؟' : 'Do you want to accept the challenge?') + `\n${ch.word ? (state.lang==='ar' ? 'عدد أحرف الكلمة: ' : 'Word length: ') + (ch.word.replace(/\s/g,'').length) : ''}`);
+    if(accept){
+      // prefill and auto-start
+      pageSetup.classList.remove('active'); pageGame.classList.add('active');
+      state.wordRaw = ch.word; state.wordChars = ch.word.split(''); state.maxApples = ch.word.replace(/\s/g,'').length;
+      buildGameBoard();
+      // optionally start a timer - for now we don't auto-lose on time (can extend)
+    } else {
+      // ignore
+    }
+  }
 
-/* Hide modals on background click */
-[modal, challengeModal, shareModal].forEach(m=>{
-  m.addEventListener('click', (ev)=>{ if(ev.target === m) m.classList.remove('show'); });
-});
+  // Share to WhatsApp single message (opens WA share)
+  function shareViaWhatsAppText(text){
+    const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+    window.open(url, '_blank');
+  }
 
-/* Ensure language buttons clickable on desktop (z-index safeguard) */
-langEls.forEach(el=>{ el.style.zIndex = 50; el.style.pointerEvents = 'auto'; });
+  // share to list of numbers: we will open multiple wa links in new tabs (user must send each)
+  function shareViaWhatsAppList(text, numbersArray){
+    // numbersArray are strings like "201234567890" international format w/o + or with +
+    numbersArray.forEach(num=>{
+      const n = num.replace(/\s+/g,'').replace(/\+/g,'');
+      const url = `https://wa.me/${n}?text=${encodeURIComponent(text)}`;
+      window.open(url, '_blank');
+    });
+  }
 
-/* End of script */
+  // challenge button
+  challengeBtn.addEventListener('click', ()=>{
+    const raw = (wordInput.value || '').trim();
+    if(!raw){ alert(state.lang==='ar' ? 'اكتب كلمة للتحدي أولاً' : 'Type a word for the challenge first'); return; }
+    const duration = prompt(state.lang==='ar' ? 'المدة بالثواني (مثال: 60)' : 'Duration in seconds (e.g. 60)', '60');
+    const d = parseInt(duration) || 60;
+    const link = generateChallengeLink({ word: (state.lang==='ar' ? raw : raw.toUpperCase()), durationSec: d });
+    // use Web Share API if available
+    if(navigator.share){
+      navigator.share({ title: 'AppelBoom Challenge', text: state.lang==='ar' ? 'تحدي تفاح' : 'Apple challenge', url: link }).catch(()=>{});
+    } else {
+      prompt((state.lang==='ar' ? 'انسخ الرابط وشاركه' : 'Copy the link and share'), link);
+    }
+  });
+
+  /* ================= REPORT GENERATION & SIGNING ================= */
+  // lastReport object stored after win/lose
+  let lastReport = null;
+
+  // create report
+  function createReport(result){
+    const now = Date.now();
+    const report = {
+      id: 'r-' + now,
+      ts: now,
+      result,
+      word: state.wordRaw,
+      fallen: state.fallenCount,
+      maxApples: state.maxApples,
+      lang: state.lang,
+      playerAgent: navigator.userAgent,
+    };
+    // compute signature (client-side SHA-256 of JSON + salt)
+    // NOTE: insecure client-side; for real trust use server signing
+    computeReportSignature(report).then(sig=>{ report.signature = sig; });
+    return report;
+  }
+
+  // compute SHA-256 signature (returns hex)
+  async function computeReportSignature(report){
+    try{
+      const json = JSON.stringify(report);
+      const data = new TextEncoder().encode(json + '|' + (settings.reportSalt || ''));
+      const hash = await crypto.subtle.digest('SHA-256', data);
+      const arr = Array.from(new Uint8Array(hash)).map(b=>b.toString(16).padStart(2,'0')).join('');
+      return arr;
+    }catch(e){ console.warn('signature error', e); return ''; }
+  }
+
+  // draw report image via canvas (simple text + fallen apples visualization)
+  async function renderReportImage(report){
+    const w = 720, h = 480;
+    const c = document.createElement('canvas'); c.width = w; c.height = h;
+    const ctx = c.getContext('2d');
+    ctx.fillStyle = '#0b5138'; ctx.fillRect(0,0,w,h);
+    ctx.fillStyle = '#fff'; ctx.font = '20px Inter, Arial'; ctx.fillText('AppelBoom - Report', 20, 40);
+    ctx.font = '16px Inter, Arial';
+    ctx.fillText(`Word: ${report.word}`, 20, 80);
+    ctx.fillText(`Result: ${report.result}`, 20, 110);
+    ctx.fillText(`Fallen apples: ${report.fallen} / ${report.maxApples}`, 20, 140);
+    ctx.fillText(`Language: ${report.lang}`, 20, 170);
+    ctx.fillText(`Time: ${new Date(report.ts).toLocaleString()}`, 20, 200);
+    ctx.fillText(`Signature(sha256): ${report.signature ? report.signature.slice(0,24) + '...' : 'pending'}`, 20, 230);
+    // draw apples small circles
+    const apples = report.maxApples || 0;
+    const fallen = report.fallen || 0;
+    const cols = Math.min(10, apples);
+    const rows = Math.ceil(apples / cols);
+    const baseX = 20, baseY = 260, gap = 28;
+    let k = 0;
+    for(let r=0;r<rows;r++){
+      for(let c0=0;c0<cols;c0++){
+        if(k>=apples) break;
+        const x = baseX + c0*gap; const y = baseY + r*gap;
+        ctx.beginPath(); ctx.arc(x,y,10,0,Math.PI*2);
+        ctx.fillStyle = (k < fallen) ? '#c73737' : '#ffffff';
+        ctx.fill(); ctx.strokeStyle='#00000033'; ctx.stroke();
+        k++;
+      }
+    }
+    return c.toDataURL('image/png');
+  }
+
+  // share report via Web Share or open in new tab
+  async function shareReport(){
+    if(!lastReport){ alert(state.lang==='ar' ? 'لا يوجد تقرير' : 'No report available'); return; }
+    // ensure signature exists before rendering
+    lastReport.signature = lastReport.signature || await computeReportSignature(lastReport);
+    const dataUrl = await renderReportImage(lastReport);
+    // create blob
+    const res = await fetch(dataUrl); const blob = await res.blob();
+    const filesArray = [ new File([blob], `${lastReport.id}.png`, { type: blob.type }) ];
+    if(navigator.canShare && navigator.canShare({ files: filesArray })){
+      try{ await navigator.share({ files: filesArray, title: 'AppelBoom Report', text: JSON.stringify(lastReport) }); return; }catch(e){ console.warn('share failed', e); }
+    }
+    // fallback: open image in new tab and copy JSON to clipboard
+    const w = window.open('', '_blank');
+    if(w){ w.document.write(`<img src="${dataUrl}" style="max-width:100%"><pre>${JSON.stringify(lastReport,null,2)}</pre>`); }
+    try{ await navigator.clipboard.writeText(JSON.stringify(lastReport)); alert(state.lang==='ar' ? 'تم نسخ التقرير إلى الحافظة' : 'Report JSON copied to clipboard'); }catch(e){}
+  }
+
+  // download report JSON + image
+  async function downloadReport(){
+    if(!lastReport){ alert(state.lang==='ar' ? 'لا يوجد تقرير' : 'No report'); return; }
+    lastReport.signature = lastReport.signature || await computeReportSignature(lastReport);
+    // download json
+    const blobJson = new Blob([JSON.stringify(lastReport,null,2)], { type: 'application/json' });
+    const urlJson = URL.createObjectURL(blobJson);
+    const a = document.createElement('a'); a.href = urlJson; a.download = `${lastReport.id}.json`; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(urlJson);
+    // download image
+    const dataUrl = await renderReportImage(lastReport);
+    const res = await fetch(dataUrl); const blob = await res.blob(); const urlImg = URL.createObjectURL(blob);
+    const b = document.createElement('a'); b.href = urlImg; b.download = `${lastReport.id}.png`; document.body.appendChild(b); b.click(); b.remove(); URL.revokeObjectURL(urlImg);
+  }
+
+  shareReportBtn.addEventListener('click', shareReport);
+  downloadReportBtn.addEventListener('click', downloadReport);
+
+  /* ================= ROTATE / FORCE LANDSCAPE ================= */
+  function updateOrientationClasses(){
+    const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+    document.body.classList.remove('mobile-portrait','mobile-landscape');
+    if(isMobile){
+      if(isPortrait) document.body.classList.add('mobile-portrait');
+      else document.body.classList.add('mobile-landscape');
+    }
+    // show rotate overlay if in portrait and we want horizontal-only experience
+    if(isMobile && isPortrait && !state.forcedLandscape){
+      // show a gentle overlay to ask user to rotate
+      rotateOverlay.classList.add('show');
+    } else {
+      rotateOverlay.classList.remove('show');
+      // if forcedLandscape active, apply transform
+      if(state.forcedLandscape){
+        applyForceLandscape();
+      } else {
+        removeForceLandscape();
+      }
+    }
+  }
+
+  overlayJustRotate.addEventListener('click', ()=>{ rotateOverlay.classList.remove('show'); });
+  overlayClose.addEventListener('click', ()=>{ rotateOverlay.classList.remove('show'); });
+  overlayForceRotate.addEventListener('click', ()=>{ state.forcedLandscape = true; rotateOverlay.classList.remove('show'); applyForceLandscape(); });
+
+  // Force landscape by rotating .stage (works even if physical device remains portrait).
+  function applyForceLandscape(){
+    // only for mobile, apply CSS transform and resize stage
+    if(!isMobile) return;
+    const vw = window.innerWidth, vh = window.innerHeight;
+    // rotate -90deg and set width/height swapped
+    stage.classList.add('force-rotated');
+    stage.style.transform = `rotate(-90deg) translate(${ -vh }px, 0px)`;
+    stage.style.width = vh + 'px';
+    stage.style.height = vw + 'px';
+    // adjust top/left
+    stage.style.left = '0px';
+    stage.style.top = '0px';
+    // set a flag
+    state.forcedLandscape = true;
+  }
+  function removeForceLandscape(){
+    stage.classList.remove('force-rotated');
+    stage.style.transform = '';
+    stage.style.width = '';
+    stage.style.height = '';
+    stage.style.left = '';
+    stage.style.top = '';
+    state.forcedLandscape = false;
+  }
+
+  forceLandscapeBtn.addEventListener('click', ()=>{
+    state.forcedLandscape = !state.forcedLandscape;
+    if(state.forcedLandscape) applyForceLandscape(); else removeForceLandscape();
+  });
+
+  // On orientation changes
+  window.addEventListener('orientationchange', ()=>{ setTimeout(()=>{ updateOrientationClasses(); updateDynamicElements(); }, 150); });
+  window.addEventListener('resize', ()=>{ setTimeout(()=>{ updateOrientationClasses(); updateDynamicElements(); }, 150); });
+
+  // dynamic updates without rebuild
+  function updateDynamicElements(){
+    adjustAlphabetButtons();
+    // adjust fallen columns widths
+    const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+    const cols = fallenColumns.querySelectorAll('.fallen-column');
+    cols.forEach(c=>{ c.style.width = isPortrait ? '70px' : '84px'; });
+  }
+
+  /* ================= handle incoming challenge on load ================= */
+  handleIncomingChallenge();
+
+  /* ================= small util: copy to clipboard ================= */
+  async function copyToClipboard(text){
+    try{ await navigator.clipboard.writeText(text); return true; }catch(e){ return false; }
+  }
+
+  /* ================= init ================= */
+  updateOrientationClasses();
+  // ensure birds play on first click if enabled
+  document.addEventListener('click', function first(){ if(state.audioEnabled) playBirds(); document.removeEventListener('click', first); });
+  // sound toggle
+  soundToggle.addEventListener('click', ()=>{ state.audioEnabled = !state.audioEnabled; if(state.audioEnabled){ soundToggle.classList.remove('muted'); soundToggle.setAttribute('aria-label','إيقاف الصوت'); playBirds(); } else { soundToggle.classList.add('muted'); soundToggle.setAttribute('aria-label','تشغيل الصوت'); stopBirds(); } uiClick(); });
+
+  // Expose for debug
+  window.Appelboom = { settings, state, generateChallengeLink, parseChallengeFromUrl, applyForceLandscape, removeForceLandscape, createReport, computeReportSignature };
+})();
 </script>
 </body>
 </html>
