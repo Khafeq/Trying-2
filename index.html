@@ -24,6 +24,43 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
 .sound-toggle::before{ content:"🔊"; font-size:22px; pointer-events:none; }
 .sound-toggle.muted::before{ content:"🔇"; }
 
+/* المؤقت */
+.timer-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  left: auto;
+  transform: none;
+  background: rgba(199, 55, 55, 0.9);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 25px;
+  font-size: 20px;
+  font-weight: 900;
+  z-index: 10000;
+  display: none;
+  border: 2px solid #ff4444;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  min-width: 80px;
+  text-align: center;
+}
+
+.timer-container.warning {
+  background: rgba(255, 68, 68, 0.95);
+  border-color: #ff0000;
+  animation: pulse 0.8s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+.timer-container.visible {
+  display: block;
+}
+
 /* pages */
 .page{display:none;height:calc(100% - 64px);position:relative;z-index:5;padding:12px}
 .page.active{display:block}
@@ -42,9 +79,29 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
 
 /* input & start */
 .input-container{ position:absolute; right:20px; top:120px; width:680px !important; z-index:10; }
-.input-field{ width:100%; border:none; padding:16px 20px !important; border-radius:12px !important; background:white; color:#000; font-weight:800; text-align:center; font-size:22px !important; outline:none; letter-spacing:4px; min-height:60px; }
-.input-field.password-dots{ font-size:24px; letter-spacing:8px; -webkit-text-security:disc; text-security:disc; }
+.input-field{ width:100%; border:none; padding:16px 20px !important; border-radius:12px !important; background:white; color:#000; font-weight:800; text-align:center; font-size:22px !important; outline:none; letter-spacing:4px; min-height:60px; position: relative; z-index: 2; }
 .input-field::placeholder{ color:#666; letter-spacing:normal; font-size:16px; }
+
+/* إخفاء الكلمة يدوياً */
+.password-dots-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: white;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    border-radius: 12px;
+    font-size: 24px;
+    letter-spacing: 8px;
+    color: #000;
+    font-weight: 800;
+    z-index: 3;
+}
+
 .start-col{ position:absolute; right:20px; bottom:120px; display:flex; align-items:center; justify-content:center; }
 .start-btn{ padding:24px 36px !important; border-radius:16px !important; background:#0b5138; color:white; border:none; font-weight:900; font-size:26px !important; cursor:pointer; box-shadow:0 12px 40px rgba(0,0,0,0.4); min-height:100px; min-width:180px; }
 
@@ -79,7 +136,7 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
 .modal-card img{ max-width:320px; height:auto; border-radius:8px; margin:8px 0; }
 .modal-btn{ margin-top:12px; padding:8px 12px; border-radius:8px; border:none; background:#0b5138; color:white; cursor:pointer; }
 
-/* responsive helpers (already implemented earlier) */
+/* responsive helpers */
 /* --- we'll add specific mobile rules below --- */
 
 /* ========== MOBILE: LANDSCAPE & PORTRAIT RULES ========== */
@@ -97,6 +154,15 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
   .game{ grid-template-columns:1fr 380px; grid-template-rows:100px 1fr; gap:10px; height:100%; }
   .game-tree-frame{ width:90% !important; max-width:500px !important; margin:0 auto !important; margin-left:-100px !important; margin-top:-50px !important; }
   .right-col{ grid-row:2; height:65vh; gap:8px; padding:5px; }
+  
+  /* المؤقت في الموبايل الأفقي */
+  .timer-container {
+    top: 15px;
+    right: 15px;
+    padding: 10px 16px;
+    font-size: 18px;
+    min-width: 70px;
+  }
 }
 
 /* Portrait mobile: custom layout as you specified */
@@ -107,6 +173,16 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
   header .title{ bottom:10px; font-size:12px; padding:6px 12px; transform:translateX(-50%); left:50%; width:90%; text-align:center; white-space:normal; }
   header .controls{ bottom:10px; right:10px; }
   .sound-toggle{ width:36px; height:36px; }
+  
+  /* المؤقت في الموبايل العمودي */
+  .timer-container {
+    top: 10px;
+    right: 10px;
+    padding: 8px 14px;
+    font-size: 16px;
+    min-width: 65px;
+  }
+  
   /* Setup page (portrait) */
   #pageSetup.active{ display:flex; flex-direction:column; align-items:center; justify-content:flex-start; height:100vh; position:relative; }
   .setup{ display:flex; flex-direction:column; height:100%; width:100%; grid-template-columns:1fr; gap:10px; }
@@ -116,6 +192,11 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
   /* Input box centered on trunk (bottom of the tree) */
   .input-container{ position:absolute !important; order:2; width:90% !important; bottom:50vh !important; left:50% !important; transform:translateX(-50%); top:auto !important; right:auto !important; z-index:20; }
   .input-field{ padding:14px 16px !important; font-size:18px !important; min-height:55px; background:white !important; opacity:1 !important; border:2px solid #0b5138; }
+  .password-dots-overlay {
+    border-radius: 12px;
+    font-size: 20px;
+    letter-spacing: 6px;
+  }
   .start-col{ position:absolute !important; order:3; bottom:15vh; right:5%; left:auto !important; transform:none; }
   .start-btn{ width:120px; padding:12px 20px !important; font-size:16px !important; min-height:50px; border-radius:12px !important; }
   .lang-col{ position:absolute; order:4; left:5%; bottom:15vh; margin-top:0; flex-direction:column; gap:6px; }
@@ -147,6 +228,14 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
   .start-col{ bottom:12vh; }
   .lang-col{ bottom:12vh; }
   .right-col{ height:45vh; }
+  
+  .timer-container {
+    top: 8px;
+    right: 8px;
+    padding: 6px 12px;
+    font-size: 14px;
+    min-width: 60px;
+  }
 }
 </style>
 </head>
@@ -206,6 +295,11 @@ const settings = {
       </div>
     </header>
 
+    <!-- المؤقت -->
+    <div id="timerContainer" class="timer-container">
+      <span id="timerDisplay">00:00</span>
+    </div>
+
     <!-- PAGE SETUP -->
     <section id="pageSetup" class="page active">
       <div class="setup">
@@ -224,7 +318,8 @@ const settings = {
       </div>
 
       <div class="input-container">
-        <input id="wordInput" class="input-field password-dots" autocomplete="off" placeholder="Typ het woord..." />
+        <input id="wordInput" class="input-field" type="text" autocomplete="off" placeholder="Typ het woord..." />
+        <div id="passwordDots" class="password-dots-overlay"></div>
       </div>
 
       <div class="start-col">
@@ -284,6 +379,7 @@ const settings = {
   const heroApples = document.getElementById('heroApples');
   const treeApples = document.getElementById('treeApples');
   const wordInput = document.getElementById('wordInput');
+  const passwordDots = document.getElementById('passwordDots');
   const startBtn = document.getElementById('startBtn');
   const langCol = document.getElementById('langCol');
   const langEls = langCol.querySelectorAll('.lang-btn');
@@ -302,6 +398,8 @@ const settings = {
   const shareReportBtn = document.getElementById('shareReportBtn');
   const downloadReportBtn = document.getElementById('downloadReportBtn');
   const challengeBtn = document.getElementById('challengeBtn');
+  const timerContainer = document.getElementById('timerContainer');
+  const timerDisplay = document.getElementById('timerDisplay');
 
   // state
   const ALPHABETS = {
@@ -325,7 +423,7 @@ const settings = {
     failIndex: 0,
     arabicWords: null,
     // multiplayer/challenge
-    activeChallenge: null, // object when playing a challenge {id, word, duration, tsStart}
+    activeChallenge: null, // object when playing a challenge {id, word, durationSec, timeLeft, timerInterval, tsStart}
   };
 
   // load images
@@ -339,6 +437,19 @@ const settings = {
   const birdsAudio = new Audio(settings.sounds.birds); birdsAudio.loop=true; birdsAudio.volume=0.25;
   function playBirds(){ if(state.audioEnabled){ birdsAudio.play().catch(()=>{}); } }
   function stopBirds(){ try{ birdsAudio.pause(); birdsAudio.currentTime=0; }catch(e){} }
+
+  // إخفاء الكلمة يدوياً
+  wordInput.addEventListener('input', function() {
+    const dots = '•'.repeat(this.value.length);
+    passwordDots.textContent = dots;
+    
+    // إخفاء/إظهار النقاط
+    if (this.value.length > 0) {
+        passwordDots.style.display = 'flex';
+    } else {
+        passwordDots.style.display = 'none';
+    }
+  });
 
   // language setup
   function updateInputPlaceholder(){
@@ -382,8 +493,81 @@ const settings = {
   }
   await loadArabicWords();
 
+  // ================= دوال المؤقت =================
+  function startChallengeTimer(durationSec) {
+      if (!state.activeChallenge) return;
+      
+      state.activeChallenge.durationSec = durationSec;
+      state.activeChallenge.timeLeft = durationSec;
+      state.activeChallenge.timerInterval = setInterval(updateTimer, 1000);
+      timerContainer.classList.add('visible');
+      updateTimerDisplay();
+  }
+
+  function updateTimer() {
+      if (!state.activeChallenge || state.activeChallenge.timeLeft <= 0) {
+          endChallengeTimer();
+          return;
+      }
+      
+      state.activeChallenge.timeLeft--;
+      updateTimerDisplay();
+      
+      // تحذير عندما يتبقى 10 ثواني
+      if (state.activeChallenge.timeLeft <= 10) {
+          timerContainer.classList.add('warning');
+          if (state.activeChallenge.timeLeft <= 5 && state.audioEnabled) {
+              playAudio(settings.sounds.click, 0.2);
+          }
+      }
+      
+      if (state.activeChallenge.timeLeft <= 0) {
+          endChallengeTimer();
+          handleTimeUp();
+      }
+  }
+
+  function updateTimerDisplay() {
+      if (!state.activeChallenge) return;
+      
+      const minutes = Math.floor(state.activeChallenge.timeLeft / 60);
+      const seconds = state.activeChallenge.timeLeft % 60;
+      timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+
+  function endChallengeTimer() {
+      if (state.activeChallenge && state.activeChallenge.timerInterval) {
+          clearInterval(state.activeChallenge.timerInterval);
+          state.activeChallenge.timerInterval = null;
+      }
+      timerContainer.classList.remove('visible', 'warning');
+  }
+
+  function handleTimeUp() {
+      stopBirds();
+      state.slots.forEach((slot, idx) => {
+          const ch = state.wordChars[idx];
+          if (ch === ' ') return;
+          slot.textContent = ch;
+          slot.style.color = '#c73737';
+      });
+      
+      modalTitle.textContent = state.lang === 'ar' ? 'انتهى الوقت!' : (state.lang === 'nl' ? 'Tijd is om!' : 'Time\'s up!');
+      modalDesc.textContent = (state.lang === 'ar') ? `الكلمة كانت: ${state.wordRaw}` : `The word was: ${state.wordRaw}`;
+      modalMedia.innerHTML = `<img src="${settings.images.crowdFail}" alt="time up" onerror="this.style.display='none'">`;
+      modal.classList.add('show');
+      
+      lastReport = createReport('time_up');
+      setTimeout(() => {
+          if (settings.sounds.failMessage) playAudio(settings.sounds.failMessage, 0.22);
+      }, 300);
+  }
+
   // build game board (apples, slots, alphabet)
   function buildGameBoard(){
+    // إعادة تعيين المؤقت إذا كان هناك تحدي سابق
+    endChallengeTimer();
+    
     treeApples.innerHTML=''; fallenColumns.innerHTML=''; slotsRow.innerHTML=''; alphabetDiv.innerHTML='';
     state.apples=[]; state.slots=[]; state.alphabetButtons=[]; state.fallenCount=0;
     const n = state.maxApples;
@@ -531,6 +715,7 @@ const settings = {
   function checkWin(){
     const unfinished = state.slots.some(s => s.textContent === '_');
     if(!unfinished){
+      endChallengeTimer(); // إيقاف المؤقت عند الفوز
       stopBirds();
       state.slots.forEach(s=>{ if(s.textContent !== ' ') s.style.color = '#0b8a3a'; });
       modalTitle.textContent = state.lang==='ar' ? 'مبروك!' : (state.lang==='nl' ? 'Gefeliciteerd!' : 'Congratulations!');
@@ -545,6 +730,7 @@ const settings = {
 
   function checkLose(){
     if(state.fallenCount >= state.maxApples){
+      endChallengeTimer(); // إيقاف المؤقت عند الخسارة
       stopBirds();
       state.slots.forEach((slot,idx)=>{ const ch=state.wordChars[idx]; if(ch===' ') return; slot.textContent = ch; slot.style.color = '#c73737'; });
       modalTitle.textContent = state.lang==='ar' ? 'انتهت التفاحات' : (state.lang==='nl' ? 'Alle appels zijn gevallen' : 'Apples finished');
@@ -561,21 +747,43 @@ const settings = {
     uiClick();
     const raw = (wordInput.value || '').trim();
     if(!raw){ alert(state.lang==='ar' ? 'الرجاء إدخال كلمة.' : (state.lang==='nl' ? 'Voer een woord in.' : 'Please enter a word.')); return; }
+    
+    // إخفاء النقاط
+    passwordDots.style.display = 'none';
+    
     const word = state.lang==='ar' ? raw : raw.toUpperCase();
     state.wordRaw = word;
     state.wordChars = word.split('');
     state.maxApples = word.replace(/\s/g,'').length;
-    pageSetup.classList.remove('active'); pageGame.classList.add('active');
+    
+    pageSetup.classList.remove('active'); 
+    pageGame.classList.add('active');
     buildGameBoard();
   });
 
   // newBtn
   newBtn.addEventListener('click', ()=>{
     uiClick();
-    pageGame.classList.remove('active'); pageSetup.classList.add('active');
+    endChallengeTimer();
+    state.activeChallenge = null;
+    pageGame.classList.remove('active'); 
+    pageSetup.classList.add('active');
+    
+    // إعادة تعيين وإظهار النقاط
+    wordInput.value = '';
+    passwordDots.style.display = 'none';
+    
     treeApples.innerHTML=''; fallenColumns.innerHTML=''; slotsRow.innerHTML=''; alphabetDiv.innerHTML='';
-    wordInput.value=''; state.wordRaw=''; state.wordChars=[]; state.maxApples=0; state.apples=[]; state.fallenCount=0; state.slots=[];
-    setTimeout(()=>{ document.addEventListener('click', function restartBirds(){ if(state.audioEnabled && pageSetup.classList.contains('active')){ playBirds(); document.removeEventListener('click', restartBirds); } }); }, 100);
+    state.wordRaw=''; state.wordChars=[]; state.maxApples=0; state.apples=[]; state.fallenCount=0; state.slots=[];
+    
+    setTimeout(()=>{ 
+        document.addEventListener('click', function restartBirds(){ 
+            if(state.audioEnabled && pageSetup.classList.contains('active')){ 
+                playBirds(); 
+                document.removeEventListener('click', restartBirds); 
+            } 
+        }); 
+    }, 100);
   });
 
   // keyboard support
@@ -636,9 +844,13 @@ const settings = {
     if(accept){
       // prefill and auto-start
       pageSetup.classList.remove('active'); pageGame.classList.add('active');
-      state.wordRaw = ch.word; state.wordChars = ch.word.split(''); state.maxApples = ch.word.replace(/\s/g,'').length;
+      state.wordRaw = ch.word; 
+      state.wordChars = ch.word.split(''); 
+      state.maxApples = ch.word.replace(/\s/g,'').length;
+      state.activeChallenge = ch; // حفظ التحدي
       buildGameBoard();
-      // optionally start a timer - for now we don't auto-lose on time (can extend)
+      // بدء المؤقت
+      startChallengeTimer(ch.durationSec);
     } else {
       // ignore
     }
@@ -669,7 +881,7 @@ const settings = {
     const link = generateChallengeLink({ word: (state.lang==='ar' ? raw : raw.toUpperCase()), durationSec: d });
     // use Web Share API if available
     if(navigator.share){
-      navigator.share({ title: 'AppelBoom Challenge', text: state.lang==='ar' ? 'تحدي تفاح' : 'Apple challenge', url: link }).catch(()=>{});
+      navigator.share({ title: 'AppelBoom Challenge', text: state.lang==='ar' ? `تحدي تفاح - ${d} ثانية` : `Apple challenge - ${d} seconds`, url: link }).catch(()=>{});
     } else {
       prompt((state.lang==='ar' ? 'انسخ الرابط وشاركه' : 'Copy the link and share'), link);
     }
