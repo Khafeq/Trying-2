@@ -360,7 +360,7 @@ const settings = {
         <div style="display:flex;gap:8px;justify-content:center;margin-top:8px;">
           <button id="modalOk" class="modal-btn">OK</button>
           <button id="shareReportBtn" class="modal-btn" style="background:#0a84ff;">مشاركة التقرير</button>
-          <button id="downloadReportBtn" class="modal-btn" style="background:#444;">تحميل التقرير</button>
+          <!-- تم إزالة زر تحميل التقرير -->
         </div>
       </div>
     </div>
@@ -396,7 +396,6 @@ const settings = {
   const modalDesc = document.getElementById('modalDesc');
   const modalOk = document.getElementById('modalOk');
   const shareReportBtn = document.getElementById('shareReportBtn');
-  const downloadReportBtn = document.getElementById('downloadReportBtn');
   const challengeBtn = document.getElementById('challengeBtn');
   const timerContainer = document.getElementById('timerContainer');
   const timerDisplay = document.getElementById('timerDisplay');
@@ -407,6 +406,77 @@ const settings = {
     en: ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"],
     ar: ["ا","أ","إ","آ","ب","ت","ث","ج","ح","خ","د","ذ","ر","ز","س","ش","ص","ض","ط","ظ","ع","غ","ف","ق","ك","ل","م","ن","ه","و","ؤ","ي","ئ","ى"]
   };
+
+  // كائن الترجمة
+  const TRANSLATIONS = {
+    nl: {
+      challengeBtn: "Uitdaging",
+      newBtn: "Nieuw Spel",
+      modalOk: "OK",
+      shareReportBtn: "Deel Rapport",
+      startBtn: "Start",
+      wordPlaceholder: "Typ het woord...",
+      timeUp: "Tijd is om!",
+      congrats: "Gefeliciteerd!",
+      applesFinished: "Alle appels zijn gevallen",
+      guessedWord: "Je hebt het woord geraden!",
+      wordWas: "Het woord was: ",
+      enterWord: "Voer een woord in.",
+      challengePrompt: "Tijd in seconden (bijv. 60)",
+      acceptChallenge: "Wil je de uitdaging accepteren?",
+      wordLength: "Woordlengte: ",
+      typeChallengeWord: "Typ een woord voor de uitdaging eerst",
+      copyLink: "Kopieer de link en deel",
+      challengeText: "Appel uitdaging - {seconds} seconden",
+      noReport: "Geen rapport beschikbaar",
+      reportCopied: "Rapport JSON gekopieerd naar klembord"
+    },
+    en: {
+      challengeBtn: "Challenge",
+      newBtn: "New Game",
+      modalOk: "OK",
+      shareReportBtn: "Share Report",
+      startBtn: "Start",
+      wordPlaceholder: "Type the word...",
+      timeUp: "Time's up!",
+      congrats: "Congratulations!",
+      applesFinished: "Apples finished",
+      guessedWord: "You guessed the word!",
+      wordWas: "The word was: ",
+      enterWord: "Please enter a word.",
+      challengePrompt: "Duration in seconds (e.g. 60)",
+      acceptChallenge: "Do you want to accept the challenge?",
+      wordLength: "Word length: ",
+      typeChallengeWord: "Type a word for the challenge first",
+      copyLink: "Copy the link and share",
+      challengeText: "Apple challenge - {seconds} seconds",
+      noReport: "No report available",
+      reportCopied: "Report JSON copied to clipboard"
+    },
+    ar: {
+      challengeBtn: "تحدي",
+      newBtn: "لعبة جديدة",
+      modalOk: "موافق",
+      shareReportBtn: "مشاركة التقرير",
+      startBtn: "ابدأ",
+      wordPlaceholder: "اكتب الكلمة...",
+      timeUp: "انتهى الوقت!",
+      congrats: "مبروك!",
+      applesFinished: "انتهت التفاحات",
+      guessedWord: "لقد خمنت الكلمة!",
+      wordWas: "الكلمة كانت: ",
+      enterWord: "الرجاء إدخال كلمة.",
+      challengePrompt: "المدة بالثواني (مثال: 60)",
+      acceptChallenge: "هل تريد قبول التحدي؟",
+      wordLength: "عدد أحرف الكلمة: ",
+      typeChallengeWord: "اكتب كلمة للتحدي أولاً",
+      copyLink: "انسخ الرابط وشاركه",
+      challengeText: "تحدي تفاح - {seconds} ثانية",
+      noReport: "لا يوجد تقرير",
+      reportCopied: "تم نسخ التقرير إلى الحافظة"
+    }
+  };
+
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
   const state = {
@@ -459,16 +529,35 @@ const settings = {
     });
   }
 
-  // language setup
-  function updateInputPlaceholder(){
-    if(state.lang === 'ar') wordInput.placeholder='اكتب الكلمة...';
-    else if(state.lang==='en') wordInput.placeholder='Type the word...';
-    else wordInput.placeholder='Typ het woord...';
+  // دالة تحديث جميع النصوص حسب اللغة
+  function updateAllTexts() {
+    const lang = state.lang;
+    const t = TRANSLATIONS[lang];
+    
+    // تحديث أزرار الواجهة
+    challengeBtn.textContent = t.challengeBtn;
+    newBtn.textContent = t.newBtn;
+    modalOk.textContent = t.modalOk;
+    shareReportBtn.textContent = t.shareReportBtn;
+    startBtn.textContent = t.startBtn;
+    
+    // تحديث placeholder
+    wordInput.placeholder = t.wordPlaceholder;
   }
+
+  // language setup
   langEls.forEach(el=>{
-    el.addEventListener('click', ()=>{ langEls.forEach(x=>x.classList.remove('active')); el.classList.add('active'); state.lang = el.dataset.lang; updateInputPlaceholder(); uiClick(); });
+    el.addEventListener('click', ()=>{ 
+        langEls.forEach(x=>x.classList.remove('active')); 
+        el.classList.add('active'); 
+        state.lang = el.dataset.lang; 
+        updateAllTexts(); 
+        uiClick(); 
+    });
   });
-  updateInputPlaceholder();
+
+  // تهيئة النصوص عند البدء
+  updateAllTexts();
 
   // hero apples render (small label apples)
   function renderHeroApples(){
@@ -562,8 +651,9 @@ const settings = {
           slot.style.color = '#c73737';
       });
       
-      modalTitle.textContent = state.lang === 'ar' ? 'انتهى الوقت!' : (state.lang === 'nl' ? 'Tijd is om!' : 'Time\'s up!');
-      modalDesc.textContent = (state.lang === 'ar') ? `الكلمة كانت: ${state.wordRaw}` : `The word was: ${state.wordRaw}`;
+      const t = TRANSLATIONS[state.lang];
+      modalTitle.textContent = t.timeUp;
+      modalDesc.textContent = t.wordWas + state.wordRaw;
       modalMedia.innerHTML = `<img src="${settings.images.crowdFail}" alt="time up" onerror="this.style.display='none'">`;
       modal.classList.add('show');
       
@@ -730,8 +820,9 @@ const settings = {
       disableAllLetters(); // تعطيل جميع الأحرف
       stopBirds();
       state.slots.forEach(s=>{ if(s.textContent !== ' ') s.style.color = '#0b8a3a'; });
-      modalTitle.textContent = state.lang==='ar' ? 'مبروك!' : (state.lang==='nl' ? 'Gefeliciteerd!' : 'Congratulations!');
-      modalDesc.textContent = (state.lang==='ar') ? 'لقد خمنت الكلمة!' : `The word was: ${state.wordRaw}`;
+      const t = TRANSLATIONS[state.lang];
+      modalTitle.textContent = t.congrats;
+      modalDesc.textContent = t.guessedWord;
       modalMedia.innerHTML = `<img src="${settings.images.crowdWin}" alt="win" onerror="this.style.display='none'">`;
       modal.classList.add('show');
       // save report
@@ -746,8 +837,9 @@ const settings = {
       disableAllLetters(); // تعطيل جميع الأحرف
       stopBirds();
       state.slots.forEach((slot,idx)=>{ const ch=state.wordChars[idx]; if(ch===' ') return; slot.textContent = ch; slot.style.color = '#c73737'; });
-      modalTitle.textContent = state.lang==='ar' ? 'انتهت التفاحات' : (state.lang==='nl' ? 'Alle appels zijn gevallen' : 'Apples finished');
-      modalDesc.textContent = (state.lang==='ar') ? `الكلمة كانت: ${state.wordRaw}` : `The word was: ${state.wordRaw}`;
+      const t = TRANSLATIONS[state.lang];
+      modalTitle.textContent = t.applesFinished;
+      modalDesc.textContent = t.wordWas + state.wordRaw;
       modalMedia.innerHTML = `<img src="${settings.images.crowdFail}" alt="fail" onerror="this.style.display='none'">`;
       modal.classList.add('show');
       lastReport = createReport('lose');
@@ -759,7 +851,8 @@ const settings = {
   startBtn.addEventListener('click', async ()=>{
     uiClick();
     const raw = (wordInput.value || '').trim();
-    if(!raw){ alert(state.lang==='ar' ? 'الرجاء إدخال كلمة.' : (state.lang==='nl' ? 'Voer een woord in.' : 'Please enter a word.')); return; }
+    const t = TRANSLATIONS[state.lang];
+    if(!raw){ alert(t.enterWord); return; }
     
     // إخفاء النقاط
     passwordDots.style.display = 'none';
@@ -853,7 +946,8 @@ const settings = {
       return;
     }
     // else offer to accept challenge
-    const accept = confirm((state.lang==='ar' ? 'هل تريد قبول التحدي؟' : 'Do you want to accept the challenge?') + `\n${ch.word ? (state.lang==='ar' ? 'عدد أحرف الكلمة: ' : 'Word length: ') + (ch.word.replace(/\s/g,'').length) : ''}`);
+    const t = TRANSLATIONS[state.lang];
+    const accept = confirm(t.acceptChallenge + `\n${ch.word ? t.wordLength + (ch.word.replace(/\s/g,'').length) : ''}`);
     if(accept){
       // prefill and auto-start
       pageSetup.classList.remove('active'); pageGame.classList.add('active');
@@ -888,15 +982,21 @@ const settings = {
   // challenge button
   challengeBtn.addEventListener('click', ()=>{
     const raw = (wordInput.value || '').trim();
-    if(!raw){ alert(state.lang==='ar' ? 'اكتب كلمة للتحدي أولاً' : 'Type a word for the challenge first'); return; }
-    const duration = prompt(state.lang==='ar' ? 'المدة بالثواني (مثال: 60)' : 'Duration in seconds (e.g. 60)', '60');
+    const t = TRANSLATIONS[state.lang];
+    if(!raw){ alert(t.typeChallengeWord); return; }
+    const duration = prompt(t.challengePrompt, '60');
     const d = parseInt(duration) || 60;
     const link = generateChallengeLink({ word: (state.lang==='ar' ? raw : raw.toUpperCase()), durationSec: d });
     // use Web Share API if available
     if(navigator.share){
-      navigator.share({ title: 'AppelBoom Challenge', text: state.lang==='ar' ? `تحدي تفاح - ${d} ثانية` : `Apple challenge - ${d} seconds`, url: link }).catch(()=>{});
+      const challengeText = t.challengeText.replace('{seconds}', d);
+      navigator.share({ 
+        title: 'AppelBoom Challenge', 
+        text: challengeText, 
+        url: link 
+      }).catch(()=>{});
     } else {
-      prompt((state.lang==='ar' ? 'انسخ الرابط وشاركه' : 'Copy the link and share'), link);
+      prompt(t.copyLink, link);
     }
   });
 
@@ -970,7 +1070,8 @@ const settings = {
 
   // share report via Web Share or open in new tab
   async function shareReport(){
-    if(!lastReport){ alert(state.lang==='ar' ? 'لا يوجد تقرير' : 'No report available'); return; }
+    const t = TRANSLATIONS[state.lang];
+    if(!lastReport){ alert(t.noReport); return; }
     // ensure signature exists before rendering
     lastReport.signature = lastReport.signature || await computeReportSignature(lastReport);
     const dataUrl = await renderReportImage(lastReport);
@@ -983,25 +1084,10 @@ const settings = {
     // fallback: open image in new tab and copy JSON to clipboard
     const w = window.open('', '_blank');
     if(w){ w.document.write(`<img src="${dataUrl}" style="max-width:100%"><pre>${JSON.stringify(lastReport,null,2)}</pre>`); }
-    try{ await navigator.clipboard.writeText(JSON.stringify(lastReport)); alert(state.lang==='ar' ? 'تم نسخ التقرير إلى الحافظة' : 'Report JSON copied to clipboard'); }catch(e){}
-  }
-
-  // download report JSON + image
-  async function downloadReport(){
-    if(!lastReport){ alert(state.lang==='ar' ? 'لا يوجد تقرير' : 'No report'); return; }
-    lastReport.signature = lastReport.signature || await computeReportSignature(lastReport);
-    // download json
-    const blobJson = new Blob([JSON.stringify(lastReport,null,2)], { type: 'application/json' });
-    const urlJson = URL.createObjectURL(blobJson);
-    const a = document.createElement('a'); a.href = urlJson; a.download = `${lastReport.id}.json`; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(urlJson);
-    // download image
-    const dataUrl = await renderReportImage(lastReport);
-    const res = await fetch(dataUrl); const blob = await res.blob(); const urlImg = URL.createObjectURL(blob);
-    const b = document.createElement('a'); b.href = urlImg; b.download = `${lastReport.id}.png`; document.body.appendChild(b); b.click(); b.remove(); URL.revokeObjectURL(urlImg);
+    try{ await navigator.clipboard.writeText(JSON.stringify(lastReport)); alert(t.reportCopied); }catch(e){}
   }
 
   shareReportBtn.addEventListener('click', shareReport);
-  downloadReportBtn.addEventListener('click', downloadReport);
 
   // dynamic updates without rebuild
   function updateDynamicElements(){
