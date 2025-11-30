@@ -623,7 +623,9 @@ const imageLoader = {
       noReport: "Geen rapport beschikbaar",
       reportCopied: "Rapport JSON gekopieerd naar klembord",
       timePlaceholder: "Tijd in seconden",
-      confirmChallenge: "Bevestig Uitdaging"
+      confirmChallenge: "Bevestig Uitdaging",
+      challengeUsed: "Uitdaging Al Gespeeld",
+      challengeUsedDesc: "Deze uitdaging is al eerder gespeeld op dit apparaat!"
     },
     en: {
       challengeBtn: "Challenge",
@@ -647,7 +649,9 @@ const imageLoader = {
       noReport: "No report available",
       reportCopied: "Report JSON copied to clipboard",
       timePlaceholder: "Time in seconds",
-      confirmChallenge: "Confirm Challenge"
+      confirmChallenge: "Confirm Challenge",
+      challengeUsed: "Challenge Already Played",
+      challengeUsedDesc: "This challenge has been played before on this device!"
     },
     ar: {
       challengeBtn: "تحدي",
@@ -671,7 +675,9 @@ const imageLoader = {
       noReport: "لا يوجد تقرير",
       reportCopied: "تم نسخ التقرير إلى الحافظة",
       timePlaceholder: "الوقت بالثواني",
-      confirmChallenge: "تأكيد التحدي"
+      confirmChallenge: "تأكيد التحدي",
+      challengeUsed: "تم استخدام التحدي",
+      challengeUsedDesc: "هذا التحدي تم لعبه مسبقاً على هذا الجهاز!"
     }
   };
 
@@ -1293,7 +1299,14 @@ const imageLoader = {
   modalOk.addEventListener('click', ()=>{ uiClick(); modal.classList.remove('show'); });
 
   function generateChallengeLink({ word, durationSec = 60, mode = 'solo' }){
-    const payload = { id: 'c-' + Date.now(), word, durationSec, mode, ts: Date.now() };
+    const payload = { 
+        id: 'c-' + Date.now(), 
+        word, 
+        durationSec, 
+        mode, 
+        ts: Date.now(),
+        lang: state.lang // 🔥 إضافة اللغة إلى payload
+    };
     const b64 = btoa(encodeURIComponent(JSON.stringify(payload)));
     const url = new URL(location.href);
     url.searchParams.set('challenge', b64);
@@ -1327,19 +1340,27 @@ const imageLoader = {
     // 🔥 التحقق من localStorage إذا كان التحدي تم تشغيله مسبقاً على هذا الجهاز
     const playedChallenges = JSON.parse(localStorage.getItem('playedChallenges') || '{}');
     if (playedChallenges[ch.id]) {
-        const t = TRANSLATIONS[state.lang];
-        alert('هذا التحدي تم لعبه مسبقاً على هذا الجهاز! لا يمكن تشغيله مرة أخرى.');
+        // 🔥 استخدام لغة التحدي الأصلية (من localStorage أو من payload)
+        const challengeLang = playedChallenges[ch.id].lang || ch.lang || state.lang;
+        const t = TRANSLATIONS[challengeLang];
+        
+        // 🔥 عرض الرسالة داخل modal اللعبة
+        modalTitle.textContent = t.challengeUsed;
+        modalDesc.textContent = t.challengeUsedDesc;
+        modalMedia.innerHTML = `<img src="${settings.images.crowdFail}" alt="challenge used">`;
+        modal.classList.add('show');
         return;
     }
     
     const t = TRANSLATIONS[state.lang];
     const accept = confirm(t.acceptChallenge + `\n${ch.word ? t.wordLength + (ch.word.replace(/\s/g,'').length) : ''}`);
     if(accept){
-        // 🔥 حفظ التحدي في localStorage كتم تشغيله
+        // 🔥 حفظ التحدي في localStorage مع اللغة الحالية
         playedChallenges[ch.id] = {
             playedAt: Date.now(),
             word: ch.word,
-            duration: ch.durationSec
+            duration: ch.durationSec,
+            lang: state.lang // 🔥 حفظ لغة التحدي
         };
         localStorage.setItem('playedChallenges', JSON.stringify(playedChallenges));
         
