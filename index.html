@@ -692,9 +692,26 @@ const imageLoader = {
     arabicWords: null,
     activeChallenge: null,
     lastFailSoundTime: 0,
-    // 🔧 إضافة هذا المتغير لمنع تكرار صوت نهاية اللعبة
     gameEndSoundPlayed: false
   };
+
+  // 🔥 دالة تنظيف التحديات القديمة
+  function cleanupOldChallenges() {
+    const playedChallenges = JSON.parse(localStorage.getItem('playedChallenges') || '{}');
+    const now = Date.now();
+    const oneWeek = 7 * 24 * 60 * 60 * 1000; // أسبوع واحد
+    
+    for (const challengeId in playedChallenges) {
+        if (now - playedChallenges[challengeId].playedAt > oneWeek) {
+            delete playedChallenges[challengeId];
+        }
+    }
+    
+    localStorage.setItem('playedChallenges', JSON.stringify(playedChallenges));
+  }
+
+  // 🔥 استدعاء التنظيف عند التحميل
+  cleanupOldChallenges();
 
   // audio helper مع منع التكرار
   function playAudio(src, vol=1){ 
@@ -742,7 +759,7 @@ const imageLoader = {
     }
   });
 
-  // 🔧 الإصلاح النهائي: إضافة event listener للـ Enter في حقل الإدخال
+  // 🔥 الإصلاح النهائي: إضافة event listener للـ Enter في حقل الإدخال
   wordInput.addEventListener('keydown', function(e) {
     if (e.key === 'Enter') {
         e.preventDefault(); // منع السلوك الافتراضي (مسح الكلمة)
@@ -864,7 +881,7 @@ const imageLoader = {
       timerContainer.classList.remove('visible', 'warning');
   }
 
-  // 🔧 الإصلاح النهائي: تعديل دالة handleTimeUp
+  // 🔥 الإصلاح النهائي: تعديل دالة handleTimeUp
   function handleTimeUp() {
     endChallengeTimer();
     disableAllLetters();
@@ -882,7 +899,7 @@ const imageLoader = {
     modal.classList.add('show');
     lastReport = createReport('time_up');
     
-    // 🔧 الإصلاح: منع تكرار صوت رسالة انتهاء الوقت
+    // 🔥 الإصلاح: منع تكرار صوت رسالة انتهاء الوقت
     if(!state.gameEndSoundPlayed && settings.sounds.failMessage) {
       playAudio(settings.sounds.failMessage, 0.22);
       state.gameEndSoundPlayed = true; // وضع علامة أن الصوت تم تشغيله
@@ -1091,7 +1108,7 @@ const imageLoader = {
     }, fallDur + bounceDur + 60);
   }
 
-  // 🔧 الإصلاح النهائي: تعديل دالة checkWin
+  // 🔥 الإصلاح النهائي: تعديل دالة checkWin
   function checkWin(){
     const unfinished = state.slots.some(s => s.textContent === '_');
     if(!unfinished){
@@ -1106,7 +1123,7 @@ const imageLoader = {
       modal.classList.add('show');
       lastReport = createReport('win');
       
-      // 🔧 الإصلاح: منع تكرار صوت رسالة النجاح النهائية
+      // 🔥 الإصلاح: منع تكرار صوت رسالة النجاح النهائية
       if(!state.gameEndSoundPlayed && settings.sounds.successMessage) {
         playAudio(settings.sounds.successMessage, 0.22);
         state.gameEndSoundPlayed = true; // وضع علامة أن الصوت تم تشغيله
@@ -1114,7 +1131,7 @@ const imageLoader = {
     }
   }
 
-  // 🔧 الإصلاح النهائي: تعديل دالة checkLose
+  // 🔥 الإصلاح النهائي: تعديل دالة checkLose
   function checkLose(){
     if(state.fallenCount >= state.maxApples){
       endChallengeTimer();
@@ -1133,7 +1150,7 @@ const imageLoader = {
       modal.classList.add('show');
       lastReport = createReport('lose');
       
-      // 🔧 الإصلاح: منع تكرار صوت رسالة الفشل النهائية
+      // 🔥 الإصلاح: منع تكرار صوت رسالة الفشل النهائية
       if(!state.gameEndSoundPlayed && settings.sounds.failMessage) {
         playAudio(settings.sounds.failMessage, 0.22);
         state.gameEndSoundPlayed = true; // وضع علامة أن الصوت تم تشغيله
@@ -1141,7 +1158,7 @@ const imageLoader = {
     }
   }
 
-  // 🔧 الإصلاح النهائي: تعديل حدث startBtn
+  // 🔥 الإصلاح النهائي: تعديل حدث startBtn
   startBtn.addEventListener('click', async ()=>{
     uiClick();
     const raw = (wordInput.value || '').trim();
@@ -1153,7 +1170,7 @@ const imageLoader = {
     state.wordChars = word.split('');
     state.maxApples = word.replace(/\s/g,'').length;
     
-    // 🔧 إعادة تعيين علامة الصوت النهائي
+    // 🔥 إعادة تعيين علامة الصوت النهائي
     state.gameEndSoundPlayed = false;
     
     pageSetup.classList.remove('active'); 
@@ -1224,11 +1241,12 @@ const imageLoader = {
     }
   });
 
-  // 🔧 الإصلاح النهائي: تعديل حدث newBtn
+  // 🔥 الإصلاح النهائي: تعديل حدث newBtn
   newBtn.addEventListener('click', ()=>{
     uiClick();
     endChallengeTimer();
     state.activeChallenge = null;
+    
     pageGame.classList.remove('active'); 
     pageSetup.classList.add('active');
     wordInput.value = '';
@@ -1236,8 +1254,8 @@ const imageLoader = {
     treeApples.innerHTML=''; fallenColumns.innerHTML=''; slotsRow.innerHTML=''; alphabetDiv.innerHTML='';
     state.wordRaw=''; state.wordChars=[]; state.maxApples=0; state.apples=[]; state.fallenCount=0; state.slots=[];
     state.lastFailSoundTime = 0;
-    // 🔧 إعادة تعيين علامة الصوت النهائي
     state.gameEndSoundPlayed = false;
+    
     setTimeout(()=>{ 
         document.addEventListener('click', function restartBirds(){ 
             if(state.audioEnabled && pageSetup.classList.contains('active')){ 
@@ -1248,7 +1266,7 @@ const imageLoader = {
     }, 100);
   });
 
-  // 🔧 الإصلاح النهائي: keyboard support - إصلاح مشكلة Enter
+  // 🔥 الإصلاح النهائي: keyboard support - إصلاح مشكلة Enter
   document.addEventListener('keydown', function(e){
     // التعامل مع صفحة الإعداد وزر Enter
     if(pageSetup.classList.contains('active') && e.key === 'Enter') {
@@ -1294,6 +1312,7 @@ const imageLoader = {
   function handleIncomingChallenge(){
     const ch = parseChallengeFromUrl();
     if(!ch) return;
+    
     const spectate = new URL(location.href).searchParams.get('spectate');
     if(spectate === '1'){
       pageSetup.classList.remove('active'); pageGame.classList.add('active');
@@ -1304,16 +1323,34 @@ const imageLoader = {
       modal.classList.add('show');
       return;
     }
+    
+    // 🔥 التحقق من localStorage إذا كان التحدي تم تشغيله مسبقاً على هذا الجهاز
+    const playedChallenges = JSON.parse(localStorage.getItem('playedChallenges') || '{}');
+    if (playedChallenges[ch.id]) {
+        const t = TRANSLATIONS[state.lang];
+        alert('هذا التحدي تم لعبه مسبقاً على هذا الجهاز! لا يمكن تشغيله مرة أخرى.');
+        return;
+    }
+    
     const t = TRANSLATIONS[state.lang];
     const accept = confirm(t.acceptChallenge + `\n${ch.word ? t.wordLength + (ch.word.replace(/\s/g,'').length) : ''}`);
     if(accept){
-      pageSetup.classList.remove('active'); pageGame.classList.add('active');
-      state.wordRaw = ch.word; 
-      state.wordChars = ch.word.split(''); 
-      state.maxApples = ch.word.replace(/\s/g,'').length;
-      state.activeChallenge = ch;
-      buildGameBoard();
-      startChallengeTimer(ch.durationSec);
+        // 🔥 حفظ التحدي في localStorage كتم تشغيله
+        playedChallenges[ch.id] = {
+            playedAt: Date.now(),
+            word: ch.word,
+            duration: ch.durationSec
+        };
+        localStorage.setItem('playedChallenges', JSON.stringify(playedChallenges));
+        
+        pageSetup.classList.remove('active'); 
+        pageGame.classList.add('active');
+        state.wordRaw = ch.word; 
+        state.wordChars = ch.word.split(''); 
+        state.maxApples = ch.word.replace(/\s/g,'').length;
+        state.activeChallenge = ch;
+        buildGameBoard();
+        startChallengeTimer(ch.durationSec);
     }
   }
 
