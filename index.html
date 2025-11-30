@@ -66,7 +66,16 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
 .page.active{display:block}
 
 /* setup */
-.lang-col{ display:flex; flex-direction:column; gap:10px; margin-top:500px; pointer-events:auto; position:relative;z-index:1000;}
+.lang-col{ 
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display:flex; 
+    flex-direction:column; 
+    gap:10px; 
+    pointer-events:auto; 
+    z-index:1000;
+}
 .setup{ height:100%; display:grid; grid-template-columns:88px 1fr; gap:12px; align-items:start; }
 .lang-btn{ width:72px; height:38px; border-radius:8px; background:rgba(255,255,255,0.92); display:flex; align-items:center; justify-content:center; cursor:pointer; font-weight:800; border:2px solid transparent; transition:all 0.3s ease;}
 .lang-btn:hover{ border-color:#0b5138; transform:scale(1.05);}
@@ -111,7 +120,7 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
 .challenge-col {
     position: absolute;
     right: 20px;
-    bottom: 240px;
+    top: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -122,7 +131,7 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
 .challenge-col-game {
     position: absolute;
     right: 20px;
-    top: 350px;
+    top: 120px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -229,18 +238,92 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
 .modal-card img{ max-width:320px; height:auto; border-radius:8px; margin:8px 0; }
 .modal-btn{ margin-top:12px; padding:8px 12px; border-radius:8px; border:none; background:#0b5138; color:white; cursor:pointer; }
 
+/* حل مشكلة الكلمات الطويلة في الجوال */
+@media (max-width: 768px) and (orientation: portrait) {
+  .slots-row {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2px !important;
+    padding: 0 5px;
+    max-height: 120px;
+    overflow-y: auto;
+  }
+  
+  .slot {
+    min-width: 28px;
+    font-size: 20px !important;
+    padding: 4px 6px;
+    margin: 1px;
+  }
+  
+  .word-top-section {
+    height: auto;
+    min-height: 80px;
+    padding: 5px 0;
+    align-items: flex-start;
+  }
+
+  .slots-row.very-long-word {
+    gap: 1px !important;
+  }
+
+  .slots-row.very-long-word .slot {
+    min-width: 24px;
+    font-size: 16px !important;
+    padding: 3px 4px;
+  }
+
+  .slots-row.extremely-long-word {
+    gap: 0.5px !important;
+  }
+
+  .slots-row.extremely-long-word .slot {
+    min-width: 20px;
+    font-size: 14px !important;
+    padding: 2px 3px;
+  }
+}
+
+@media (max-width: 1024px) and (orientation: landscape) {
+  .slots-row {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 3px !important;
+    padding: 0 8px;
+    max-height: 80px;
+    overflow-y: auto;
+  }
+  
+  .slot {
+    min-width: 30px;
+    font-size: 22px !important;
+    padding: 5px 7px;
+    margin: 1px;
+  }
+  
+  .word-top-section {
+    height: auto;
+    min-height: 60px;
+  }
+}
+
 /* responsive helpers */
 @media (max-width: 1024px) and (orientation: landscape) {
   .wrap{ padding:5px; height:100vh; display:block; }
   .stage{ height:100vh; max-width:100%; border-radius:0; }
   .page{ height:calc(100vh - 20px); padding:10px; }
-  .lang-col{ margin-top:20px !important; }
+  .lang-col{ 
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    margin-top: 0 !important; 
+  }
   .tree-wrap{ height:85vh; }
   .tree-frame{ width:85% !important; max-width:600px !important; margin-left:-400px !important; margin-top:0 !important; }
   .input-container{ position:absolute; width:450px !important; right:30px; top:200px !important; }
   .start-col{ position:absolute; right:30px; bottom:150px !important; }
-  .challenge-col{ position:absolute; right:30px; bottom:270px !important; }
-  .challenge-col-game{ position:absolute; right:30px; top:380px !important; }
+  .challenge-col{ position:absolute; right:30px; top:250px !important; }
+  .challenge-col-game{ position:absolute; right:30px; top:150px !important; }
   .challenge-input-container{ right:30px; bottom:380px !important; }
   .game{ grid-template-columns:1fr 380px; grid-template-rows:100px 1fr; gap:10px; height:100%; }
   .game-tree-frame{ width:90% !important; max-width:500px !important; margin:0 auto !important; margin-left:-100px !important; margin-top:-50px !important; }
@@ -258,6 +341,14 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
   .timer-container { top:10px; right:10px; padding:8px 14px; font-size:16px; min-width:65px; }
   #pageSetup.active{ display:flex; flex-direction:column; align-items:center; justify-content:flex-start; height:100vh; position:relative; }
   .setup{ display:flex; flex-direction:column; height:100%; width:100%; grid-template-columns:1fr; gap:10px; }
+  .lang-col{ 
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    margin-top: 0;
+    flex-direction: row;
+    gap: 6px;
+  }
   .tree-wrap{ order:1; height:50vh; width:100%; margin-top:10px; }
   .tree-frame{ width:95% !important; max-width:100% !important; margin:0 !important; height:100%; }
   .tree-img{ position:relative !important; left:50% !important; top:50% !important; transform:translate(-50%,-50%) !important; width:100% !important; height:100% !important; object-fit:contain !important; }
@@ -266,16 +357,14 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
   .password-dots-overlay { border-radius:12px; font-size:20px; letter-spacing:6px; }
   .start-col{ position:absolute !important; order:3; bottom:15vh; right:5%; left:auto !important; transform:none; }
   .challenge-col{ position:absolute !important; order:3; bottom:25vh; right:5%; transform:none; }
-  .challenge-col-game{ position:absolute !important; top:250px !important; right:5%; transform:none; }
+  .challenge-col-game{ position:absolute !important; top:120px !important; right:5%; transform:none; }
   .challenge-input-container{ position:absolute !important; bottom:35vh; right:5%; width:90% !important; }
   .start-btn{ width:120px; padding:12px 20px !important; font-size:16px !important; min-height:50px; border-radius:12px !important; }
   .challenge-btn{ width:100px; padding:10px 16px !important; font-size:14px !important; min-height:40px; border-radius:12px !important; }
-  .lang-col{ position:absolute; order:4; left:5%; bottom:15vh; margin-top:0; flex-direction:column; gap:6px; }
   .lang-btn{ width:50px; height:30px; font-size:10px; }
   #pageGame.active{ display:flex; flex-direction:column; height:100vh; position:relative; }
   .game{ display:flex; flex-direction:column; height:100%; width:100%; grid-template-columns:1fr; grid-template-rows:auto auto 1fr; gap:8px; }
   .word-top-section{ order:1; height:15vh; margin-top:0; padding:5px 0; }
-  .slots-row{ min-height:50px; margin-top:0 !important; gap:1px !important; padding:0 5px !important; }
   .left-game{ order:2; height:25vh; position:relative; padding:0; margin:0; }
   .game-tree-frame{ width:60% !important; max-width:300px !important; margin:0 auto !important; height:100%; }
   .game-tree-img{ width:100% !important; height:100% !important; left:50% !important; top:50% !important; object-fit:contain !important; }
@@ -295,9 +384,9 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
   .input-container{ bottom:20vh; width:95% !important; }
   .start-col{ bottom:12vh; }
   .challenge-col{ bottom:22vh; }
-  .challenge-col-game{ top:220px !important; }
+  .challenge-col-game{ top:100px !important; }
   .challenge-input-container{ bottom:32vh; }
-  .lang-col{ bottom:12vh; }
+  .lang-col{ top: 8px; left: 8px; }
   .right-col{ height:45vh; }
   .timer-container { top:8px; right:8px; padding:6px 12px; font-size:14px; min-width:60px; }
 }
@@ -692,8 +781,11 @@ const imageLoader = {
     arabicWords: null,
     activeChallenge: null,
     lastFailSoundTime: 0,
-    // 🔧 إضافة هذا المتغير لمنع تكرار صوت نهاية اللعبة
-    gameEndSoundPlayed: false
+    gameEndSoundPlayed: false,
+    // 🔧 إضافة متغيرات جديدة للتحدي والوقت
+    gameStartTime: null,
+    challengeStartTime: null,
+    firstGuessMade: false
   };
 
   // audio helper مع منع التكرار
@@ -922,20 +1014,45 @@ const imageLoader = {
     updateDynamicElements();
   }
 
+  // 🔧 تحسين دالة renderSlots للكلمات الطويلة
   function renderSlots(){
-    slotsRow.innerHTML=''; state.slots=[];
+    slotsRow.innerHTML=''; 
+    state.slots=[];
+    
     state.wordChars.forEach((ch,i)=>{
-      const s=document.createElement('div'); s.className='slot'; s.dataset.pos=i;
-      if(ch===' '){ s.classList.add('space'); s.textContent=' '; } else s.textContent='_';
-      slotsRow.appendChild(s); state.slots.push(s);
+        const s=document.createElement('div'); 
+        s.className='slot'; 
+        s.dataset.pos=i;
+        if(ch===' '){ 
+            s.classList.add('space'); 
+            s.textContent=' '; 
+            s.style.margin = '0 8px'; // مسافة أكبر للفراغات
+        } else {
+            s.textContent='_';
+        }
+        slotsRow.appendChild(s); 
+        state.slots.push(s);
     });
+    
     const wordLength = state.wordChars.filter(ch=>ch!==' ').length;
     slotsRow.classList.remove('short-word','medium-word','long-word','very-long-word','extremely-long-word');
+    
     if(wordLength<=8) slotsRow.classList.add('short-word');
     else if(wordLength<=16) slotsRow.classList.add('medium-word');
     else if(wordLength<=24) slotsRow.classList.add('long-word');
     else if(wordLength<=30) slotsRow.classList.add('very-long-word');
     else slotsRow.classList.add('extremely-long-word');
+    
+    // إضافة خاصية scroll للكلمات الطويلة جداً
+    if(wordLength > 20) {
+        slotsRow.style.overflowX = 'auto';
+        slotsRow.style.flexWrap = 'nowrap';
+        slotsRow.style.justifyContent = 'flex-start';
+    } else {
+        slotsRow.style.overflowX = 'visible';
+        slotsRow.style.flexWrap = 'wrap';
+        slotsRow.style.justifyContent = 'center';
+    }
   }
 
   function renderAlphabet(){
@@ -973,12 +1090,21 @@ const imageLoader = {
     handleGuess(letter);
   }
 
+  // 🔧 تعديل دالة handleGuess لبدء المؤقت عند أول تخمين
   function handleGuess(letter){
+    // بدء المؤقت عند أول تخمين في وضع التحدي
+    if(state.activeChallenge && !state.firstGuessMade) {
+        state.firstGuessMade = true;
+        state.challengeStartTime = Date.now();
+        startChallengeTimer(state.activeChallenge.durationSec);
+    }
+    
     let match=false;
     state.wordChars.forEach(ch => {
       if(ch===' ') return;
       if(state.lang==='ar'){ if(ch===letter) match=true; } else { if(ch.toUpperCase()===letter.toUpperCase()) match=true; }
     });
+    
     if(match){
       revealLetter(letter);
       const isLastLetter = checkIfLastLetter();
@@ -1153,8 +1279,11 @@ const imageLoader = {
     state.wordChars = word.split('');
     state.maxApples = word.replace(/\s/g,'').length;
     
-    // 🔧 إعادة تعيين علامة الصوت النهائي
+    // 🔧 إعادة تعيين علامة الصوت النهائي والمتغيرات الزمنية
     state.gameEndSoundPlayed = false;
+    state.firstGuessMade = false;
+    state.challengeStartTime = null;
+    state.gameStartTime = Date.now(); // تسجيل وقت بدء اللعبة
     
     pageSetup.classList.remove('active'); 
     pageGame.classList.add('active');
@@ -1229,6 +1358,9 @@ const imageLoader = {
     uiClick();
     endChallengeTimer();
     state.activeChallenge = null;
+    state.firstGuessMade = false;
+    state.challengeStartTime = null;
+    state.gameStartTime = null;
     pageGame.classList.remove('active'); 
     pageSetup.classList.add('active');
     wordInput.value = '';
@@ -1312,24 +1444,33 @@ const imageLoader = {
       state.wordChars = ch.word.split(''); 
       state.maxApples = ch.word.replace(/\s/g,'').length;
       state.activeChallenge = ch;
+      // لا نبدأ المؤقت هنا، سيبدأ عند أول تخمين
+      state.firstGuessMade = false;
+      state.challengeStartTime = null;
+      state.gameStartTime = Date.now();
       buildGameBoard();
-      startChallengeTimer(ch.durationSec);
     }
   }
 
   let lastReport = null;
 
+  // 🔧 تحسين دالة createReport لإضافة الوقت المستغرق واللغة
   function createReport(result){
     const now = Date.now();
+    const timeSpent = state.challengeStartTime ? 
+        Math.floor((now - state.challengeStartTime) / 1000) : 
+        (state.gameStartTime ? Math.floor((now - state.gameStartTime) / 1000) : 0);
+    
     const report = {
-      id: 'r-' + now,
-      ts: now,
-      result,
-      word: state.wordRaw,
-      fallen: state.fallenCount,
-      maxApples: state.maxApples,
-      lang: state.lang,
-      playerAgent: navigator.userAgent,
+        id: 'r-' + now,
+        ts: now,
+        result,
+        word: state.wordRaw,
+        fallen: state.fallenCount,
+        maxApples: state.maxApples,
+        lang: state.lang,
+        timeSpent: timeSpent + ' ' + (state.lang === 'ar' ? 'ثانية' : state.lang === 'nl' ? 'seconden' : 'seconds'),
+        playerAgent: navigator.userAgent,
     };
     computeReportSignature(report).then(sig=>{ report.signature = sig; });
     return report;
@@ -1345,24 +1486,111 @@ const imageLoader = {
     }catch(e){ console.warn('signature error', e); return ''; }
   }
 
+  // 🔧 دالة مساعدة للترجمة في التقارير
+  function getTranslatedText(key, lang) {
+    const translations = {
+        reportTitle: {
+            nl: 'AppelBoom - Rapport',
+            en: 'AppelBoom - Report', 
+            ar: 'تقرير - شجرة التفاح'
+        },
+        word: {
+            nl: 'Woord',
+            en: 'Word',
+            ar: 'الكلمة'
+        },
+        result: {
+            nl: 'Resultaat',
+            en: 'Result',
+            ar: 'النتيجة'
+        },
+        win: {
+            nl: 'Gewonnen',
+            en: 'Win',
+            ar: 'فوز'
+        },
+        lose: {
+            nl: 'Verloren',
+            en: 'Lose',
+            ar: 'خسارة'
+        },
+        time_up: {
+            nl: 'Tijd om',
+            en: 'Time up',
+            ar: 'انتهى الوقت'
+        },
+        fallenApples: {
+            nl: 'Gevallen appels',
+            en: 'Fallen apples',
+            ar: 'التفاحات الساقطة'
+        },
+        language: {
+            nl: 'Taal',
+            en: 'Language',
+            ar: 'اللغة'
+        },
+        nl: {
+            nl: 'Nederlands',
+            en: 'Dutch',
+            ar: 'هولندي'
+        },
+        en: {
+            nl: 'Engels',
+            en: 'English', 
+            ar: 'إنجليزي'
+        },
+        ar: {
+            nl: 'Arabisch',
+            en: 'Arabic',
+            ar: 'عربي'
+        },
+        timeSpent: {
+            nl: 'Tijd gebruikt',
+            en: 'Time spent',
+            ar: 'الوقت المستغرق'
+        },
+        time: {
+            nl: 'Tijd',
+            en: 'Time',
+            ar: 'الوقت'
+        }
+    };
+    
+    return translations[key]?.[lang] || key;
+  }
+
+  // 🔧 تحسين دالة renderReportImage لدعم اللغات
   async function renderReportImage(report){
     const w = 720, h = 480;
-    const c = document.createElement('canvas'); c.width = w; c.height = h;
+    const c = document.createElement('canvas'); 
+    c.width = w; 
+    c.height = h;
     const ctx = c.getContext('2d');
-    ctx.fillStyle = '#0b5138'; ctx.fillRect(0,0,w,h);
-    ctx.fillStyle = '#fff'; ctx.font = '20px Inter, Arial'; ctx.fillText('AppelBoom - Report', 20, 40);
+    
+    // الخلفية
+    ctx.fillStyle = '#0b5138'; 
+    ctx.fillRect(0,0,w,h);
+    
+    // العنوان بلغة التقرير
+    const titleText = getTranslatedText('reportTitle', report.lang);
+    ctx.fillStyle = '#fff'; 
+    ctx.font = 'bold 24px Inter, Arial'; 
+    ctx.fillText(titleText, 20, 40);
+    
     ctx.font = '16px Inter, Arial';
-    ctx.fillText(`Word: ${report.word}`, 20, 80);
-    ctx.fillText(`Result: ${report.result}`, 20, 110);
-    ctx.fillText(`Fallen apples: ${report.fallen} / ${report.maxApples}`, 20, 140);
-    ctx.fillText(`Language: ${report.lang}`, 20, 170);
-    ctx.fillText(`Time: ${new Date(report.ts).toLocaleString()}`, 20, 200);
-    ctx.fillText(`Signature(sha256): ${report.signature ? report.signature.slice(0,24) + '...' : 'pending'}`, 20, 230);
+    ctx.fillText(`${getTranslatedText('word', report.lang)}: ${report.word}`, 20, 80);
+    ctx.fillText(`${getTranslatedText('result', report.lang)}: ${getTranslatedText(report.result, report.lang)}`, 20, 110);
+    ctx.fillText(`${getTranslatedText('fallenApples', report.lang)}: ${report.fallen} / ${report.maxApples}`, 20, 140);
+    ctx.fillText(`${getTranslatedText('language', report.lang)}: ${getTranslatedText(report.lang, report.lang)}`, 20, 170);
+    ctx.fillText(`${getTranslatedText('timeSpent', report.lang)}: ${report.timeSpent}`, 20, 200);
+    ctx.fillText(`${getTranslatedText('time', report.lang)}: ${new Date(report.ts).toLocaleString()}`, 20, 230);
+    ctx.fillText(`Signature(sha256): ${report.signature ? report.signature.slice(0,24) + '...' : 'pending'}`, 20, 260);
+    
     const apples = report.maxApples || 0;
     const fallen = report.fallen || 0;
     const cols = Math.min(10, apples);
     const rows = Math.ceil(apples / cols);
-    const baseX = 20, baseY = 260, gap = 28;
+    const baseX = 20, baseY = 290, gap = 28;
     let k = 0;
     for(let r=0;r<rows;r++){
       for(let c0=0;c0<cols;c0++){
