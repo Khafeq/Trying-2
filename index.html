@@ -245,7 +245,7 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
   
   /* 🔥 تصغير التفاحات الساقطة */
   .fallen-item img {
-    width: 25px !important; /* غير هذه القيمة */
+    width: 20px !important; /* غير هذه القيمة */
   }
   
   /* 🔥 تصغير حجم الأعمدة */
@@ -299,18 +299,20 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
   
     .right-col{ 
     grid-row:2; 
-    height:8vh; 
-    margin-top: -120px !important;
+    height:7vh; 
+    margin-top: -80px !important;
     gap:1px; 
     padding:3px; 
   }
   
   .alphabet {
     margin-top: 0 !important;
+        z-index: 1000 !important;
+        position: relative !important;
   }
   
   .letter-btn{ 
-    padding: 4px 8px !important;
+    padding: 4px 7px !important;
        min-width: 20px !important;
        min-height: 20px !important;
       font-size: 13px !important;
@@ -326,7 +328,7 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
   .challenge-col-game{ position:absolute; right:20px; bottom:90px !important; }
   .challenge-input-container{ right:50px; bottom:180px !important; }
   .game{ grid-template-columns:1fr 380px; grid-template-rows:100px 1fr; gap:10px; height:100%; }
-  .game-tree-frame{ width:80% !important; max-width:300px !important; margin:0 auto !important; margin-left: -30px !important; margin-top: -60px !important; }
+  .game-tree-frame{ width:80% !important; max-width:300px !important; margin:0 auto !important; margin-left: -50px !important; margin-top: -60px !important; }
   .game-tree-img{ width:180% !important; height:100% !important; left:35% !important; top:55% !important; object-fit:contain !important; }
   .timer-container { top:15px; right:15px; padding:10px 16px; font-size:18px; min-width:70px; }
   .slots-row { flex-wrap: wrap; justify-content: center; gap: 4px !important; }
@@ -366,6 +368,17 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
 }
 
 @media (max-width: 768px) and (orientation: portrait) {
+  
+/* 🔥 تصغير التفاحات على الشجرة */
+  .tree-apples .apple-item img {
+    width: 15px !important; /* غير هذه القيمة */
+  }
+  
+  /* 🔥 تصغير التفاحات الساقطة */
+  .fallen-item img {
+    width: 20px !important; /* غير هذه القيمة */
+  }
+    
   .wrap{ padding:5px; height:100vh; display:block; overflow:hidden; }
   .stage{ height:100vh; max-width:100%; border-radius:0; }
   .page{ height:calc(100vh - 10px); padding:5px; }
