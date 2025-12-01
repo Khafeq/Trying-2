@@ -291,16 +291,16 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
   /* 🔥 تصغير أزرار الحروف - ابحث عن هذا الكود */
   .right-col{ 
     grid-row:2; 
-    height:40vh; 
-    gap:3px; 
-    padding:3px; 
+    height:30vh; 
+    gap:2px; 
+    padding:2px; 
   }
   
   .letter-btn{ 
-    padding: 5px 7px !important;
-    min-width: 30px !important;
-    min-height: 30px !important;
-    font-size: 20px !important;
+    padding: 4px 6px !important;
+    min-width: 25px !important;
+    min-height: 25px !important;
+    font-size: 15px !important;
   }
 .challenge-btn{ 
     width: 120px;
@@ -313,7 +313,8 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
   .challenge-col-game{ position:absolute; right:20px; bottom:90px !important; }
   .challenge-input-container{ right:50px; bottom:180px !important; }
   .game{ grid-template-columns:1fr 380px; grid-template-rows:100px 1fr; gap:10px; height:100%; }
-  .game-tree-frame{ width:70% !important; max-width:250px !important; margin:0 auto !important; margin-left: 500px !important; margin-top: 100px !important; }
+  .game-tree-frame{ width:65% !important; max-width:300px !important; margin:0 auto !important; margin-left: 300px !important; margin-top: 50px !important; }
+  .game-tree-img{ width:100% !important; height:100% !important; left:50% !important; top:50% !important; object-fit:contain !important; }
   .timer-container { top:15px; right:15px; padding:10px 16px; font-size:18px; min-width:70px; }
   .slots-row { flex-wrap: wrap; justify-content: center; gap: 4px !important; }
   .slot { min-width: 28px; font-size: 20px !important; padding: 4px 6px; }
@@ -325,6 +326,29 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
   .sound-toggle{ 
     width: 36px !important;
     height: 36px !important;
+  }
+
+  .fallen-columns {
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: flex-end !important;
+    position: absolute !important;
+    bottom: 15px !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 8px !important;
+    overflow-x: auto !important;
+    background: rgba(0,0,0,0.2) !important;
+  }
+  
+  .fallen-column {
+    flex-direction: row !important;
+    gap: 6px !important;
+    width: auto !important;
+  }
+  
+  .fallen-item img {
+    width: 32px !important;
   }
 }
 
@@ -347,6 +371,13 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
   .start-col{ position:absolute !important; order:3; bottom:40vh; right:5%; left:auto !important; transform:none; }
   .challenge-col{ position:absolute !important; order:3; bottom:17vh; right:1%; transform:none; }
   .challenge-col-game{ position:absolute !important; bottom:17vh !important; right:1%; transform:none; }
+  .challenge-btn{ 
+    width: 120px;
+    padding: 12px 20px !important;
+    font-size: 16px !important;
+    min-height: 50px;
+    min-width: 120px;
+  }
   .challenge-input-container{ position:absolute !important; bottom:20vh; right:5%; width:60% !important; }
   .start-btn{ width:120px; padding:12px 20px !important; font-size:16px !important; min-height:50px; border-radius:12px !important; }
   .challenge-btn{ width:100px; padding:10px 16px !important; font-size:14px !important; min-height:40px; border-radius:12px !important; }
