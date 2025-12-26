@@ -788,10 +788,10 @@ const imageLoader = {
     background: settings.images.background,
     tree: settings.images.tree,
     apple: settings.images.apple,
-    //appleTransparent: settings.images.appleTransparent,
-    //crowdFail: settings.images.crowdFail,
-    //crowdWin: settings.images.crowdWin,
-    //winImage: settings.images.winImage
+    appleTransparent: settings.images.appleTransparent,
+    crowdFail: settings.images.crowdFail,
+    crowdWin: settings.images.crowdWin,
+    winImage: settings.images.winImage
   };
   
   document.getElementById('totalCount').textContent = Object.keys(imagesToLoad).length;
@@ -858,11 +858,18 @@ const imageLoader = {
   const ALPHABETS = {
     nl: ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","Á","À","É","È","Ë","Í","Ï","Ó","Ö","Ú","Ü"],
     en: ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"],
-    // 3. ترتيب عربي أبجدي من اليمين لليسار حسب طلبك
-    ar: ["ى","ئ","ي","ؤ","و","ه","ن","م","ل","ك","ق","ف","غ","ع","ظ","ط","ض","ص","ش","س","ز","ر","ذ","د","خ","ح","ج","ث","ت","ب","آ","إ","أ","ا"]
+    // 1. ترتيب عربي أبجدي من اليمين لليسار (عكس الترتيب السابق)
+    ar: ["ا","أ","إ","آ","ب","ت","ث","ج","ح","خ","د","ذ","ر","ز","س","ش","ص","ض","ط","ظ","ع","غ","ف","ق","ك","ل","م","ن","ه","و","ؤ","ي","ئ","ى"]
   };
 
-  // كائن الترجمة - تحديث كامل مع استبدال "تقرير" بـ "بيان"
+  // 3. أسماء اللغات كاملة
+  const LANGUAGE_NAMES = {
+    nl: { nl: "Nederlands", en: "Dutch", ar: "هولندي" },
+    en: { nl: "Engels", en: "English", ar: "إنجليزي" },
+    ar: { nl: "Arabisch", en: "Arabic", ar: "عربي" }
+  };
+
+  // كائن الترجمة - تحديث كامل
   const TRANSLATIONS = {
     nl: {
       challengeBtn: "Uitdaging",
@@ -944,7 +951,7 @@ const imageLoader = {
       challengeBtn: "تحدي",
       newBtn: "لعبة جديدة",
       modalOk: "موافق",
-      shareReportBtn: "مشاركة البيان", // 4. تغيير من "تقرير" إلى "بيان"
+      shareReportBtn: "مشاركة البيان",
       startBtn: "ابدأ",
       wordPlaceholder: "اكتب الكلمة...",
       timeUp: "انتهى الوقت!",
@@ -959,8 +966,8 @@ const imageLoader = {
       typeChallengeWord: "اكتب كلمة للتحدي أولاً",
       copyLink: "انسخ الرابط وشاركه",
       challengeText: "تحدي تفاح - {seconds} ثانية",
-      noReport: "لا يوجد بيان", // 4. تغيير من "تقرير" إلى "بيان"
-      reportCopied: "تم نسخ البيان إلى الحافظة", // 4. تغيير من "تقرير" إلى "بيان"
+      noReport: "لا يوجد بيان",
+      reportCopied: "تم نسخ البيان إلى الحافظة",
       timePlaceholder: "الوقت بالثواني",
       confirmChallenge: "تأكيد التحدي",
       challengeUsed: "تم استخدام التحدي",
@@ -970,13 +977,13 @@ const imageLoader = {
       resultWin: "فوز",
       resultLose: "خسارة",
       resultTimeUp: "انتهى الوقت",
-      reportTitle: "AppelBoom - بيان", // 4. تغيير من "تقرير" إلى "بيان"
+      reportTitle: "AppelBoom - بيان",
       fallenApples: "التفاحات الساقطة: ",
       maxApples: "أقصى تفاحات: ",
       language: "اللغة: ",
       signature: "التوقيع(sha256): ",
-      result: "النتيجة: ", // 1. إضافة ترجمة لـ "Result"
-      time: "الوقت: " // 1. إضافة ترجمة لـ "Time"
+      result: "النتيجة: ",
+      time: "الوقت: "
     }
   };
 
@@ -1218,12 +1225,17 @@ const imageLoader = {
       slot.style.color = '#c73737';
     });
     
+    // 2. استخدام لغة التحدي لرسالة النهاية
     const reportLang = state.activeChallenge?.lang || state.lang;
     const t = TRANSLATIONS[reportLang] || TRANSLATIONS[state.lang];
     
     const elapsedTime = getElapsedTime();
     modalTitle.textContent = t.timeUp;
-    modalDesc.textContent = t.wordWas + state.wordRaw + (elapsedTime > 0 ? `\n${t.timeElapsed}${elapsedTime} ${t.seconds}` : '');
+    
+    // 4. جعل الكلمة بارزة بخط أعرض
+    const wordSpan = `<span style="font-weight: 900; font-size: 1.2em; color: #c73737; padding: 2px 6px; background: #fff3cd; border-radius: 4px; border: 2px solid #c73737;">${state.wordRaw}</span>`;
+    modalDesc.innerHTML = t.wordWas + wordSpan + (elapsedTime > 0 ? `<br>${t.timeElapsed}${elapsedTime} ${t.seconds}` : '');
+    
     modalMedia.innerHTML = `<img src="${settings.images.crowdFail}" alt="time up" onerror="this.style.display='none'">`;
     modal.classList.add('show');
     lastReport = createReport('time_up');
@@ -1289,12 +1301,10 @@ const imageLoader = {
     updateDynamicElements();
   }
 
-  // 2. تعديل دالة renderSlots لدعم الكتابة من اليمين لليسار للعربية
   function renderSlots(){
     slotsRow.innerHTML=''; state.slots=[];
     const isArabic = (state.activeChallenge?.lang || state.lang) === 'ar';
     
-    // 2. إذا كانت اللغة عربية، عرض الحروف من اليمين لليسار
     const charsToDisplay = isArabic ? state.wordChars.slice() : state.wordChars;
     
     charsToDisplay.forEach((ch,i)=>{
@@ -1302,12 +1312,11 @@ const imageLoader = {
       if(ch===' '){ 
         s.classList.add('space'); 
         s.textContent=' '; 
-        s.style.margin = '0 10px'; // إضافة مسافة للفراغات
+        s.style.margin = '0 10px';
       } else {
         s.textContent='_';
       }
       
-      // 2. للغة العربية، تعيين اتجاه النص
       if (isArabic) {
         s.style.direction = 'rtl';
         s.style.textAlign = 'right';
@@ -1316,7 +1325,6 @@ const imageLoader = {
       slotsRow.appendChild(s); state.slots.push(s);
     });
     
-    // 2. تعيين اتجاه الصف كله للعربية
     if (isArabic) {
       slotsRow.style.direction = 'rtl';
       slotsRow.style.justifyContent = 'flex-end';
@@ -1334,41 +1342,62 @@ const imageLoader = {
     else slotsRow.classList.add('extremely-long-word');
   }
 
-  // 3. دالة محدثة لعرض الأبجدية العربية بترتيب أبجدي
+  // 1. تعديل دالة renderAlphabet لعكس ترتيب الأحرف العربية
   function renderAlphabet(){
     alphabetDiv.innerHTML=''; state.alphabetButtons=[];
     const gameLang = state.activeChallenge?.lang || state.lang;
     const arr = ALPHABETS[gameLang] || ALPHABETS.nl;
     
-    // 3. للغة العربية، استخدام الترتيب الأبجدي كما هو في ALPHABETS.ar
     let letters;
     if (gameLang === 'ar') {
-      // 3. الترتيب الأبجدي من اليمين لليسار
-      letters = arr.slice(); // استخدام الترتيب المحدد في ALPHABETS.ar
+      // 1. عكس الترتيب لعرض الأحرف من اليمين لليسار
+      letters = arr.slice().reverse(); // عكس الترتيب
     } else {
-      letters = (gameLang==='ar') ? arr.slice().reverse() : arr.slice();
+      letters = arr.slice();
     }
     
-    letters.forEach(l=>{
-      const btn=document.createElement('button'); 
-      btn.className='letter-btn'; 
-      btn.textContent=l; 
-      btn.dataset.letter=l;
+    // 1. إنشاء صفوف للأحرف لتنظيمها بشكل أفضل
+    const rows = [];
+    const charsPerRow = gameLang === 'ar' ? 11 : 13; // عدد أحرف أقل للعربية لأن الحروف أوسع
+    
+    for (let i = 0; i < letters.length; i += charsPerRow) {
+      rows.push(letters.slice(i, i + charsPerRow));
+    }
+    
+    // 1. عرض الأحرف في صفوف
+    rows.forEach(rowLetters => {
+      const rowDiv = document.createElement('div');
+      rowDiv.style.display = 'flex';
+      rowDiv.style.flexWrap = 'wrap';
+      rowDiv.style.justifyContent = gameLang === 'ar' ? 'flex-end' : 'center';
+      rowDiv.style.gap = '6px';
+      rowDiv.style.marginBottom = '6px';
+      rowDiv.style.width = '100%';
       
-      // 3. للغة العربية، جعل النص بحجم مناسب
-      if (gameLang === 'ar') {
-        btn.style.fontSize = '22px';
-        btn.style.fontFamily = '"Segoe UI", Arial, sans-serif';
-      }
+      rowLetters.forEach(l=>{
+        const btn=document.createElement('button'); 
+        btn.className='letter-btn'; 
+        btn.textContent=l; 
+        btn.dataset.letter=l;
+        
+        if (gameLang === 'ar') {
+          btn.style.fontSize = '22px';
+          btn.style.fontFamily = '"Segoe UI", Arial, sans-serif';
+          btn.style.minWidth = '36px';
+          btn.style.minHeight = '36px';
+        }
+        
+        btn.addEventListener('click', onLetterClick); 
+        rowDiv.appendChild(btn); 
+        state.alphabetButtons.push(btn);
+      });
       
-      btn.addEventListener('click', onLetterClick); 
-      alphabetDiv.appendChild(btn); 
-      state.alphabetButtons.push(btn);
+      alphabetDiv.appendChild(rowDiv);
     });
     
-    // 3. اتجاه الأبجدية
     alphabetDiv.style.direction = (gameLang==='ar') ? 'rtl' : 'ltr';
-    alphabetDiv.style.justifyContent = (gameLang==='ar') ? 'flex-end' : 'center';
+    alphabetDiv.style.justifyContent = 'flex-start';
+    alphabetDiv.style.alignItems = 'flex-start';
     
     adjustAlphabetButtons();
   }
@@ -1445,7 +1474,6 @@ const imageLoader = {
         state.slots[idx].style.color = '#0b8a3a'; 
         state.slots[idx].classList.add('revealed'); 
         
-        // 2. للغة العربية، التأكد من اتجاه النص
         if (state.lang === 'ar') {
           state.slots[idx].style.direction = 'rtl';
           state.slots[idx].style.textAlign = 'right';
@@ -1522,7 +1550,6 @@ const imageLoader = {
       letterEl.className='fallen-letter'; 
       letterEl.textContent = letter;
       
-      // 2. للغة العربية، اتجاه النص
       if (state.lang === 'ar') {
         letterEl.style.direction = 'rtl';
         letterEl.style.textAlign = 'right';
@@ -1550,7 +1577,6 @@ const imageLoader = {
       state.slots.forEach(s=>{ 
         if(s.textContent !== ' ') {
           s.style.color = '#0b8a3a'; 
-          // 2. للغة العربية، التأكد من اتجاه النص
           if (state.lang === 'ar') {
             s.style.direction = 'rtl';
             s.style.textAlign = 'right';
@@ -1558,6 +1584,7 @@ const imageLoader = {
         }
       });
       
+      // 2. استخدام لغة التحدي لرسالة الفوز
       const reportLang = state.activeChallenge?.lang || state.lang;
       const t = TRANSLATIONS[reportLang] || TRANSLATIONS[state.lang];
       
@@ -1586,19 +1613,23 @@ const imageLoader = {
         slot.textContent = ch; 
         slot.style.color = '#c73737'; 
         
-        // 2. للغة العربية، التأكد من اتجاه النص
         if (state.lang === 'ar') {
           slot.style.direction = 'rtl';
           slot.style.textAlign = 'right';
         }
       });
       
+      // 2. استخدام لغة التحدي لرسالة الخسارة
       const reportLang = state.activeChallenge?.lang || state.lang;
       const t = TRANSLATIONS[reportLang] || TRANSLATIONS[state.lang];
       
       const elapsedTime = getElapsedTime();
       modalTitle.textContent = t.applesFinished;
-      modalDesc.textContent = t.wordWas + state.wordRaw + (elapsedTime > 0 ? `\n${t.timeElapsed}${elapsedTime} ${t.seconds}` : '');
+      
+      // 4. جعل الكلمة بارزة بخط أعرض
+      const wordSpan = `<span style="font-weight: 900; font-size: 1.2em; color: #c73737; padding: 2px 6px; background: #fff3cd; border-radius: 4px; border: 2px solid #c73737;">${state.wordRaw}</span>`;
+      modalDesc.innerHTML = t.wordWas + wordSpan + (elapsedTime > 0 ? `<br>${t.timeElapsed}${elapsedTime} ${t.seconds}` : '');
+      
       modalMedia.innerHTML = `<img src="${settings.images.crowdFail}" alt="fail" onerror="this.style.display='none'">`;
       modal.classList.add('show');
       lastReport = createReport('lose');
@@ -1875,7 +1906,10 @@ const imageLoader = {
     
     const t = TRANSLATIONS[report.lang] || TRANSLATIONS.en;
     
-    // 1. ترجمة النتيجة بالكامل
+    // 3. الحصول على اسم اللغة الكامل
+    const langCode = report.lang || 'en';
+    const langName = LANGUAGE_NAMES[langCode] ? LANGUAGE_NAMES[langCode][report.lang] || LANGUAGE_NAMES[langCode].en : langCode.toUpperCase();
+    
     let resultText = '';
     switch(report.result) {
       case 'win': resultText = t.resultWin; break;
@@ -1888,10 +1922,10 @@ const imageLoader = {
     ctx.fillText(t.reportTitle, 20, 40);
     ctx.font = '16px Inter, Arial';
     ctx.fillText(`${t.wordWas} ${report.word}`, 20, 80);
-    ctx.fillText(`${t.result}${resultText}`, 20, 110); // 1. استخدام الترجمة الكاملة
+    ctx.fillText(`${t.result}${resultText}`, 20, 110);
     ctx.fillText(`${t.fallenApples}${report.fallen} / ${report.maxApples}`, 20, 140);
-    ctx.fillText(`${t.language}${report.lang}`, 20, 170);
-    ctx.fillText(`${t.time}${new Date(report.ts).toLocaleString()}`, 20, 200); // 1. استخدام الترجمة الكاملة
+    ctx.fillText(`${t.language}${langName}`, 20, 170); // 3. استخدام اسم اللغة الكامل
+    ctx.fillText(`${t.time}${new Date(report.ts).toLocaleString()}`, 20, 200);
     
     if (report.elapsedTime > 0) {
         ctx.fillText(`${t.timeElapsed} ${report.elapsedTime} ${t.seconds}`, 20, 230);
