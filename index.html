@@ -70,7 +70,7 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
 .lang-col-game { 
     position: absolute;
     right: 20px;
-    top: 120px;
+    bottom: 100px; /* 3. تحت زر التحدي */
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -279,8 +279,9 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
   .page{ height:calc(100vh - 20px); padding:10px; }
   .lang-col{ margin-top:60px !important; }
   .lang-col-game { 
-        right: 10px !important;
-        top: 70px !important;
+        right: 20px !important;
+        bottom: 100px !important; /* 3. تحت زر التحدي في الجوال الأفقي */
+        top: auto !important;
     }
   .tree-wrap{ height:35vh; }
   .tree-frame{ width:65% !important; max-width: 300px !important; margin-left: -260px !important; margin-top: 100px !important; }
@@ -303,10 +304,10 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
   /* 🔥 تصغير زر New - ابحث عن هذا الكود */
   .new-bottom{ 
     position:absolute !important; 
-    order:3; 
     top:40px !important; 
     right:20px !important;
     transform:none; 
+    z-index: 10000 !important; /* 4. فوق العناصر */
   }
   
    .new-btn{ 
@@ -437,14 +438,15 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
   .start-col{ position:absolute !important; order:3; bottom:40vh; right:5%; left:auto !important; transform:none; }
   .lang-col-game {
         position: absolute !important;
-        order: 4;
-        bottom: 10vh;
-        right: 5%;
+        right: 5% !important;
+        bottom: 90px !important; /* 3. تحت زر التحدي في الجوال العمودي */
+        top: auto !important;
         transform: none;
         margin-top: 0;
+        z-index: 10000;
     }
   .challenge-col{ position:absolute !important; order:3; bottom:17vh; right:1%; transform:none; }
-  .challenge-col-game{ position:absolute !important; bottom:17vh !important; right:1%; transform:none; }
+  .challenge-col-game{ position:absolute !important; bottom:20px !important; right:5%; transform:none; }
   .challenge-btn{ 
     width: 120px;
     padding: 12px 20px !important;
@@ -463,10 +465,35 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
   .slots-row{ min-height:50px; margin-top:0 !important; gap:1px !important; padding:0 5px !important; flex-wrap: wrap; justify-content: center; }
   .left-game{ order:2; height:25vh; position:relative; padding:0; margin:0; }
   .game-tree-frame{ width:65% !important; max-width:300px !important; margin:0 auto !important; height:100%; }
-  .game-tree-img{ width:100% !important; height:100% !important; left:40% !important; top:6	0% !important; object-fit:contain !important; }
-  .new-bottom{ position:absolute !important; order:3; top:270px !important; right:3%; transform:none; }
-  .new-btn{ padding:8px 16px; border-radius:20px; font-size:12px; min-height:40px; }
-  .right-col{ order:4; height:50vh; display:flex; flex-direction:row; gap:8px; padding:5px; margin-top:10px; }
+  .game-tree-img{ width:100% !important; height:100% !important; left:40% !important; top:60% !important; object-fit:contain !important; }
+  
+  /* 4. إصلاح زر New في الجوال العمودي */
+  .new-bottom{ 
+    position: fixed !important;
+    bottom: 70px !important;
+    right: 50% !important;
+    transform: translateX(50%) !important;
+    top: auto !important;
+    z-index: 10001 !important;
+    width: 90%;
+    max-width: 200px;
+    text-align: center;
+  }
+  
+  .new-btn{ 
+    padding: 12px 20px !important;
+    border-radius: 20px;
+    font-size: 14px !important;
+    min-height: 44px;
+    width: 100%;
+    background: #86198F !important;
+    color: white !important;
+    border: 2px solid white !important;
+    box-shadow: 0 4px 12px rgba(134, 25, 143, 0.5) !important;
+    pointer-events: auto !important;
+  }
+  
+  .right-col{ order:4; height:50vh; display:flex; flex-direction:row; gap:8px; padding:5px; margin-top:10px; margin-bottom: 100px; /* إضافة مساحة للأزرار السفلية */ }
   .fallen-columns{ flex:1; padding-top:10px; max-height:100%; justify-content:flex-start; overflow-y:auto; }
   .fallen-column{ width:70px; }
   .fallen-item img{ width:30px !important; }
@@ -497,13 +524,25 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
   .tree-wrap{ height:45vh; }
   .input-container{ bottom:20vh; width:95% !important; }
   .start-col{ bottom:40vh; }
-  .lang-col-game { bottom: 8vh; }
+  .lang-col-game { bottom: 85px !important; }
   .challenge-col{ bottom:17vh; }
-  .challenge-col-game{ bottom:17vh !important; }
+  .challenge-col-game{ bottom:20px !important; }
   .challenge-input-container{ bottom:20vh; }
   .lang-col{ bottom:25vh; }
-  .right-col{ height:45vh; }
+  .right-col{ height:45vh; margin-bottom: 90px; }
   .timer-container { top:8px; right:8px; padding:6px 12px; font-size:14px; min-width:60px; }
+  
+  /* 4. إصلاح زر New في الشاشات الصغيرة جداً */
+  .new-bottom{ 
+    bottom: 60px !important;
+    max-width: 180px;
+  }
+  
+  .new-btn{ 
+    padding: 10px 16px !important;
+    font-size: 13px !important;
+    min-height: 40px;
+  }
   
   /* 🔥 تحسينات إضافية للشاشات الصغيرة */
   .slots-row {
@@ -694,7 +733,6 @@ const imageLoader = {
   images: {},
   
   load: function(images, callback) {
-    // 1. التعديل: تصفية الصور التي لها قيمة فقط
     const validImages = {};
     for (const [key, src] of Object.entries(images)) {
       if (src && src.trim() !== '') {
@@ -743,27 +781,23 @@ const imageLoader = {
 
 /* ================= Appelboom v7 - Mobile Optimized + Challenge/Share ================= */
 (async function(){
-  // إخفاء المحتوى الرئيسي مؤقتاً
   const stage = document.getElementById('stage');
   stage.style.display = 'none';
   
-  // تحميل الصور بشكل متدرج
   const imagesToLoad = {
     background: settings.images.background,
     tree: settings.images.tree,
     apple: settings.images.apple,
-    //appleTransparent: settings.images.appleTransparent,
-    //crowdFail: settings.images.crowdFail,
-    //crowdWin: settings.images.crowdWin,
-    //winImage: settings.images.winImage
+    appleTransparent: settings.images.appleTransparent,
+    crowdFail: settings.images.crowdFail,
+    crowdWin: settings.images.crowdWin,
+    winImage: settings.images.winImage
   };
   
-  // تحديث العداد
   document.getElementById('totalCount').textContent = Object.keys(imagesToLoad).length;
   document.getElementById('loadedCount').textContent = '0';
   
   imageLoader.load(imagesToLoad, function() {
-    // بعد اكتمال التحميل، تعيين الصور
     const bg = document.getElementById('bg');
     const heroTree = document.getElementById('heroTree');
     const gameTree = document.getElementById('gameTree');
@@ -772,7 +806,6 @@ const imageLoader = {
     heroTree.src = settings.images.tree;
     gameTree.src = settings.images.tree;
     
-    // إخفاء شاشة التحميل وإظهار المحتوى الرئيسي
     setTimeout(() => {
       document.getElementById('loadingScreen').style.opacity = '0';
       document.getElementById('loadingScreen').style.transition = 'opacity 0.5s ease';
@@ -784,7 +817,6 @@ const imageLoader = {
     }, 500);
   });
   
-  // تحديث العداد أثناء التحميل
   const updateCounter = setInterval(() => {
     document.getElementById('loadedCount').textContent = imageLoader.loaded;
     if (imageLoader.loaded === imageLoader.total) {
@@ -799,7 +831,7 @@ const imageLoader = {
   const passwordDots = document.getElementById('passwordDots');
   const startBtn = document.getElementById('startBtn');
   const langCol = document.getElementById('langCol');
-  const langColGame = document.getElementById('langColGame'); // 4. إضافة مرجع للغة في الصفحة الثانية
+  const langColGame = document.getElementById('langColGame');
   const langEls = langCol.querySelectorAll('.lang-btn');
   const soundToggle = document.getElementById('soundToggle');
   const pageSetup = document.getElementById('pageSetup');
@@ -829,7 +861,7 @@ const imageLoader = {
     ar: ["ا","أ","إ","آ","ب","ت","ث","ج","ح","خ","د","ذ","ر","ز","س","ش","ص","ض","ط","ظ","ع","غ","ف","ق","ك","ل","م","ن","ه","و","ؤ","ي","ئ","ى"]
   };
 
-  // كائن الترجمة
+  // كائن الترجمة - إضافة جميع الترجمات للتقرير
   const TRANSLATIONS = {
     nl: {
       challengeBtn: "Uitdaging",
@@ -857,7 +889,15 @@ const imageLoader = {
       challengeUsed: "Uitdaging Al Gespeeld",
       challengeUsedDesc: "Deze uitdaging is al eerder gespeeld op dit apparaat!",
       timeElapsed: "Tijd gebruikt: ",
-      seconds: "seconden"
+      seconds: "seconden",
+      resultWin: "Gewonnen",
+      resultLose: "Verloren",
+      resultTimeUp: "Tijd om",
+      reportTitle: "AppelBoom - Rapport",
+      fallenApples: "Gevallen appels: ",
+      maxApples: "Max appels: ",
+      language: "Taal: ",
+      signature: "Handtekening(sha256): "
     },
     en: {
       challengeBtn: "Challenge",
@@ -885,7 +925,15 @@ const imageLoader = {
       challengeUsed: "Challenge Already Played",
       challengeUsedDesc: "This challenge has been played before on this device!",
       timeElapsed: "Time used: ",
-      seconds: "seconds"
+      seconds: "seconds",
+      resultWin: "Win",
+      resultLose: "Lose",
+      resultTimeUp: "Time Up",
+      reportTitle: "AppelBoom - Report",
+      fallenApples: "Fallen apples: ",
+      maxApples: "Max apples: ",
+      language: "Language: ",
+      signature: "Signature(sha256): "
     },
     ar: {
       challengeBtn: "تحدي",
@@ -913,7 +961,15 @@ const imageLoader = {
       challengeUsed: "تم استخدام التحدي",
       challengeUsedDesc: "هذا التحدي تم لعبه مسبقاً على هذا الجهاز!",
       timeElapsed: "الوقت المستغرق: ",
-      seconds: "ثانية"
+      seconds: "ثانية",
+      resultWin: "فوز",
+      resultLose: "خسارة",
+      resultTimeUp: "انتهى الوقت",
+      reportTitle: "AppelBoom - تقرير",
+      fallenApples: "التفاحات الساقطة: ",
+      maxApples: "أقصى تفاحات: ",
+      language: "اللغة: ",
+      signature: "التوقيع(sha256): "
     }
   };
 
@@ -940,7 +996,6 @@ const imageLoader = {
     gameStartTime: 0
   };
 
-  // 🔥 دالة تنظيف التحديات القديمة
   function cleanupOldChallenges() {
     const playedChallenges = JSON.parse(localStorage.getItem('playedChallenges') || '{}');
     const now = Date.now();
@@ -957,7 +1012,6 @@ const imageLoader = {
 
   cleanupOldChallenges();
 
-  // audio helper مع منع التكرار
   function playAudio(src, vol=1){ 
     if(!state.audioEnabled) return; 
     try{ 
@@ -1043,14 +1097,13 @@ const imageLoader = {
 
   updateAllTexts();
 
-  // 4. دالة لعرض زر اللغة في الصفحة الثانية
+  // 1. & 3. دالة محدثة لعرض زر اللغة في الصفحة الثانية
   function renderLanguageButtonInGamePage(lang) {
     langColGame.innerHTML = '';
     const langBtn = document.createElement('div');
     langBtn.className = 'lang-btn active';
     langBtn.dataset.lang = lang;
     
-    // تعيين النص حسب اللغة
     let langText = '';
     switch(lang) {
       case 'nl': langText = 'NL'; break;
@@ -1060,7 +1113,7 @@ const imageLoader = {
     }
     
     langBtn.textContent = langText;
-    langBtn.style.pointerEvents = 'none'; // لمنع التغيير أثناء اللعبة
+    langBtn.style.pointerEvents = 'none';
     langColGame.appendChild(langBtn);
   }
 
@@ -1159,7 +1212,7 @@ const imageLoader = {
       slot.style.color = '#c73737';
     });
     
-    // 5. استخدام لغة التحدي أو اللغة الحالية للتقرير
+    // 2. استخدام لغة التحدي لتقرير كامل
     const reportLang = state.activeChallenge?.lang || state.lang;
     const t = TRANSLATIONS[reportLang] || TRANSLATIONS[state.lang];
     
@@ -1207,8 +1260,9 @@ const imageLoader = {
     renderSlots();
     renderAlphabet();
     
-    // 4. عرض زر اللغة في الصفحة الثانية
-    renderLanguageButtonInGamePage(state.lang);
+    // 1. إصلاح: استخدام لغة التحدي إذا كان موجوداً
+    const displayLang = state.activeChallenge?.lang || state.lang;
+    renderLanguageButtonInGamePage(displayLang);
     
     const wordLength = state.wordChars.filter(ch=>ch!==' ').length;
     let slotFontSize = settings.options.slotFontSizePx;
@@ -1416,7 +1470,7 @@ const imageLoader = {
       stopBirds();
       state.slots.forEach(s=>{ if(s.textContent !== ' ') s.style.color = '#0b8a3a'; });
       
-      // 5. استخدام لغة التحدي أو اللغة الحالية للتقرير
+      // 2. استخدام لغة التحدي لتقرير كامل
       const reportLang = state.activeChallenge?.lang || state.lang;
       const t = TRANSLATIONS[reportLang] || TRANSLATIONS[state.lang];
       
@@ -1446,7 +1500,7 @@ const imageLoader = {
         slot.style.color = '#c73737'; 
       });
       
-      // 5. استخدام لغة التحدي أو اللغة الحالية للتقرير
+      // 2. استخدام لغة التحدي لتقرير كامل
       const reportLang = state.activeChallenge?.lang || state.lang;
       const t = TRANSLATIONS[reportLang] || TRANSLATIONS[state.lang];
       
@@ -1517,7 +1571,7 @@ const imageLoader = {
     const link = generateChallengeLink({ 
         word: (state.lang==='ar' ? raw : raw.toUpperCase()), 
         durationSec: duration,
-        lang: state.lang // 2. إضافة اللغة إلى التحدي
+        lang: state.lang
     });
     
     challengeInputContainer.style.display = 'none';
@@ -1545,7 +1599,8 @@ const imageLoader = {
     }
   });
 
-  newBtn.addEventListener('click', ()=>{
+  // 4. إضافة event listener محسن لزر New
+  newBtn.addEventListener('click', function(){
     uiClick();
     endChallengeTimer();
     state.activeChallenge = null;
@@ -1568,6 +1623,18 @@ const imageLoader = {
             } 
         }); 
     }, 100);
+  });
+
+  // 4. تأكيد أن زر New يستجيب للمس في الجوال
+  newBtn.addEventListener('touchstart', function(e) {
+    e.preventDefault();
+    this.style.transform = 'scale(0.95)';
+  });
+  
+  newBtn.addEventListener('touchend', function(e) {
+    e.preventDefault();
+    this.style.transform = '';
+    this.click();
   });
 
   document.addEventListener('keydown', function(e){
@@ -1608,7 +1675,7 @@ const imageLoader = {
         durationSec, 
         mode, 
         ts: Date.now(),
-        lang: lang // 2. إضافة اللغة إلى payload
+        lang: lang
     };
     const b64 = btoa(encodeURIComponent(JSON.stringify(payload)));
     const url = new URL(location.href);
@@ -1642,7 +1709,6 @@ const imageLoader = {
     
     const playedChallenges = JSON.parse(localStorage.getItem('playedChallenges') || '{}');
     if (playedChallenges[ch.id]) {
-        // 2. استخدام لغة التحدي الأصلية من الـ payload
         const challengeLang = ch.lang || state.lang;
         const t = TRANSLATIONS[challengeLang] || TRANSLATIONS[state.lang];
         
@@ -1653,7 +1719,6 @@ const imageLoader = {
         return;
     }
     
-    // 2. استخدام لغة التحدي من الـ payload للرسالة الأولى
     const challengeLang = ch.lang || state.lang;
     const t = TRANSLATIONS[challengeLang] || TRANSLATIONS[state.lang];
     
@@ -1663,7 +1728,7 @@ const imageLoader = {
             playedAt: Date.now(),
             word: ch.word,
             duration: ch.durationSec,
-            lang: challengeLang // حفظ لغة التحدي
+            lang: challengeLang
         };
         localStorage.setItem('playedChallenges', JSON.stringify(playedChallenges));
         
@@ -1684,7 +1749,6 @@ const imageLoader = {
   function createReport(result){
     const now = Date.now();
     const elapsedTime = getElapsedTime();
-    // 5. استخدام لغة التحدي أو اللغة الحالية للتقرير
     const reportLang = state.activeChallenge?.lang || state.lang;
     
     const report = {
@@ -1694,7 +1758,7 @@ const imageLoader = {
       word: state.wordRaw,
       fallen: state.fallenCount,
       maxApples: state.maxApples,
-      lang: reportLang, // استخدام اللغة الصحيحة للتقرير
+      lang: reportLang,
       playerAgent: navigator.userAgent,
       elapsedTime: elapsedTime,
       challengeId: state.activeChallenge?.id || null
@@ -1719,22 +1783,32 @@ const imageLoader = {
     const ctx = c.getContext('2d');
     ctx.fillStyle = '#0b5138'; ctx.fillRect(0,0,w,h);
     
-    // 5. استخدام لغة التقرير من الكائن report
+    // 2. استخدام جميع ترجمات التقرير من اللغة الصحيحة
     const t = TRANSLATIONS[report.lang] || TRANSLATIONS.en;
     
-    ctx.fillStyle = '#fff'; ctx.font = '20px Inter, Arial'; ctx.fillText('AppelBoom - Report', 20, 40);
+    // ترجمة النتيجة
+    let resultText = '';
+    switch(report.result) {
+      case 'win': resultText = t.resultWin; break;
+      case 'lose': resultText = t.resultLose; break;
+      case 'time_up': resultText = t.resultTimeUp; break;
+      default: resultText = report.result;
+    }
+    
+    ctx.fillStyle = '#fff'; ctx.font = '20px Inter, Arial'; 
+    ctx.fillText(t.reportTitle, 20, 40);
     ctx.font = '16px Inter, Arial';
     ctx.fillText(`${t.wordWas} ${report.word}`, 20, 80);
-    ctx.fillText(`Result: ${report.result}`, 20, 110);
-    ctx.fillText(`Fallen apples: ${report.fallen} / ${report.maxApples}`, 20, 140);
-    ctx.fillText(`Language: ${report.lang}`, 20, 170);
+    ctx.fillText(`Result: ${resultText}`, 20, 110);
+    ctx.fillText(`${t.fallenApples}${report.fallen} / ${report.maxApples}`, 20, 140);
+    ctx.fillText(`${t.language}${report.lang}`, 20, 170);
     ctx.fillText(`Time: ${new Date(report.ts).toLocaleString()}`, 20, 200);
     
     if (report.elapsedTime > 0) {
         ctx.fillText(`${t.timeElapsed} ${report.elapsedTime} ${t.seconds}`, 20, 230);
-        ctx.fillText(`Signature(sha256): ${report.signature ? report.signature.slice(0,24) + '...' : 'pending'}`, 20, 260);
+        ctx.fillText(`${t.signature}${report.signature ? report.signature.slice(0,24) + '...' : 'pending'}`, 20, 260);
     } else {
-        ctx.fillText(`Signature(sha256): ${report.signature ? report.signature.slice(0,24) + '...' : 'pending'}`, 20, 230);
+        ctx.fillText(`${t.signature}${report.signature ? report.signature.slice(0,24) + '...' : 'pending'}`, 20, 230);
     }
     
     const apples = report.maxApples || 0;
@@ -1757,7 +1831,6 @@ const imageLoader = {
   }
 
   async function shareReport(){
-    // 5. استخدام لغة التقرير من lastReport
     const reportLang = lastReport?.lang || state.lang;
     const t = TRANSLATIONS[reportLang] || TRANSLATIONS[state.lang];
     
