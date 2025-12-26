@@ -565,7 +565,7 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
   height: 100%;
   background: #0b5138;
   display: flex;
-  flex-direction: column;
+  flex-direction:column;
   align-items: center;
   justify-content: center;
   z-index: 100000;
@@ -858,7 +858,7 @@ const imageLoader = {
   const ALPHABETS = {
     nl: ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","Á","À","É","È","Ë","Í","Ï","Ó","Ö","Ú","Ü"],
     en: ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"],
-    // 1. ترتيب عربي أبجدي من اليمين لليسار (عكس الترتيب السابق)
+    // 1. ترتيب عربي أبجدي بسيط من اليمين لليسار (بدون تقسيم لصفوف)
     ar: ["ا","أ","إ","آ","ب","ت","ث","ج","ح","خ","د","ذ","ر","ز","س","ش","ص","ض","ط","ظ","ع","غ","ف","ق","ك","ل","م","ن","ه","و","ؤ","ي","ئ","ى"]
   };
 
@@ -1083,9 +1083,10 @@ const imageLoader = {
     });
   }
 
-  function updateAllTexts() {
-    const lang = state.lang;
-    const t = TRANSLATIONS[lang];
+  // 2. دالة محدثة لترجمة النصوص حسب لغة التحدي
+  function updateAllTexts(lang = null) {
+    const currentLang = lang || state.lang;
+    const t = TRANSLATIONS[currentLang];
     
     challengeBtn.textContent = t.challengeBtn;
     challengeBtnGame.textContent = t.challengeBtn;
@@ -1342,7 +1343,7 @@ const imageLoader = {
     else slotsRow.classList.add('extremely-long-word');
   }
 
-  // 1. تعديل دالة renderAlphabet لعكس ترتيب الأحرف العربية
+  // 1. تعديل بسيط لدالة renderAlphabet لعرض الأحرف من اليمين لليسار
   function renderAlphabet(){
     alphabetDiv.innerHTML=''; state.alphabetButtons=[];
     const gameLang = state.activeChallenge?.lang || state.lang;
@@ -1350,54 +1351,32 @@ const imageLoader = {
     
     let letters;
     if (gameLang === 'ar') {
-      // 1. عكس الترتيب لعرض الأحرف من اليمين لليسار
-      letters = arr.slice().reverse(); // عكس الترتيب
+      // 1. استخدام الترتيب الطبيعي بدون عكس
+      letters = arr.slice();
     } else {
       letters = arr.slice();
     }
     
-    // 1. إنشاء صفوف للأحرف لتنظيمها بشكل أفضل
-    const rows = [];
-    const charsPerRow = gameLang === 'ar' ? 11 : 13; // عدد أحرف أقل للعربية لأن الحروف أوسع
-    
-    for (let i = 0; i < letters.length; i += charsPerRow) {
-      rows.push(letters.slice(i, i + charsPerRow));
-    }
-    
-    // 1. عرض الأحرف في صفوف
-    rows.forEach(rowLetters => {
-      const rowDiv = document.createElement('div');
-      rowDiv.style.display = 'flex';
-      rowDiv.style.flexWrap = 'wrap';
-      rowDiv.style.justifyContent = gameLang === 'ar' ? 'flex-end' : 'center';
-      rowDiv.style.gap = '6px';
-      rowDiv.style.marginBottom = '6px';
-      rowDiv.style.width = '100%';
+    letters.forEach(l=>{
+      const btn=document.createElement('button'); 
+      btn.className='letter-btn'; 
+      btn.textContent=l; 
+      btn.dataset.letter=l;
       
-      rowLetters.forEach(l=>{
-        const btn=document.createElement('button'); 
-        btn.className='letter-btn'; 
-        btn.textContent=l; 
-        btn.dataset.letter=l;
-        
-        if (gameLang === 'ar') {
-          btn.style.fontSize = '22px';
-          btn.style.fontFamily = '"Segoe UI", Arial, sans-serif';
-          btn.style.minWidth = '36px';
-          btn.style.minHeight = '36px';
-        }
-        
-        btn.addEventListener('click', onLetterClick); 
-        rowDiv.appendChild(btn); 
-        state.alphabetButtons.push(btn);
-      });
+      if (gameLang === 'ar') {
+        btn.style.fontSize = '22px';
+        btn.style.fontFamily = '"Segoe UI", Arial, sans-serif';
+      }
       
-      alphabetDiv.appendChild(rowDiv);
+      btn.addEventListener('click', onLetterClick); 
+      alphabetDiv.appendChild(btn); 
+      state.alphabetButtons.push(btn);
     });
     
+    // 1. تعيين الاتجاه فقط بدون تقسيم لصفوف
     alphabetDiv.style.direction = (gameLang==='ar') ? 'rtl' : 'ltr';
-    alphabetDiv.style.justifyContent = 'flex-start';
-    alphabetDiv.style.alignItems = 'flex-start';
+    alphabetDiv.style.justifyContent = (gameLang==='ar') ? 'flex-end' : 'center';
+    alphabetDiv.style.flexWrap = 'wrap';
     
     adjustAlphabetButtons();
   }
