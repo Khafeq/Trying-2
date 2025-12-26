@@ -718,7 +718,7 @@ const settings = {
         <p id="modalDesc"></p>
         <div style="display:flex;gap:8px;justify-content:center;margin-top:8px;">
           <button id="modalOk" class="modal-btn">OK</button>
-          <button id="shareReportBtn" class="modal-btn" style="background:#0a84ff;">مشاركة التقرير</button>
+          <button id="shareReportBtn" class="modal-btn" style="background:#0a84ff;">مشاركة البيان</button>
         </div>
       </div>
     </div>
@@ -788,10 +788,10 @@ const imageLoader = {
     background: settings.images.background,
     tree: settings.images.tree,
     apple: settings.images.apple,
-    appleTransparent: settings.images.appleTransparent,
-    crowdFail: settings.images.crowdFail,
-    crowdWin: settings.images.crowdWin,
-    winImage: settings.images.winImage
+    //appleTransparent: settings.images.appleTransparent,
+    //crowdFail: settings.images.crowdFail,
+    //crowdWin: settings.images.crowdWin,
+    //winImage: settings.images.winImage
   };
   
   document.getElementById('totalCount').textContent = Object.keys(imagesToLoad).length;
@@ -858,10 +858,11 @@ const imageLoader = {
   const ALPHABETS = {
     nl: ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","Á","À","É","È","Ë","Í","Ï","Ó","Ö","Ú","Ü"],
     en: ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"],
-    ar: ["ا","أ","إ","آ","ب","ت","ث","ج","ح","خ","د","ذ","ر","ز","س","ش","ص","ض","ط","ظ","ع","غ","ف","ق","ك","ل","م","ن","ه","و","ؤ","ي","ئ","ى"]
+    // 3. ترتيب عربي أبجدي من اليمين لليسار حسب طلبك
+    ar: ["ى","ئ","ي","ؤ","و","ه","ن","م","ل","ك","ق","ف","غ","ع","ظ","ط","ض","ص","ش","س","ز","ر","ذ","د","خ","ح","ج","ث","ت","ب","آ","إ","أ","ا"]
   };
 
-  // كائن الترجمة - إضافة جميع الترجمات للتقرير
+  // كائن الترجمة - تحديث كامل مع استبدال "تقرير" بـ "بيان"
   const TRANSLATIONS = {
     nl: {
       challengeBtn: "Uitdaging",
@@ -897,7 +898,9 @@ const imageLoader = {
       fallenApples: "Gevallen appels: ",
       maxApples: "Max appels: ",
       language: "Taal: ",
-      signature: "Handtekening(sha256): "
+      signature: "Handtekening(sha256): ",
+      result: "Resultaat: ",
+      time: "Tijd: "
     },
     en: {
       challengeBtn: "Challenge",
@@ -933,13 +936,15 @@ const imageLoader = {
       fallenApples: "Fallen apples: ",
       maxApples: "Max apples: ",
       language: "Language: ",
-      signature: "Signature(sha256): "
+      signature: "Signature(sha256): ",
+      result: "Result: ",
+      time: "Time: "
     },
     ar: {
       challengeBtn: "تحدي",
       newBtn: "لعبة جديدة",
       modalOk: "موافق",
-      shareReportBtn: "مشاركة التقرير",
+      shareReportBtn: "مشاركة البيان", // 4. تغيير من "تقرير" إلى "بيان"
       startBtn: "ابدأ",
       wordPlaceholder: "اكتب الكلمة...",
       timeUp: "انتهى الوقت!",
@@ -954,8 +959,8 @@ const imageLoader = {
       typeChallengeWord: "اكتب كلمة للتحدي أولاً",
       copyLink: "انسخ الرابط وشاركه",
       challengeText: "تحدي تفاح - {seconds} ثانية",
-      noReport: "لا يوجد تقرير",
-      reportCopied: "تم نسخ التقرير إلى الحافظة",
+      noReport: "لا يوجد بيان", // 4. تغيير من "تقرير" إلى "بيان"
+      reportCopied: "تم نسخ البيان إلى الحافظة", // 4. تغيير من "تقرير" إلى "بيان"
       timePlaceholder: "الوقت بالثواني",
       confirmChallenge: "تأكيد التحدي",
       challengeUsed: "تم استخدام التحدي",
@@ -965,11 +970,13 @@ const imageLoader = {
       resultWin: "فوز",
       resultLose: "خسارة",
       resultTimeUp: "انتهى الوقت",
-      reportTitle: "AppelBoom - تقرير",
+      reportTitle: "AppelBoom - بيان", // 4. تغيير من "تقرير" إلى "بيان"
       fallenApples: "التفاحات الساقطة: ",
       maxApples: "أقصى تفاحات: ",
       language: "اللغة: ",
-      signature: "التوقيع(sha256): "
+      signature: "التوقيع(sha256): ",
+      result: "النتيجة: ", // 1. إضافة ترجمة لـ "Result"
+      time: "الوقت: " // 1. إضافة ترجمة لـ "Time"
     }
   };
 
@@ -1097,7 +1104,6 @@ const imageLoader = {
 
   updateAllTexts();
 
-  // 1. & 3. دالة محدثة لعرض زر اللغة في الصفحة الثانية
   function renderLanguageButtonInGamePage(lang) {
     langColGame.innerHTML = '';
     const langBtn = document.createElement('div');
@@ -1212,7 +1218,6 @@ const imageLoader = {
       slot.style.color = '#c73737';
     });
     
-    // 2. استخدام لغة التحدي لتقرير كامل
     const reportLang = state.activeChallenge?.lang || state.lang;
     const t = TRANSLATIONS[reportLang] || TRANSLATIONS[state.lang];
     
@@ -1260,7 +1265,6 @@ const imageLoader = {
     renderSlots();
     renderAlphabet();
     
-    // 1. إصلاح: استخدام لغة التحدي إذا كان موجوداً
     const displayLang = state.activeChallenge?.lang || state.lang;
     renderLanguageButtonInGamePage(displayLang);
     
@@ -1285,13 +1289,42 @@ const imageLoader = {
     updateDynamicElements();
   }
 
+  // 2. تعديل دالة renderSlots لدعم الكتابة من اليمين لليسار للعربية
   function renderSlots(){
     slotsRow.innerHTML=''; state.slots=[];
-    state.wordChars.forEach((ch,i)=>{
+    const isArabic = (state.activeChallenge?.lang || state.lang) === 'ar';
+    
+    // 2. إذا كانت اللغة عربية، عرض الحروف من اليمين لليسار
+    const charsToDisplay = isArabic ? state.wordChars.slice() : state.wordChars;
+    
+    charsToDisplay.forEach((ch,i)=>{
       const s=document.createElement('div'); s.className='slot'; s.dataset.pos=i;
-      if(ch===' '){ s.classList.add('space'); s.textContent=' '; } else s.textContent='_';
+      if(ch===' '){ 
+        s.classList.add('space'); 
+        s.textContent=' '; 
+        s.style.margin = '0 10px'; // إضافة مسافة للفراغات
+      } else {
+        s.textContent='_';
+      }
+      
+      // 2. للغة العربية، تعيين اتجاه النص
+      if (isArabic) {
+        s.style.direction = 'rtl';
+        s.style.textAlign = 'right';
+      }
+      
       slotsRow.appendChild(s); state.slots.push(s);
     });
+    
+    // 2. تعيين اتجاه الصف كله للعربية
+    if (isArabic) {
+      slotsRow.style.direction = 'rtl';
+      slotsRow.style.justifyContent = 'flex-end';
+    } else {
+      slotsRow.style.direction = 'ltr';
+      slotsRow.style.justifyContent = 'center';
+    }
+    
     const wordLength = state.wordChars.filter(ch=>ch!==' ').length;
     slotsRow.classList.remove('short-word','medium-word','long-word','very-long-word','extremely-long-word');
     if(wordLength<=8) slotsRow.classList.add('short-word');
@@ -1301,28 +1334,61 @@ const imageLoader = {
     else slotsRow.classList.add('extremely-long-word');
   }
 
+  // 3. دالة محدثة لعرض الأبجدية العربية بترتيب أبجدي
   function renderAlphabet(){
     alphabetDiv.innerHTML=''; state.alphabetButtons=[];
-    // 3. استخدام لغة التحدي أو اللغة الحالية
     const gameLang = state.activeChallenge?.lang || state.lang;
     const arr = ALPHABETS[gameLang] || ALPHABETS.nl;
-    const letters = (gameLang==='ar') ? arr.slice().reverse() : arr.slice();
+    
+    // 3. للغة العربية، استخدام الترتيب الأبجدي كما هو في ALPHABETS.ar
+    let letters;
+    if (gameLang === 'ar') {
+      // 3. الترتيب الأبجدي من اليمين لليسار
+      letters = arr.slice(); // استخدام الترتيب المحدد في ALPHABETS.ar
+    } else {
+      letters = (gameLang==='ar') ? arr.slice().reverse() : arr.slice();
+    }
+    
     letters.forEach(l=>{
-      const btn=document.createElement('button'); btn.className='letter-btn'; btn.textContent=l; btn.dataset.letter=l;
-      btn.addEventListener('click', onLetterClick); alphabetDiv.appendChild(btn); state.alphabetButtons.push(btn);
+      const btn=document.createElement('button'); 
+      btn.className='letter-btn'; 
+      btn.textContent=l; 
+      btn.dataset.letter=l;
+      
+      // 3. للغة العربية، جعل النص بحجم مناسب
+      if (gameLang === 'ar') {
+        btn.style.fontSize = '22px';
+        btn.style.fontFamily = '"Segoe UI", Arial, sans-serif';
+      }
+      
+      btn.addEventListener('click', onLetterClick); 
+      alphabetDiv.appendChild(btn); 
+      state.alphabetButtons.push(btn);
     });
+    
+    // 3. اتجاه الأبجدية
     alphabetDiv.style.direction = (gameLang==='ar') ? 'rtl' : 'ltr';
+    alphabetDiv.style.justifyContent = (gameLang==='ar') ? 'flex-end' : 'center';
+    
     adjustAlphabetButtons();
   }
 
   function adjustAlphabetButtons(){
     const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+    const gameLang = state.activeChallenge?.lang || state.lang;
+    
     if(state.alphabetButtons && state.alphabetButtons.length){
       state.alphabetButtons.forEach(btn=>{
         if(isPortrait){
-          btn.style.minWidth="32px"; btn.style.minHeight="32px"; btn.style.padding="8px 10px"; btn.style.fontSize="12px";
+          btn.style.minWidth="32px"; 
+          btn.style.minHeight="32px"; 
+          btn.style.padding="8px 10px"; 
+          btn.style.fontSize = (gameLang === 'ar') ? "16px" : "12px";
         } else {
-          btn.style.minWidth="40px"; btn.style.minHeight="auto"; btn.style.padding="8px 10px"; btn.style.fontSize="inherit";
+          btn.style.minWidth="40px"; 
+          btn.style.minHeight="auto"; 
+          btn.style.padding="8px 10px"; 
+          btn.style.fontSize = (gameLang === 'ar') ? "22px" : "inherit";
         }
       });
     }
@@ -1378,6 +1444,12 @@ const imageLoader = {
         state.slots[idx].textContent = ch; 
         state.slots[idx].style.color = '#0b8a3a'; 
         state.slots[idx].classList.add('revealed'); 
+        
+        // 2. للغة العربية، التأكد من اتجاه النص
+        if (state.lang === 'ar') {
+          state.slots[idx].style.direction = 'rtl';
+          state.slots[idx].style.textAlign = 'right';
+        }
       }
     });
   }
@@ -1449,6 +1521,13 @@ const imageLoader = {
       const letterEl = document.createElement('div'); 
       letterEl.className='fallen-letter'; 
       letterEl.textContent = letter;
+      
+      // 2. للغة العربية، اتجاه النص
+      if (state.lang === 'ar') {
+        letterEl.style.direction = 'rtl';
+        letterEl.style.textAlign = 'right';
+      }
+      
       item.appendChild(imgWrap); 
       item.appendChild(letterEl); 
       colEl.appendChild(item);
@@ -1468,9 +1547,17 @@ const imageLoader = {
       endChallengeTimer();
       disableAllLetters();
       stopBirds();
-      state.slots.forEach(s=>{ if(s.textContent !== ' ') s.style.color = '#0b8a3a'; });
+      state.slots.forEach(s=>{ 
+        if(s.textContent !== ' ') {
+          s.style.color = '#0b8a3a'; 
+          // 2. للغة العربية، التأكد من اتجاه النص
+          if (state.lang === 'ar') {
+            s.style.direction = 'rtl';
+            s.style.textAlign = 'right';
+          }
+        }
+      });
       
-      // 2. استخدام لغة التحدي لتقرير كامل
       const reportLang = state.activeChallenge?.lang || state.lang;
       const t = TRANSLATIONS[reportLang] || TRANSLATIONS[state.lang];
       
@@ -1498,9 +1585,14 @@ const imageLoader = {
         if(ch===' ') return; 
         slot.textContent = ch; 
         slot.style.color = '#c73737'; 
+        
+        // 2. للغة العربية، التأكد من اتجاه النص
+        if (state.lang === 'ar') {
+          slot.style.direction = 'rtl';
+          slot.style.textAlign = 'right';
+        }
       });
       
-      // 2. استخدام لغة التحدي لتقرير كامل
       const reportLang = state.activeChallenge?.lang || state.lang;
       const t = TRANSLATIONS[reportLang] || TRANSLATIONS[state.lang];
       
@@ -1599,7 +1691,6 @@ const imageLoader = {
     }
   });
 
-  // 4. إضافة event listener محسن لزر New
   newBtn.addEventListener('click', function(){
     uiClick();
     endChallengeTimer();
@@ -1625,7 +1716,6 @@ const imageLoader = {
     }, 100);
   });
 
-  // 4. تأكيد أن زر New يستجيب للمس في الجوال
   newBtn.addEventListener('touchstart', function(e) {
     e.preventDefault();
     this.style.transform = 'scale(0.95)';
@@ -1783,10 +1873,9 @@ const imageLoader = {
     const ctx = c.getContext('2d');
     ctx.fillStyle = '#0b5138'; ctx.fillRect(0,0,w,h);
     
-    // 2. استخدام جميع ترجمات التقرير من اللغة الصحيحة
     const t = TRANSLATIONS[report.lang] || TRANSLATIONS.en;
     
-    // ترجمة النتيجة
+    // 1. ترجمة النتيجة بالكامل
     let resultText = '';
     switch(report.result) {
       case 'win': resultText = t.resultWin; break;
@@ -1799,10 +1888,10 @@ const imageLoader = {
     ctx.fillText(t.reportTitle, 20, 40);
     ctx.font = '16px Inter, Arial';
     ctx.fillText(`${t.wordWas} ${report.word}`, 20, 80);
-    ctx.fillText(`Result: ${resultText}`, 20, 110);
+    ctx.fillText(`${t.result}${resultText}`, 20, 110); // 1. استخدام الترجمة الكاملة
     ctx.fillText(`${t.fallenApples}${report.fallen} / ${report.maxApples}`, 20, 140);
     ctx.fillText(`${t.language}${report.lang}`, 20, 170);
-    ctx.fillText(`Time: ${new Date(report.ts).toLocaleString()}`, 20, 200);
+    ctx.fillText(`${t.time}${new Date(report.ts).toLocaleString()}`, 20, 200); // 1. استخدام الترجمة الكاملة
     
     if (report.elapsedTime > 0) {
         ctx.fillText(`${t.timeElapsed} ${report.elapsedTime} ${t.seconds}`, 20, 230);
