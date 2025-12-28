@@ -401,18 +401,17 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
 
 @media (max-width: 768px) and (orientation: portrait) {
   
-/* 🔥 تصغير التفاحات على الشجرة */
+  /* 🔥 تصغير التفاحات على الشجرة */
   .tree-apples .apple-item img {
-    width: 15px !important; /* غير هذه القيمة */
+    width: 15px !important;
   }
   
   /* 🔥 تصغير التفاحات الساقطة */
   .fallen-item img {
-    width: 20px !important; /* غير هذه القيمة */
+    width: 20px !important;
   }
 
-
-.tree-apples {
+  .tree-apples {
     transform: scale(0.88) !important;
   }
   
@@ -439,14 +438,19 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
   .lang-col-game {
         position: absolute !important;
         right: 5% !important;
-        bottom: 100px !important; /* 3. تحت زر التحدي في الجوال العمودي */
+        bottom: 150px !important; /* 🔥 رفع من 90px إلى 150px */
         top: auto !important;
         transform: none;
         margin-top: 0;
         z-index: 10000;
     }
   .challenge-col{ position:absolute !important; order:3; bottom:17vh; right:1%; transform:none; }
-  .challenge-col-game{ position:absolute !important; bottom:200px !important; right:5%; transform:none; }
+  .challenge-col-game{ 
+    position:absolute !important; 
+    bottom: 100px !important; /* 🔥 رفع من 20px إلى 100px */
+    right:5%; 
+    transform:none; 
+  }
   .challenge-btn{ 
     width: 120px;
     padding: 12px 20px !important;
@@ -467,30 +471,38 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
   .game-tree-frame{ width:65% !important; max-width:300px !important; margin:0 auto !important; height:100%; }
   .game-tree-img{ width:100% !important; height:100% !important; left:40% !important; top:60% !important; object-fit:contain !important; }
   
-  /* 4. إصلاح زر New في الجوال العمودي */
+  /* 🔥 تصحيح زر New في الجوال العمودي */
   .new-bottom{ 
     position: fixed !important;
-    bottom: 200px !important;
-    right: 10% !important;
-    transform: translateX(50%) !important;
-    top: auto !important;
+    bottom: auto !important;        /* إزالة bottom */
+    top: 50% !important;            /* في منتصف الشاشة */
+    right: 5% !important;           /* محاذاة لليمين */
+    left: auto !important;          /* تأكيد محاذاة اليمين */
+    transform: translateY(-50%) !important; /* تعديل للمركز العمودي */
     z-index: 10001 !important;
-    width: 40%;
-    max-width: 200px;
+    
+    /* نفس أبعاد زر التحدي */
+    width: auto !important;         /* العرض حسب المحتوى */
+    min-width: 120px !important;    /* نفس زر التحدي */
+    max-width: 160px !important;    /* نفس زر التحدي */
+    min-height: 50px !important;    /* نفس زر التحدي */
+    
     text-align: center;
+    margin: 0;
   }
   
   .new-btn{ 
     padding: 12px 20px !important;
-    border-radius: 20px;
-    font-size: 14px !important;
-    min-height: 44px;
-    width: 40%;
+    border-radius: 16px !important;  /* نفس زر التحدي */
+    font-size: 16px !important;      /* نفس زر التحدي */
+    min-height: 50px;
+    width: 100%;
     background: #86198F !important;
     color: white !important;
     border: 2px solid white !important;
     box-shadow: 0 4px 12px rgba(134, 25, 143, 0.5) !important;
     pointer-events: auto !important;
+    font-weight: 900;                /* نفس زر التحدي */
   }
   
   .right-col{ order:4; height:50vh; display:flex; flex-direction:row; gap:8px; padding:5px; margin-top:10px; margin-bottom: 100px; /* إضافة مساحة للأزرار السفلية */ }
@@ -519,6 +531,7 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
       width: 12px;
   }
 }
+
 
 @media (max-width:380px) and (orientation:portrait){
   .tree-wrap{ height:45vh; }
