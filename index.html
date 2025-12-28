@@ -435,10 +435,30 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
   .input-field{ padding:14px 16px !important; font-size:18px !important; min-height:55px; background:white !important; opacity:1 !important; border:2px solid #0b5138; }
   .password-dots-overlay { border-radius:12px; font-size:20px; letter-spacing:6px; }
   .start-col{ position:absolute !important; order:3; bottom:40vh; right:5%; left:auto !important; transform:none; }
-  .lang-col-game { position:absolute !important; order:2; bottom:37vh; right:1%; transform:none;
-    }
+  
+  /* 🔥 تصحيح زر اللغة */
+  .lang-col-game {
+    position: absolute !important;
+    right: 5% !important;
+    bottom: 150px !important; /* 🔥 رفع من 90px */
+    top: auto !important;
+    transform: none;
+    margin-top: 0;
+    z-index: 10000;
+  }
+  
   .challenge-col{ position:absolute !important; order:3; bottom:17vh; right:1%; transform:none; }
-  .challenge-col-game{ position:absolute !important; order:3; bottom:17vh; right:1%; transform:none; }
+  
+  /* 🔥 تصحيح زر التحدي */
+  .challenge-col-game {
+    position: absolute !important;
+    bottom: 100px !important; /* 🔥 رفع من 20px */
+    right:5%;
+    transform:none !important;
+    z-index: 10000 !important;
+  }
+  
+  /* 🔥 تصحيح زر التحدي - نسخة واحدة فقط! */
   .challenge-btn{ 
     padding: 12px 20px !important;
     border-radius: 16px !important;
@@ -447,8 +467,12 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
     min-width: 120px !important;
     width: auto !important;
   }
+  
   .challenge-input-container{ position:absolute !important; bottom:20vh; right:5%; width:60% !important; }
   .start-btn{ width:120px; padding:12px 20px !important; font-size:16px !important; min-height:50px; border-radius:12px !important; }
+  
+  /* ⚠️ تم حذف .challenge-btn المكرر هنا ⚠️ */
+  
   .lang-col{ position:absolute; order:4; left:5%; bottom:5vh; margin-top:0; flex-direction:column; gap:6px; }
   .lang-btn{ width:50px; height:30px; font-size:10px; }
   #pageGame.active{ display:flex; flex-direction:column; height:100vh; position:relative; }
@@ -462,27 +486,24 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
   /* 🔥 تصحيح زر New في الجوال العمودي */
   .new-bottom{ 
     position: fixed !important;
-    bottom: auto !important;        /* إزالة bottom */
-    top: 55% !important;            /* في منتصف الشاشة */
-    right: 1% !important;           /* محاذاة لليمين */
-    left: auto !important;          /* تأكيد محاذاة اليمين */
-    transform: translateY(-50%) !important; /* تعديل للمركز العمودي */
+    bottom: auto !important;
+    top: 50% !important;
+    right: 5% !important;
+    left: auto !important;
+    transform: translateY(-50%) !important;
     z-index: 10001 !important;
-    
-    /* نفس أبعاد زر التحدي */
-    width: auto !important;         /* العرض حسب المحتوى */
-    min-width: 120px !important;    /* نفس زر التحدي */
-    max-width: 160px !important;    /* نفس زر التحدي */
-    min-height: 50px !important;    /* نفس زر التحدي */
-    
+    width: auto !important;
+    min-width: 120px !important;
+    max-width: 160px !important;
+    min-height: 50px !important;
     text-align: center;
     margin: 0;
   }
   
   .new-btn{ 
     padding: 12px 20px !important;
-    border-radius: 16px !important;  /* نفس زر التحدي */
-    font-size: 16px !important;      /* نفس زر التحدي */
+    border-radius: 16px !important;
+    font-size: 16px !important;
     min-height: 50px;
     width: 100%;
     background: #86198F !important;
@@ -490,10 +511,10 @@ header .controls{ position:absolute; bottom:30px; right:120px; z-index:10000; di
     border: 2px solid white !important;
     box-shadow: 0 4px 12px rgba(134, 25, 143, 0.5) !important;
     pointer-events: auto !important;
-    font-weight: 900;                /* نفس زر التحدي */
+    font-weight: 900;
   }
   
-  .right-col{ order:4; height:50vh; display:flex; flex-direction:row; gap:8px; padding:5px; margin-top:10px; margin-bottom: 100px; /* إضافة مساحة للأزرار السفلية */ }
+  .right-col{ order:4; height:50vh; display:flex; flex-direction:row; gap:8px; padding:5px; margin-top:10px; margin-bottom: 100px; }
   .fallen-columns{ flex:1; padding-top:10px; max-height:100%; justify-content:flex-start; overflow-y:auto; }
   .fallen-column{ width:70px; }
   .fallen-item img{ width:30px !important; }
